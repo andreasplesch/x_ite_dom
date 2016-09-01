@@ -12,4 +12,4 @@ This exists is only to collect ideas.
 - better just add a property to dom node: domNode._x3dnode = x3dnode; !;
 - statements (routes, import,export, proto) probably in separate maps
 - in mutation observer, use map to find x3d node and use SAI to update/remove/add
-- 
+
