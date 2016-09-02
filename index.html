@@ -117,7 +117,7 @@ X3D {
 
 </body>
 <script id="jsbin-javascript">
-$(function(){
+window.setTimout($(function(){
 	
 
 mybrowser = X3D.createBrowser("X3DCanvas");
@@ -126,7 +126,7 @@ myx3d = $('Scene')[0];
 mybrowser.importDocument(myx3d);
 
 }
-)
+),1000);
 
 </script>
 
