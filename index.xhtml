@@ -126,7 +126,8 @@ console.log('after ready?')
 
 mybrowser = X3D.createBrowser("X3DCanvas");
 myscene = mybrowser.createScene();
-myx3d = $('Scene')[0];
+//myx3d = $('Scene')[0];
+myx3d = document.querySelector('Scene');
 mybrowser.importDocument(myx3d);
 
 }
