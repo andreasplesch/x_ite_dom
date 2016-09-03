@@ -91,6 +91,7 @@ X3DCanvas {
 <body>
 	
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
+		<X3D id='dummy'></X3D>
 		<X3DCanvas>
 	<Scene>
 		<Shape>
@@ -122,7 +123,7 @@ X3DCanvas {
 console.log('START')
 $(function(){
 console.log('after ready?')
-	
+X3D(function(el){var b1 = X3D.getBrowser(el)});	
 
 mybrowser = X3D.createBrowser("X3DCanvas");
 myscene = mybrowser.createScene();
