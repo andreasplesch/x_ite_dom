@@ -91,8 +91,7 @@ X3DCanvas {
 <body>
 	
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
-		<X3D id='dummy'></X3D>
-		<X3DCanvas>
+		<X3D id='dummy'>
 	<Scene>
 		<Shape>
 		<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
@@ -107,7 +106,7 @@ X3DCanvas {
 				because this is currently the choice of the choice. We will continuously keep you informed <br/>
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
-		</X3DCanvas>
+		</X3D>
 	
 	<div class="location-bar">
 		<div class="location">
@@ -123,13 +122,13 @@ X3DCanvas {
 console.log('START')
 $(function(){
 console.log('after ready?')
-X3D(function(el){var b1 = X3D.getBrowser(el)});	
-
-mybrowser = X3D.createBrowser("X3DCanvas");
-myscene = mybrowser.createScene();
-//myx3d = $('Scene')[0];
-myx3d = document.querySelector('Scene');
-mybrowser.importDocument(myx3d);
+X3D(function(el){
+	var mybrowser = X3D.getBrowser(el);
+	var myscene = mybrowser.createScene();
+	//myx3d = $('Scene')[0];
+	var myx3d = document.querySelector('Scene');
+	mybrowser.importDocument(myx3d);
+});	
 
 }
 );
