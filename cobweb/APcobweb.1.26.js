@@ -18268,7 +18268,7 @@ function ($,
 			this .table   = $("<table></table>") .appendTo (this .element);
 			this .header  = $("<thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);
-			this .footer  = $("<tfoot>") .append ($("<tr></tr>") .append ($("<td colspan='2'></th>"))) .appendTo (this .table);
+			this .footer  = $("<tfoot>") .append ($("<tr></tr>") .append ($("<td colspan='2'></td>"))) .appendTo (this .table);
 			this .button  = $("<button>") .click (this .set_type__ .bind (this)) .appendTo (this .footer .find ("td"));
 			this .rows    = [ ];
 
