@@ -89,7 +89,7 @@ X3D {
 </style>
 </head>
 <body>
-	
+	<button onclick='random_color()'>new color</button>
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
 		<X3D id='dummy'>
 	<Scene>
@@ -153,7 +153,12 @@ X3D(function(el){
 }
 );
 
-
+function random_color() {
+	var m = document.querySelector("Material")
+	
+	m.setAttribute("diffuseColor", Math.random()+" "+Math.random()+" "+Math.random()+" ");
+	
+}
 
 
 </script>
