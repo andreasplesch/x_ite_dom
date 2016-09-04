@@ -122,16 +122,39 @@ X3D {
 console.log('START')
 $(function(){
 console.log('after ready?')
+
 X3D(function(el){
 	var mybrowser = X3D.getBrowser(el);
-	var myscene = mybrowser.createScene();
+	var myscene = mybrowser.createScene(); //probably not needed
 	//myx3d = $('Scene')[0];
 	var myx3d = document.querySelector('Scene');
-	mybrowser.importDocument(myx3d);
-});	
-
+	mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+	// select the target node
+	var target = myx3d;
+	
+	// create an observer instance
+	var observer = new MutationObserver(function(mutations) {
+	  mutations.forEach(function(mutation) {
+	  	//map attribute to x3dnode field
+	    console.log(mutation);
+	  });    
+	});
+	 
+	// configuration of the observer:
+	var config = { attributes: true, childList: true, characterData: true, subtree: true };
+	
+	// pass in the target node, as well as the observer options
+	observer.observe(target, config);
+	});
+	
+	//start x3d access via dom
+	var m = document.querySelector("Material")
+	m.setAttribute("diffuseColor", "1 0 0");
 }
 );
+
+
+
 
 </script>
 
