@@ -1212,7 +1212,7 @@
                                 break;
 
                             case 'select':
-                                $input = $('<select name="">')
+                                $input = $('<select name=""></select>')
                                     .attr('name', 'context-menu-input-' + key)
                                     .appendTo($label);
                                 if (item.options) {
