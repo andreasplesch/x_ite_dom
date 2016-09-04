@@ -137,6 +137,8 @@ X3D(function(el){
 	  mutations.forEach(function(mutation) {
 	  	//map attribute to x3dnode field
 	    console.log(mutation);
+	    var el = mutation.target
+	    el.x3dnode[mutation.attributeName] = el[mutation.attributeName].split("");
 	  });    
 	});
 	 
