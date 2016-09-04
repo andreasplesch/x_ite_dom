@@ -151,15 +151,13 @@ X3D(function(el){
 	observer.observe(target, config);
 	});
 	
-	//start x3d access via dom
-	var m = document.querySelector("Material")
-	m.setAttribute("diffuseColor", "1 0 0");
 }
 );
 
 function random_color() {
-	var m = document.querySelector("Material")
 	
+	var m = document.querySelector("Material")
+	//will be transferred to scene graph node 
 	m.setAttribute("diffuseColor", Math.random()+" "+Math.random()+" "+Math.random());
 	
 }
