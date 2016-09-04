@@ -139,7 +139,7 @@ X3D(function(el){
 	    console.log(mutation);
 	    var el = mutation.target;
 	    var name = mutation.attributeName;
-	    var val  = el.attributes.find(function(attr){ return attr.name === name ;}).nodeValue ;
+	    var val  = el.attributes.getNamedItem(name).nodeValue ;
 	    el.x3dnode[name] = val.split(" ");
 	  });    
 	});
