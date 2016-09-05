@@ -118,7 +118,7 @@ console.log('after ready?')
 	    					var attribute = el.attributes.getNamedItem(name);
 		    				var val  = el.attributes.getNamedItem(name).nodeValue ;
 		    				XMLParser.attribute(attribute, el.x3dnode[name]);
-		    				el.x3dnode[name] = val.split(" ");
+		    				//el.x3dnode[name] = val.split(" ");
 				  	});
 			  	// configuration of the observer:
 				var config = { attributes: true, childList: true, characterData: true, subtree: true };
