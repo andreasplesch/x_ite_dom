@@ -27,36 +27,6 @@ body {
 	color: white;
 }
 
-.examples {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	bottom: 30px;
-	left: 0px;
-}
-
-.submit-url {
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
-}
-
-.submit-url input {
-	width: 100%;
-}
-
-.bookmarks {
-	box-sizing: border-box;
-	background: #414141;
-	overflow: hidden;
-	padding: 5px;
-	width: 120px;
-	float: left;
-	font-size: 12px;
-	text-align: right;
-	height: 100%;
-}
-
 X3D {
 	background: #414141;
 	height: 50%;
@@ -136,7 +106,7 @@ function random_color() {
 	var m = document.querySelector("Material")
 	//will be transferred to scene graph node 
 	m.setAttribute("diffuseColor", Math.random()+" "+Math.random()+" "+Math.random());
-	
+	console.log(m);
 }
 
 
