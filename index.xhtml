@@ -104,36 +104,32 @@ X3D(function(el){
 	var myx3d = document.querySelector('Scene');
 	mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 	// select the target node
-	X3D.require(["cobweb/Parser/XMLParser"],
-		function(XMLParser) {
-			return new XMLParser;
-		}
-	)
-	
 	var target = myx3d;
-	
-	// create an observer instance
-	var observer = new MutationObserver(function(mutations) {
-	  mutations.forEach(function(mutation) {
-	  	//map attribute to x3dnode field
-	    console.log(mutation);
-	    var el = mutation.target;
-	    var name = mutation.attributeName;
-	    var val  = el.attributes.getNamedItem(name).nodeValue ;
-	    el.x3dnode[name] = val.split(" ");
-	  });    
-	});
+	X3D.require(
+		["cobweb/Parser/XMLParser"],
+		function(XMLParser) {
+			// create an observer instance
+			var observer = new MutationObserver(function(mutations) {
+				mutations.forEach(function(mutation) {
+				//map attribute to x3dnode field
+					console.log(mutation);
+					var el = mutation.target;
+    					var name = mutation.attributeName;
+	    				var val  = el.attributes.getNamedItem(name).nodeValue ;
+	    				el.x3dnode[name] = val.split(" ");
+			  	});
+		  	// configuration of the observer:
+			var config = { attributes: true, childList: true, characterData: true, subtree: true };
+			// pass in the target node, as well as the observer options
+			observer.observe(target, config);
+			});
+		}
+	);
 	 
-	// configuration of the observer:
-	var config = { attributes: true, childList: true, characterData: true, subtree: true };
 	
-	// pass in the target node, as well as the observer options
-	observer.observe(target, config);
-	});
 	
-}
-);
-
+});
+	
 function random_color() {
 	
 	var m = document.querySelector("Material")
