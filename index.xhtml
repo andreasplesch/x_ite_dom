@@ -88,7 +88,10 @@ console.log('after ready?')
 	    					var attribute = el.attributes.getNamedItem(name);
 		    				var val  = el.attributes.getNamedItem(name).value ;
 		    				var parser = new XMLParser (mybrowser.currentScene, el);
-		    				parser.attribute(attribute, el.x3dnode);
+		    				parser.attribute(attribute, el.x3dnode);//almost there
+		    				//only underscore gets update
+		    				var field = el.x3dnode.getField(name);
+		    				field.addEvent(); // set_field event
 		    				//el.x3dnode[name] = val.split(" ");
 				  	});
 				});
