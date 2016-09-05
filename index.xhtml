@@ -86,9 +86,9 @@ console.log('after ready?')
 						var el = mutation.target;
 	    					var name = mutation.attributeName;
 	    					var attribute = el.attributes.getNamedItem(name);
-		    				var val  = el.attributes.getNamedItem(name).nodeValue ;
+		    				var val  = el.attributes.getNamedItem(name).value ;
 		    				var parser = new XMLParser (mybrowser.currentScene, el);
-		    				XMLParser.attribute(attribute, el.x3dnode);
+		    				parser.attribute(attribute, el.x3dnode);
 		    				//el.x3dnode[name] = val.split(" ");
 				  	});
 				});
