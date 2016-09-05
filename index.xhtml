@@ -115,7 +115,9 @@ X3D(function(el){
 					console.log(mutation);
 					var el = mutation.target;
     					var name = mutation.attributeName;
+    					var attribute = el.attributes.getNamedItem(name);
 	    				var val  = el.attributes.getNamedItem(name).nodeValue ;
+	    				XMLParser.attribute(attribute, el.x3dnode[name]);
 	    				el.x3dnode[name] = val.split(" ");
 			  	});
 		  	// configuration of the observer:
