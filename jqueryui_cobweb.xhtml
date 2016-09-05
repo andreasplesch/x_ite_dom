@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>JQuery Manipulation</title>
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/create3000/cobweb/master/stable/1/1.26/cobweb.css"/>
+		<script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script>
+		
+  <style id="jsbin-css">
+  html, body {
+  	margin: 0px;
+  	padding: 0px;
+  	border: 0px;
+  	width: 100%;
+  	height: 100%;
+  	overflow: hidden;
+  }
+  
+  body {
+  	background: black;
+  	color: white;
+  }
+  
+  X3D {
+  	background: #414141;
+  	height: 50%;
+  }
+  
+  .fallback {
+  	display: block;
+  	margin: 300px 0 0 0;
+  	text-align: center;
+  }
+        label { width: 100px; float: left; clear: both; }
+        #ctrlContainer { border: 1px solid #000; padding: 20px; float: left; width: 280px; margin-left: 20px; }
+        #sliderContainer div { float:left; width: 200px; }
+        #sliderContainer li { height: 25px; }
+        #sliderContainer ul { clear: both; list-style-type: none; margin: 20px 0 10px 0; padding: 0; }
+    </style>
+
+</head>
+
+<body style="background-color:#E0E0E0;">
+
+    <h1>JQuery Manipulation: Using jQuery to manipulate an Attribute</h1>
+
+    <X3D >
+        <Scene DEF='scene'>
+            <Viewpoint position='0 0 10' />
+			<Background skyColor='1 1 1' />
+            <Transform id='trans'>
+                <Shape>
+                    <Appearance>
+                        <Material diffuseColor='0 0 0' specularColor='.2 .2 .2' />
+                    </Appearance>
+                    <Box DEF='box'/>
+                </Shape>
+            </Transform>
+        </Scene>
+    </X3D>
+	
+    <div id="ctrlContainer">
+        <p>Change the color of the cube using the RGB sliders, which updates the "diffuseColor" attribute of the Material node using jQuery.</p>
+        <div id="sliderContainer">
+            <ul>
+                <li><label>Red</label><div id="redSlider" class="slider"/></li>
+                <li><label>Green</label><div id="greenSlider" class="slider"/></li>
+                <li><label>Blue</label><div id="blueSlider" class="slider"/></li>
+            </ul>
+        </div>
+    </div>
+
+	 
+  
+</body>
+</html>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <link type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+	<script>
+$(function(){
+
+	X3D(function(el){
+		var mybrowser = X3D.getBrowser(el);
+		var myscene = mybrowser.createScene(); //probably not needed
+		//myx3d = $('Scene')[0];
+		var myx3d = document.querySelector('Scene');
+		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+		// select the target node
+		var target = myx3d;
+		X3D.require(
+			["cobweb/Parser/XMLParser"],
+			function(XMLParser) {
+				// create an observer instance
+				var observer = new MutationObserver(function(mutations) {
+					mutations.forEach(function(mutation) {
+					//map attribute to x3dnode field
+						console.log(mutation);
+						var el = mutation.target;
+	    					var name = mutation.attributeName;
+	    					var attribute = el.attributes.getNamedItem(name);
+		    				var val  = el.attributes.getNamedItem(name).value ;
+		    				var parser = new XMLParser (mybrowser.currentScene, el);
+		    				parser.attribute(attribute, el.x3dnode);//almost there
+		    				//only underscore gets update
+		    				var field = el.x3dnode.getField(name);
+		    				field.addEvent(); // set_field event
+		    				//el.x3dnode[name] = val.split(" ");
+				  	});
+				});
+				// configuration of the observer:
+				var config = { attributes: true, childList: true, characterData: true, subtree: true };
+				// pass in the target node, as well as the observer options
+				observer.observe(target, config);
+			}
+		);
+	});
+	
+	          // Create the sliders
+            $(".slider").slider({min: 0, max: 1, step: 0.01, slide: function(e, ui) {
+                var newCol =   $("#redSlider").slider('option', 'value') + " " 
+                             + $("#greenSlider").slider('option', 'value') + " "  
+                             + $("#blueSlider").slider('option', 'value');              
+                $("Material").attr("diffuseColor", newCol);
+            }});
+
+	
+});
+
+function random_color() {
+	
+	var m = document.querySelector("Material")
+	//will be transferred to scene graph node 
+	m.setAttribute("diffuseColor", Math.random()+" "+Math.random()+" "+Math.random());
+	console.log(m);
+}
+
+
+</script>
