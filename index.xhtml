@@ -87,16 +87,18 @@ console.log('after ready?')
 	    					var name = mutation.attributeName;
 	    					var attribute = el.attributes.getNamedItem(name);
 		    				var val  = el.attributes.getNamedItem(name).nodeValue ;
-		    				XMLParser.attribute(attribute, el.x3dnode[name]);
+		    				var parser = new XMLParser (mybrowser.currentScene, el);
+		    				XMLParser.attribute(attribute, el.x3dnode);
 		    				//el.x3dnode[name] = val.split(" ");
 				  	});
-			  	// configuration of the observer:
+				});
+				// configuration of the observer:
 				var config = { attributes: true, childList: true, characterData: true, subtree: true };
 				// pass in the target node, as well as the observer options
 				observer.observe(target, config);
-				});
 			}
 		);
+		
 		
 	});
 });
