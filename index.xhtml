@@ -104,6 +104,12 @@ X3D(function(el){
 	var myx3d = document.querySelector('Scene');
 	mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 	// select the target node
+	require(["cobweb/Parser/XMLParser"],
+		function(XMLParser) {
+			return new XMLParser;
+		}
+	)
+	
 	var target = myx3d;
 	
 	// create an observer instance
