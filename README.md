@@ -21,15 +21,16 @@ Ideas and refinements:
  - uses cobweb parser to convert from string to correct type, then set value to field
  - also reflect back to DOM after internal changes?
  - would need conversion from type to string per type ...
+ - perhaps hook into whenever any value is set ? get dom node, set dom attribute
 
 TODO:
 
 - add/remove nodes
  - SAI: Scene.createNode, .rootNodeHandling.createRootNode or so
- - SAI node.dispose()
+ - SAI: node.dispose()
 - mouse EVENTS:
  - canvas events all captured and stopped by cobweb; it then checks if over Shapes
- - need to emit event back to DOM node
+ - need to emit event back to DOM node, somehow
  - needs reverse mapping of DOM node to x3d node
 
 
