@@ -29,8 +29,8 @@ TODO:
  - SAI: Scene.createNode, .rootNodeHandling.createRootNode or so
  - SAI: node.dispose()
 - mouse EVENTS:
- - canvas events all captured and stopped by cobweb; it then checks if over Shapes
- - need to emit event back to DOM node, somehow
+ - canvas events all captured and stopped by cobweb; it then checks if over Shapes in traverse type POINTER
+ - need to emit event back to DOM node, somehow, with useful properties 
  - needs reverse mapping of DOM node to x3d node
 
 
