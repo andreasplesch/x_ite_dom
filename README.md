@@ -1,7 +1,7 @@
 # cobweb_dom
-fuzzy ideas on how to link cobweb to the dom
+fuzzy ideas on how to link cobweb to the dom converted to first code
 
-This exists is only to collect ideas.
+Ideas and refinements:
 
 - use X3D.createBrowser('x3dcanvas') to create browser at x3dcanvas tag as a placeholder
  - difficult, needs internal changes; just <x3d> as intended
@@ -19,5 +19,18 @@ This exists is only to collect ideas.
 - in mutation observer, use map to find x3d node and use SAI to update/remove/add
  - attribute changes handled
  - uses cobweb parser to convert from string to correct type, then set value to field
+ - also reflect back to DOM after internal changes?
+ - would need conversion from type to string per type ...
+
+TODO:
+
+- add/remove nodes
+ - SAI: Scene.createNode, .rootNodeHandling.createRootNode or so
+ - SAI node.dispose()
+- mouse EVENTS:
+ - canvas events all captured and stopped by cobweb; it then checks if over Shapes
+ - need to emit event back to DOM node
+ - needs reverse mapping of DOM node to x3d node
+
 
 
