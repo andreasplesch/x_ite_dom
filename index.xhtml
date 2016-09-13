@@ -9,7 +9,8 @@
 		<meta http-equiv="Pragma" content="no-cache"/>
 		<meta http-equiv="Expires" content="0"/>
 		<meta charset="utf-8"/>
-		<link rel="stylesheet" type="text/css" href="https://rawgit.com/create3000/cobweb/master/stable/1/1.26/cobweb.css"/>
+		<!--link rel="stylesheet" type="text/css" href="https://rawgit.com/create3000/cobweb/master/stable/1/1.26/cobweb.css"/-->
+		<link rel="stylesheet" type="text/css" href="./cobweb/stable/1/1.26/cobweb.css"/>
 		<script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script>
 		
 <style id="jsbin-css">
@@ -41,16 +42,21 @@ X3D {
 </head>
 <body>
 	<button onclick='random_color()'>new color</button>
+	<button onclick='add_box()'>new box</button>
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
 		<X3D id='dummy'>
 	<Scene>
-		<Shape>
-		<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
-			<Appearance>
-				<Material></Material>
-			</Appearance>
-		<Box></Box>
-		</Shape>
+		<Transform translation='2 0 0'>
+			<Shape>
+			<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
+				<Appearance>
+					<Material></Material>
+				</Appearance>
+				<Box></Box>
+			</Shape>
+		</Transform>
+		<Transform id='shell'>
+		</Transform>
 	</Scene>
 			<p class="fallback">
 				Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
@@ -58,8 +64,6 @@ X3D {
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
 		</X3D>
-	
-	
 
 </body>
 <script>
@@ -69,7 +73,7 @@ console.log('after ready?')
 
 	X3D(function(el){
 		var mybrowser = X3D.getBrowser(el);
-		var myscene = mybrowser.createScene(); //probably not needed
+		//var myscene = mybrowser.createScene(); //probably not needed
 		//myx3d = $('Scene')[0];
 		var myx3d = document.querySelector('Scene');
 		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
@@ -84,15 +88,39 @@ console.log('after ready?')
 					//map attribute to x3dnode field
 						console.log(mutation);
 						var el = mutation.target;
-	    					var name = mutation.attributeName;
-	    					var attribute = el.attributes.getNamedItem(name);
-		    				var val  = el.attributes.getNamedItem(name).value ;
-		    				var parser = new XMLParser (mybrowser.currentScene, el);
-		    				parser.attribute(attribute, el.x3dnode);//almost there
-		    				//only underscore gets update
-		    				var field = el.x3dnode.getField(name);
-		    				field.addEvent(); // set_field event
-		    				//el.x3dnode[name] = val.split(" ");
+						var parser = new XMLParser (mybrowser.currentScene, el);
+						if (mutation.type == 'attributes') {
+							//attributes
+							var name = mutation.attributeName;
+							var attribute = el.attributes.getNamedItem(name);
+							var val  = el.attributes.getNamedItem(name).value ;
+							parser.attribute(attribute, el.x3dnode);//almost there
+							//only underscore gets update
+							var field = el.x3dnode.getField(name);
+							field.addEvent(); // set_field event
+							//el.x3dnode[name] = val.split(" ");
+							}
+						if (mutation.type == 'childList') {
+							//elements
+							//parser.statement (el) should work for all new nodes
+							//forEach addedNodes
+							var addedEl = mutation.addedNodes[0];
+							parser.statement(addedEl);
+							//parser only adds uninitialized x3d nodes to scene
+							//the setup function initializes only uninitialized nodes
+							mybrowser.currentScene.setup();
+							//forEach removedNodes
+							//removedNodes still has the removed nodes
+							//probably best to find parent
+							//parent = removedNode.parentElement.x3dnode
+							//then use removedNode.x3dnode.removeParent(parent)
+							//then perhaps set removedNode.x3dnode = null
+							//then trigger redraw
+							//scene.setup() does not work, set unitinialized somehow on parent ?
+							//or find correct field in parent and emit set event like above
+							//
+						}
+						
 				  	});
 				});
 				// configuration of the observer:
@@ -106,6 +134,10 @@ console.log('after ready?')
 	});
 });
 
+var box_counter = 0;
+var radius = 4;
+var perBoxAngle = 2*Math.PI/12;
+
 function random_color() {
 	
 	var m = document.querySelector("Material")
@@ -114,6 +146,23 @@ function random_color() {
 	console.log(m);
 }
 
+
+function add_box() {
+
+	var transform = document.createElement('Transform');
+	transform.setAttribute('translation', radius * Math.cos(perBoxAngle * box_counter) + " " + radius * Math.sin(perBoxAngle * box_counter++) + " " + 0);
+	var shape = document.createElement('Shape');
+	var app = document.createElement('Appearance');
+	var mat = document.createElement('Material');
+	var box = document.createElement('Box');
+	var shell = document.querySelector('Scene');
+	app.appendChild(mat);
+	shape.appendChild(app);
+	shape.appendChild(box);
+	transform.appendChild(shape);
+	shell.appendChild(transform);
+
+}
 
 </script>
 
