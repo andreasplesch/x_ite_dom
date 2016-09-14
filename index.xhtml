@@ -10,7 +10,7 @@
 		<meta http-equiv="Expires" content="0"/>
 		<meta charset="utf-8"/>
 		<!--link rel="stylesheet" type="text/css" href="https://rawgit.com/create3000/cobweb/master/stable/1/1.26/cobweb.css"/-->
-		<link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css"/>
+		<link rel="stylesheet" type="text/css" href="./cobweb/stable/1/1.26/cobweb.css"/>
 		<script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script>
 		
 <style id="jsbin-css">
@@ -31,7 +31,7 @@ body {
 X3D {
 	background: #414141;
 	width: 600px;
-	height: 50%;
+	height: 400px;
 }
 
 .fallback {
@@ -44,6 +44,9 @@ X3D {
 <body>
 	<button onclick='random_color()'>new color</button>
 	<button onclick='add_box()'>new box</button>
+	<button onclick='remove_last_box()'>remove box</button>
+	<button onclick='remove_last_material()'>remove material</button>
+	
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
 		<X3D id='dummy'>
 	<Scene>
@@ -106,10 +109,12 @@ console.log('after ready?')
 							//parser.statement (el) should work for all new nodes
 							//forEach addedNodes
 							var addedEl = mutation.addedNodes[0];
-							parser.statement(addedEl);
-							//parser only adds uninitialized x3d nodes to scene
-							//the setup function initializes only uninitialized nodes
-							mybrowser.currentScene.setup();
+							if (addedEl) {
+								parser.statement(addedEl);
+								//parser only adds uninitialized x3d nodes to scene
+								//the setup function initializes only uninitialized nodes
+								mybrowser.currentScene.setup();
+							}
 							//forEach removedNodes
 							//removedNodes still has the removed nodes
 							//probably best to find parent
@@ -120,8 +125,42 @@ console.log('after ready?')
 							//scene.setup() does not work, set unitinialized somehow on parent ?
 							//or find correct field in parent and emit set event like above
 							//
+							var removedEl = mutation.removedNodes[0];
+							if (removedEl) {
+								var parents = removedEl.x3dnode.getParents(); //parent should be field in parent node
+								//deal with root nodes TODO
+								for (var key in parents) { // only way to find property in parents object
+									var parent = parents[key];
+									//SFNode field or member of MFNode field or rootNode?
+									var grandparents = parent.getParents();
+									for (var k2 in grandparents){
+										var gp = grandparents[k2];
+										if (gp.getTypeName == 'MFNode') {
+											var isMFNode = true;
+											if (gp.getName = 'rootNodes') {
+												var isRootNode = true;
+											}
+										}
+									}
+									parent.set(); // resets value of field to null
+									if (isMFNode) {
+										gp.addEvent();
+										if (isRootNode) { // also remove from rootnodes
+											var rootNodes = mybrowser.currentScene.getRootNodes();
+											//find in array
+											for (var key in parents) { // look through all parents
+												parent = parents[key];
+												var i = rootNodes.indexOf(parent);
+												if (i !== -1) { break } // found it
+											}																											
+											rootNodes.splice(i,1); 
+										}
+									}
+									else {parent.addEvent();}
+									// trigger update event for this field
+								}
+							}
 						}
-						
 				  	});
 				});
 				// configuration of the observer:
@@ -162,9 +201,25 @@ function add_box() {
 	shape.appendChild(box);
 	transform.appendChild(shape);
 	shell.appendChild(transform);
+	radius = radius + box_counter/100;
+}
+
+function remove_last_box() {
+
+	var trafos = document.querySelectorAll("Transform");
+	var last_trafo = trafos[trafos.length - 1];
+	last_trafo.remove();
+	box_counter--;
+	radius = radius - box_counter/100;
 
 }
 
+function remove_last_material() {
+
+	var mats = document.querySelectorAll("Material");
+	var last_mat = mats[mats.length - 1];
+	last_mat.remove();
+}
 </script>
 
 </html>
