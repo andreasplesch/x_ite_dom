@@ -19,7 +19,7 @@
 	simple example which shows how to add/remove nodes using a simple DOM appendChild()/removeChild() function
 	</p>
 	<p class="case"> 
-		<X3D id="boxes" showStat="true" x="0px" y="0px" width="400px" height="300px">
+		<X3D id="boxes" >
 			<Scene>
 				<Viewpoint position='4.88104 4.59865 7.4181' orientation='-0.69017 0.723467 -0.0161809 0.735134' ></Viewpoint>
 				<Background DEF='bgnd' transparency='0' skyColor='1 1 1' ></Background>
@@ -86,6 +86,7 @@
         var ot = document.getElementById('root');
         for (var i = 0; i < ot.childNodes.length; i++) {
         	if (ot.childNodes[i].nodeType === Node.ELEMENT_NODE) {
+        	// check if we have a real X3DOM Node; not just e.g. a Text-tag
         		ot.removeChild(ot.childNodes[i]);
   				break;
   			}
