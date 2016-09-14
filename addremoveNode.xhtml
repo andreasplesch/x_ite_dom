@@ -7,9 +7,14 @@
 		<title>Simple WebGL example</title>
 		<style>
 		p.case { clear: both; border-top: 1px solid #888; }
+		X3D {
+		width: 600px;
+		height: 400px;
+		}
 		</style>
-        <link rel="stylesheet" type="text/css" href="cobweb/cobweb.css" />
+        <link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css" />
 	<script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script>
+	<script type="text/javascript" src="./cobweb/cobweb_dom.js"></script>
 	</head>
        
 <body>
@@ -40,12 +45,10 @@
 	<input type="button" value="Remove Child" 	onclick="window.removeNode();" />
 	</p>
 	
-	
-
 </body>
 
-<script></script>
-	    
+<script>
+<![CDATA[	    
     function addNode()
     {
 		x = Math.random() * 6 - 3;
@@ -81,6 +84,7 @@
         return false;
     };
     
+    
     function removeNode()
     {
         var ot = document.getElementById('root');
@@ -91,11 +95,11 @@
   				break;
   			}
   		}
-        
+       
         return false;
     };
-    
-<script>	</script>
+]]>	
+</script>
 	
 
 </html>
