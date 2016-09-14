@@ -25,9 +25,14 @@ Ideas and refinements:
 
 TODO:
 
-- add/remove nodes
+- add/remove nodes: done
  - SAI: Scene.createNode, .rootNodeHandling.createRootNode or so
  - SAI: node.dispose()
+ - ---
+ - instead ended up using Parser for creation
+ - dispose does not seem implemented
+ - set container(parent) field to null, emit set event
+ - check mfnode and rootnodes and handle 
 - mouse EVENTS:
  - canvas events all captured and stopped by cobweb; it then checks if over Shapes in traverse type POINTER
  - need to emit event back to DOM node, somehow, with useful properties 
