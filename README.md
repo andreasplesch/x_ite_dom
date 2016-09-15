@@ -28,7 +28,7 @@ TODO:
 - add/remove nodes: done
  - SAI: Scene.createNode, .rootNodeHandling.createRootNode or so
  - SAI: node.dispose()
- - ---
+ - o-------------------o
  - instead ended up using Parser for creation
  - dispose does not seem implemented
  - set container(parent) field to null, emit set event
@@ -37,6 +37,16 @@ TODO:
  - canvas events all captured and stopped by cobweb; it then checks if over Shapes in traverse type POINTER
  - need to emit event back to DOM node, somehow, with useful properties 
  - needs reverse mapping of DOM node to x3d node
+ - o--------------------o
+ - discovered field.addFieldCallback() SAI function
+ - use it on all (output?) sensor fields
+ - callback then dispatches DOM event with useful properties
+ - TODO: howto best find all sensor nodes
+ - TODO: ignore input only fields (though may be useful to listen to input to)
+ - TODO: thinkabout names for DOM events: probably same as field names, but in parallel classic html names as well ?
+ - TODO: howto add field callbacks for dynamically added nodes: via DOM just do it after parsing, but via SAI ?
+ - hack cobweb createNode() ?
+ - is there a node created x3d event ?
 
 
 
