@@ -67,7 +67,7 @@ console.log('after ready?')
 											}
 										}
 									}
-									parent.set(); // resets value of field to null
+									parent.setValue(null); // resets value of field to null
 									if (isMFNode) {
 										gp.addEvent();
 										if (isRootNode) { // also remove from rootnodes
