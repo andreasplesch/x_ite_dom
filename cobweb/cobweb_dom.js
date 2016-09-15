@@ -69,7 +69,7 @@ console.log('after ready?')
 									}
 									parent.setValue(null); // resets value of field to null
 									if (isMFNode) {
-										gp.addEvent();
+										//gp.addEvent();
 										if (isRootNode) { // also remove from rootnodes
 											var rootNodes = mybrowser.currentScene.getRootNodes();
 											//find in array
@@ -81,7 +81,10 @@ console.log('after ready?')
 											rootNodes.splice(i,1); 
 										}
 									}
-									else {parent.addEvent();}
+									else {
+										//parent.addEvent();
+										
+									}
 									// trigger update event for this field
 								}
 							}
