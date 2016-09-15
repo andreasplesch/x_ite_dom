@@ -1,8 +1,9 @@
 //cobweb-dom access
 //load after cobweb.js
+//cobweb-dom access
+//load after cobweb.js
 $(function(){
 console.log('after ready?')
-
 	X3D(function(el){
 		var mybrowser = X3D.getBrowser(el);
 		//var myscene = mybrowser.createScene(); //probably not needed
@@ -93,7 +94,44 @@ console.log('after ready?')
 				observer.observe(target, config);
 			}
 		);
-		
-		
+		//events
+		//define callbacks for all fields in all sensor nodes
+		//find all sensor nodes by looking for isActive field ?
+		//or just match Sensor in name of elements ?
+		//then go through all (relevant?) fields
+		//getFields().forEach
+		//and define callbacks
+		//field.addCallback('callback'+fieldname, callbackfunction)
+		//function callbackfunction(eventvalue) {
+			// now dispatch dom event with name fieldname
+			// and provide eventvalue
+			// plus useful other fieldvalues
+			// get parent of field: field.getParents()
+			// key in parents
+			// or x3dnode from sensor element if in scope
+			// return {value: eventvalue; fields: x3dnode.getFields()}
+			//first mak new event
+			//ev = new Event(fieldname)
+			//add properties
+			//ev.value = eventvalue
+			//ev.fields = x3dnode.getFields()
+			//ev.x3dnode = x3dnode
+			//then dispatch
+			//element.dispatch(Event)
+			// then it should be possible to use Eventlistener
+		var sensors = myx3d.querySelectorAll('TouchSensor');
+		var x3dsensor = sensors[0].x3dnode ;
+		var fields = x3dsensor.getFields();
+		for (key in fields) {doFieldCallback(fields[key])};
+		function doFieldCallback (field) {
+			field.addFieldCallback(field.getName(),
+			function fieldcallback (value){
+				var evt = new Event(field.getName());
+				evt.value = value;
+				evt.fields = x3dsensor.getFields(); // copy ?
+				evt.x3dnode = x3dsensor
+				sensors[0].dispatchEvent(evt);
+			});
+		}
 	});
-});
+} );
