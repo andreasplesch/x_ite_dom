@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
@@ -11,6 +12,7 @@
 		<!--link rel="stylesheet" type="text/css" href="https://rawgit.com/create3000/cobweb/master/stable/1/1.26/cobweb.css"/-->
 		<link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css"/>
 		<script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script>
+		<script type="text/javascript" src="./cobweb/cobweb_dom.js"></script>
 		
 <style id="jsbin-css">
 html, body {
@@ -49,15 +51,18 @@ X3D {
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
 		<X3D id='dummy'>
 	<Scene>
+		 
 		<Transform translation='2 0 0'>
-			<Shape>
-			<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
-				<Appearance>
-					<Material></Material>
-				</Appearance>
-				<Box></Box>
-			</Shape>
+			<TouchSensor DEF='ts1'></TouchSensor>
+				<Shape>
+				<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
+					<Appearance>
+						<Material></Material>
+					</Appearance>
+					<Box></Box>
+				</Shape>
 		</Transform>
+		
 		<Transform id='shell'>
 		</Transform>
 	</Scene>
@@ -67,111 +72,28 @@ X3D {
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
 		</X3D>
-
+<div id='report'>mouse over coordinates: <span id='coords'></span></div>
+<div id='report'>hit point coordinates: <span id='hitpoint'></span></div>
 </body>
 <script>
 console.log('START')
-$(function(){
-console.log('after ready?')
 
-	X3D(function(el){
-		var mybrowser = X3D.getBrowser(el);
-		//var myscene = mybrowser.createScene(); //probably not needed
-		//myx3d = $('Scene')[0];
-		var myx3d = document.querySelector('Scene');
-		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
-		// select the target node
-		var target = myx3d;
-		X3D.require(
-			["cobweb/Parser/XMLParser"],
-			function(XMLParser) {
-				// create an observer instance
-				var observer = new MutationObserver(function(mutations) {
-					mutations.forEach(function(mutation) {
-					//map attribute to x3dnode field
-						console.log(mutation);
-						var el = mutation.target;
-						var parser = new XMLParser (mybrowser.currentScene, el);
-						if (mutation.type == 'attributes') {
-							//attributes
-							var name = mutation.attributeName;
-							var attribute = el.attributes.getNamedItem(name);
-							var val  = el.attributes.getNamedItem(name).value ;
-							parser.attribute(attribute, el.x3dnode);//almost there
-							//only underscore gets update
-							var field = el.x3dnode.getField(name);
-							field.addEvent(); // set_field event
-							//el.x3dnode[name] = val.split(" ");
-							}
-						if (mutation.type == 'childList') {
-							//elements
-							//parser.statement (el) should work for all new nodes
-							//forEach addedNodes
-							var addedEl = mutation.addedNodes[0];
-							if (addedEl) {
-								parser.statement(addedEl);
-								//parser only adds uninitialized x3d nodes to scene
-								//the setup function initializes only uninitialized nodes
-								mybrowser.currentScene.setup();
-							}
-							//forEach removedNodes
-							//removedNodes still has the removed nodes
-							//probably best to find parent
-							//parent = removedNode.parentElement.x3dnode
-							//then use removedNode.x3dnode.removeParent(parent)
-							//then perhaps set removedNode.x3dnode = null
-							//then trigger redraw
-							//scene.setup() does not work, set unitinialized somehow on parent ?
-							//or find correct field in parent and emit set event like above
-							//
-							var removedEl = mutation.removedNodes[0];
-							if (removedEl) {
-								var parents = removedEl.x3dnode.getParents(); //parent should be field in parent node
-								//deal with root nodes TODO
-								for (var key in parents) { // only way to find property in parents object
-									var parent = parents[key];
-									//SFNode field or member of MFNode field or rootNode?
-									var grandparents = parent.getParents();
-									for (var k2 in grandparents){
-										var gp = grandparents[k2];
-										if (gp.getTypeName == 'MFNode') {
-											var isMFNode = true;
-											if (gp.getName = 'rootNodes') {
-												var isRootNode = true;
-											}
-										}
-									}
-									parent.set(); // resets value of field to null
-									if (isMFNode) {
-										gp.addEvent();
-										if (isRootNode) { // also remove from rootnodes
-											var rootNodes = mybrowser.currentScene.getRootNodes();
-											//find in array
-											for (var key in parents) { // look through all parents
-												parent = parents[key];
-												var i = rootNodes.indexOf(parent);
-												if (i !== -1) { break } // found it
-											}																											
-											rootNodes.splice(i,1); 
-										}
-									}
-									else {parent.addEvent();}
-									// trigger update event for this field
-								}
-							}
-						}
-				  	});
-				});
-				// configuration of the observer:
-				var config = { attributes: true, childList: true, characterData: true, subtree: true };
-				// pass in the target node, as well as the observer options
-				observer.observe(target, config);
-			}
-		);
-		
-		
+//try out x3d events on touchsensor
+ts = document.querySelector('TouchSensor');
+coords = document.querySelector('#coords');
+hitpt = document.querySelector('#hitpoint');
+ts.addEventListener('isOver', function(evt) {
+	if (evt.value) {
+		coords.textContent = " " + evt.fields.hitPoint_changed;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	}
 	});
-});
+ts.addEventListener('hitPoint_changed', function(evt) {
+	if (evt.value) {
+		hitpt.textContent = " " + evt.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	}
+	});
 
 var box_counter = 0;
 var radius = 4;
@@ -184,7 +106,6 @@ function random_color() {
 	m.setAttribute("diffuseColor", Math.random()+" "+Math.random()+" "+Math.random());
 	console.log(m);
 }
-
 
 function add_box() {
 
@@ -219,6 +140,8 @@ function remove_last_material() {
 	var last_mat = mats[mats.length - 1];
 	last_mat.remove();
 }
+
+
 </script>
 
 </html>
