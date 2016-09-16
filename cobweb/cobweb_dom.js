@@ -9,7 +9,7 @@ console.log('after ready?')
 		//var myscene = mybrowser.createScene(); //probably not needed
 		//myx3d = $('Scene')[0];
 		var myx3d = document.querySelector('Scene');
-		//mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 		// select the target node
 		var target = myx3d;
 		X3D.require(
