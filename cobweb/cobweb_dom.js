@@ -125,7 +125,7 @@ console.log('after ready?')
 		var sensors = myx3d.querySelectorAll('TouchSensor');
 		var x3dsensor = sensors[0].x3dnode ;
 		var fields = x3dsensor.getFields();
-		for (key in fields) {doFieldCallback(fields[key])};
+		for (var key in fields) {doFieldCallback(fields[key])};
 		function doFieldCallback (field) {
 			field.addFieldCallback(field.getName(),
 			function fieldcallback (value){
