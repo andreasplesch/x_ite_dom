@@ -128,13 +128,14 @@ console.log('after ready?')
 		for (var key in fields) {
 			var field = fields[key];
 			field.addFieldCallback(field.getName(),
-			function fieldCallback (value){
-				var evt = new Event(field.getName());
-				evt.value = value;
-				evt.fields = x3dsensor.getFields(); // copy ?
-				evt.x3dnode = x3dsensor;
-				sensors[0].dispatchEvent(evt);
-			});
+				function fieldCallback (value){
+					var evt = new Event(field.getName());
+					evt.value = value;
+					evt.fields = x3dsensor.getFields(); // copy ?
+					evt.x3dnode = x3dsensor;
+					sensors[0].dispatchEvent(evt);
+				}
+			);
 		}
 	});
 } );
