@@ -38,10 +38,8 @@ function processMutation(mutation, mybrowser) {
 					if (mutation.type == 'childList') {
 						//forEach addedNodes: TODO
 						var addedNodes = mutation.addedNodes;
-						if (addedNodes) {
-							addedNodes.forEach(function(el){
-								processAddedNode(el, parser, mybrowser);
-							});
+						for (var i = 0; i < addedNodes.length; i++) {
+							processAddedNode(addedNodes[i], parser, mybrowser);
 						}
 						/*
 						var addedEl = mutation.addedNodes[0];
