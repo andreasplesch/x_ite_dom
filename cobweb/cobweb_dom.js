@@ -95,60 +95,62 @@ function processMutation(mutation, mybrowser) {
 	);
 }
 		
-		var mybrowser = X3D.getBrowser(el);
-		var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
-		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
-		// select the target node
-		var target = myx3d;
-				// create an observer instance
-				var observer = new MutationObserver(function(mutations) {
-					mutations.forEach(function(mutation) {
-					 processMutation(mutation, mybrowser);
-					});
-				});
-				// configuration of the observer:
-				var config = { attributes: true, childList: true, characterData: true, subtree: true };
-				// pass in the target node, as well as the observer options
-				observer.observe(target, config);
-		//events
-		//define callbacks for all fields in all sensor nodes
-		//find all sensor nodes by looking for isActive field ?
-		//or just match Sensor in name of elements ?
-		//then go through all (relevant?) fields
-		//getFields().forEach
-		//and define callbacks
-		//field.addCallback('callback'+fieldname, callbackfunction)
-		//function callbackfunction(eventvalue) {
-			// now dispatch dom event with name fieldname
-			// and provide eventvalue
-			// plus useful other fieldvalues
-			// get parent of field: field.getParents()
-			// key in parents
-			// or x3dnode from sensor element if in scope
-			// return {value: eventvalue; fields: x3dnode.getFields()}
-			//first mak new event
-			//ev = new Event(fieldname)
-			//add properties
-			//ev.value = eventvalue
-			//ev.fields = x3dnode.getFields()
-			//ev.x3dnode = x3dnode
-			//then dispatch
-			//element.dispatch(Event)
-			// then it should be possible to use Eventlistener
-		var sensors = myx3d.querySelectorAll('TouchSensor');
-		var x3dsensor = sensors[0].x3dnode ;
-		var fields = x3dsensor.getFields();
-		for (var key in fields) {doFieldCallback(fields[key])};
-		function doFieldCallback (field) {
-			field.addFieldCallback(field.getName(),
-			function fieldcallback (value){
-				var evt = new Event(field.getName());
-				evt.value = value;
-				evt.fields = x3dsensor.getFields(); // copy ?
-				evt.x3dnode = x3dsensor
-				sensors[0].dispatchEvent(evt);
-			});
-		}
+var mybrowser = X3D.getBrowser(el);
+var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+// select the target node
+var target = myx3d;
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+	mutations.forEach(function(mutation) {
+	 processMutation(mutation, mybrowser);
+	});
+});
+// configuration of the observer:
+var config = { attributes: true, childList: true, characterData: true, subtree: true };
+// pass in the target node, as well as the observer options
+observer.observe(target, config);
+
+//events
+var sensors = myx3d.querySelectorAll('TouchSensor'); //TODO any kind of Sensor
+var x3dsensor = sensors[0].x3dnode ;
+var fields = x3dsensor.getFields();
+for (var key in fields) {doFieldCallback(fields[key])};
+function doFieldCallback (field) {
+	field.addFieldCallback(field.getName(),
+	function fieldcallback (value){
+		var evt = new Event(field.getName());
+		evt.value = value;
+		evt.fields = x3dsensor.getFields(); // copy ?
+		evt.x3dnode = x3dsensor
+		sensors[0].dispatchEvent(evt);
+	});
+}
 });
 });
 
+
+//define callbacks for all fields in all sensor nodes
+//find all sensor nodes by looking for isActive field ?
+//or just match Sensor in name of elements ?
+//then go through all (relevant?) fields
+//getFields().forEach
+//and define callbacks
+//field.addCallback('callback'+fieldname, callbackfunction)
+//function callbackfunction(eventvalue) {
+	// now dispatch dom event with name fieldname
+	// and provide eventvalue
+	// plus useful other fieldvalues
+	// get parent of field: field.getParents()
+	// key in parents
+	// or x3dnode from sensor element if in scope
+	// return {value: eventvalue; fields: x3dnode.getFields()}
+	//first mak new event
+	//ev = new Event(fieldname)
+	//add properties
+	//ev.value = eventvalue
+	//ev.fields = x3dnode.getFields()
+	//ev.x3dnode = x3dnode
+	//then dispatch
+	//element.dispatch(Event)
+	// then it should be possible to use Eventlistener
