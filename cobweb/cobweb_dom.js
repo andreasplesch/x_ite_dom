@@ -3,6 +3,13 @@
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready
 
+function processRemovedNode2(removedEl, mybrowser){
+	
+	removedEl.x3dnode.dispose();
+	
+}
+
+
 function processRemovedNode(removedEl, mybrowser){
 	var parents = removedEl.x3dnode.getParents(); //parent should be field in parent node
 	//deal with root nodes TODO
@@ -87,7 +94,7 @@ function processMutation(mutation, mybrowser) {
 						
 						var removedEl = mutation.removedNodes[0];
 						if (removedEl) {
-							processRemovedNode(removedEl, mybrowser)
+							processRemovedNode2(removedEl, mybrowser)
 						}
 					}
 		}
