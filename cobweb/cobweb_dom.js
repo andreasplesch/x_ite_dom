@@ -3,14 +3,14 @@
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready
 
-function processRemovedNode2(removedEl, mybrowser){
+function processRemovedNode(removedEl){
 	
-	removedEl.x3dnode.dispose();
-	
+	removedEl.x3dnode.dispose(); // works also for root nodes since scene is effectively a MFNode in cobweb
+	// all done!
 }
 
-
-function processRemovedNode(removedEl, mybrowser){
+/*
+function processRemovedNode2(removedEl, mybrowser){
 	var parents = removedEl.x3dnode.getParents(); //parent should be field in parent node
 	//deal with root nodes TODO
 	for (var key in parents) { // only way to find property in parents object
@@ -48,12 +48,13 @@ function processRemovedNode(removedEl, mybrowser){
 	}
 }
 
+*/
 
 function processAddedNode(addedEl, parser, mybrowser) {
 	parser.statement(addedEl);
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
-	mybrowser.currentScene.setup();
+	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 }
 
 function processAttributes(mutation, el, parser){
@@ -69,7 +70,7 @@ function processAttributes(mutation, el, parser){
 
 function processMutation(mutation, mybrowser) {
 	X3D.require(
-		["cobweb/Parser/XMLParser"], // needed for attributes
+		["cobweb/Parser/XMLParser"], // needed for attributes and new nodes
 		function(XMLParser) {
 					//map attribute to x3dnode field
 					//console.log(mutation);
@@ -94,7 +95,7 @@ function processMutation(mutation, mybrowser) {
 						
 						var removedEl = mutation.removedNodes[0];
 						if (removedEl) {
-							processRemovedNode2(removedEl, mybrowser)
+							processRemovedNode(removedEl)
 						}
 					}
 		}
@@ -109,7 +110,7 @@ var target = myx3d;
 // create an observer instance
 var observer = new MutationObserver(function(mutations) {
 	mutations.forEach(function(mutation) {
-	 processMutation(mutation, mybrowser);
+		processMutation(mutation, mybrowser);
 	});
 });
 // configuration of the observer:
