@@ -39,7 +39,7 @@ function processMutation(mutation, mybrowser) {
 						//forEach addedNodes: TODO
 						var addedNodes = mutation.addedNodes;
 						if (addedNodes) {
-							addNodes.forEach(function(el){
+							addedNodes.forEach(function(el){
 								processAddedNode(el, parser, mybrowser);
 							});
 						}
