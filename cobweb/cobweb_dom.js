@@ -72,7 +72,8 @@ observer.observe(target, config); //start observing
 //events
 var sensors = myx3d.querySelectorAll('TouchSensor'); //TODO any kind of Sensor
 for (var i=0; i < sensors.length; i++) {
-	var x3dsensor = sensors[i].x3dnode ;
+	var sensor = sensors[i];
+	var x3dsensor = sensor.x3dnode ;
 	var fields = x3dsensor.getFields();
 	for (var key in fields) {doFieldCallback(fields[key])};
 	function doFieldCallback (field) {
@@ -82,7 +83,7 @@ for (var i=0; i < sensors.length; i++) {
 			evt.value = value;
 			evt.fields = x3dsensor.getFields(); // copy ?
 			evt.x3dnode = x3dsensor; 
-			sensors[i].dispatchEvent(evt);
+			sensor.dispatchEvent(evt);
 		});
 	}
 }
