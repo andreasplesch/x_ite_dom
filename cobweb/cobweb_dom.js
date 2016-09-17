@@ -6,49 +6,8 @@ $(function(){ // make sure jquery is ready
 function processRemovedNode(removedEl){
 	
 	removedEl.x3dnode.dispose(); // works also for root nodes since scene is effectively a MFNode in cobweb
-	// all done!
+	// all done! cobweb has TODO for Routes and such
 }
-
-/*
-function processRemovedNode2(removedEl, mybrowser){
-	var parents = removedEl.x3dnode.getParents(); //parent should be field in parent node
-	//deal with root nodes TODO
-	for (var key in parents) { // only way to find property in parents object
-		var parent = parents[key];
-		//SFNode field or member of MFNode field or rootNode?
-		var grandparents = parent.getParents();
-		for (var k2 in grandparents){
-			var gp = grandparents[k2];
-			if (gp.getTypeName == 'MFNode') {
-				var isMFNode = true;
-				if (gp.getName = 'rootNodes') {
-					var isRootNode = true;
-				}
-			}
-		}
-		parent.setValue(null); // resets value of field to null
-		if (isMFNode) {
-			//gp.addEvent();
-			if (isRootNode) { // also remove from rootnodes
-				var rootNodes = mybrowser.currentScene.getRootNodes();
-				//find in array
-				for (var key in parents) { // look through all parents
-					parent = parents[key];
-					var i = rootNodes.indexOf(parent);
-					if (i !== -1) { break } // found it
-				}																											
-				rootNodes.splice(i,1); 
-			}
-		}
-		else {
-			//parent.addEvent();
-			
-		}
-		// trigger update event for this field
-	}
-}
-
-*/
 
 function processAddedNode(addedEl, parser, mybrowser) {
 	parser.statement(addedEl);
@@ -58,41 +17,31 @@ function processAddedNode(addedEl, parser, mybrowser) {
 }
 
 function processAttributes(mutation, el, parser){
-	var name = mutation.attributeName;
+	var name = mutation.attributeName; // TODO: check if mutation can have multiple changed attributes
 	var attribute = el.attributes.getNamedItem(name);
-	//var val  = el.attributes.getNamedItem(name).value ;
-	parser.attribute(attribute, el.x3dnode);//almost there
+	parser.attribute(attribute, el.x3dnode); //almost there
 	//only underscore gets update
 	var field = el.x3dnode.getField(name);
-	field.addEvent(); // set_field event
-	//el.x3dnode[name] = val.split(" "); // poor man's parser
+	field.addEvent(); // set_field event, updates real property
+	//may not work for Routes, check
 }
 
 function processMutation(mutation, mybrowser) {
 	X3D.require(
 		["cobweb/Parser/XMLParser"], // needed for attributes and new nodes
 		function(XMLParser) {
-					//map attribute to x3dnode field
-					//console.log(mutation);
 					var el = mutation.target;
 					var parser = new XMLParser (mybrowser.currentScene, el);
 					if (mutation.type == 'attributes') {
 						processAttributes(mutation, el, parser);
 						}
 					if (mutation.type == 'childList') {
-						//elements
-						//parser.statement (el) should work for all new nodes
-						//forEach addedNodes
+						//forEach addedNodes: TODO
 						var addedEl = mutation.addedNodes[0];
 						if (addedEl) {
 							processAddedNode(addedEl, parser, mybrowser);
 						}
-						//forEach removedNodes
-						//removedNodes still has the removed nodes
-						//probably best to find parent
-						//
-						//or find correct field in parent and emit set event like above
-						
+						//forEach removedNodes: TODO
 						var removedEl = mutation.removedNodes[0];
 						if (removedEl) {
 							processRemovedNode(removedEl)
@@ -129,7 +78,7 @@ function doFieldCallback (field) {
 		var evt = new Event(field.getName());
 		evt.value = value;
 		evt.fields = x3dsensor.getFields(); // copy ?
-		evt.x3dnode = x3dsensor
+		evt.x3dnode = x3dsensor; 
 		sensors[0].dispatchEvent(evt);
 	});
 }
