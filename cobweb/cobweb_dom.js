@@ -50,15 +50,14 @@ function processAddedNode(addedEl, parser, mybrowser) {
 }
 
 function processAttributes(mutation, el, parser){
-		//attributes
-						var name = mutation.attributeName;
-						var attribute = el.attributes.getNamedItem(name);
-						var val  = el.attributes.getNamedItem(name).value ;
-						parser.attribute(attribute, el.x3dnode);//almost there
-						//only underscore gets update
-						var field = el.x3dnode.getField(name);
-						field.addEvent(); // set_field event
-						//el.x3dnode[name] = val.split(" ");
+	var name = mutation.attributeName;
+	var attribute = el.attributes.getNamedItem(name);
+	//var val  = el.attributes.getNamedItem(name).value ;
+	parser.attribute(attribute, el.x3dnode);//almost there
+	//only underscore gets update
+	var field = el.x3dnode.getField(name);
+	field.addEvent(); // set_field event
+	//el.x3dnode[name] = val.split(" "); // poor man's parser
 }
 
 function processMutation(mutation, mybrowser) {
