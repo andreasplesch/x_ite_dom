@@ -1,6 +1,8 @@
 //cobweb-dom access
 //load after cobweb.js
-
+X3D.require(
+			["cobweb/Parser/XMLParser"], // needed for attributes
+			function(XMLParser) {
 	function processMutation(mutation, mybrowser) {
 						//map attribute to x3dnode field
 						//console.log(mutation);
@@ -74,7 +76,9 @@
 							}
 						}
 	}
-
+			}
+		);
+		
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready
 		var mybrowser = X3D.getBrowser(el);
@@ -82,9 +86,6 @@ $(function(){ // make sure jquery is ready
 		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 		// select the target node
 		var target = myx3d;
-		X3D.require(
-			["cobweb/Parser/XMLParser"], // needed for attributes
-			function(XMLParser) {
 				// create an observer instance
 				var observer = new MutationObserver(function(mutations) {
 					mutations.forEach(function(mutation) {
