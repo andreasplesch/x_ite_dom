@@ -3,6 +3,13 @@
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready
 
+function processAddedNode(addedEl, parser, mybrowser) {
+	parser.statement(addedEl);
+	//parser only adds uninitialized x3d nodes to scene
+	//the setup function initializes only uninitialized nodes
+	mybrowser.currentScene.setup();
+}
+
 function processAttributes(mutation, el, parser){
 		//attributes
 						var name = mutation.attributeName;
@@ -32,10 +39,7 @@ function processMutation(mutation, mybrowser) {
 						//forEach addedNodes
 						var addedEl = mutation.addedNodes[0];
 						if (addedEl) {
-							parser.statement(addedEl);
-							//parser only adds uninitialized x3d nodes to scene
-							//the setup function initializes only uninitialized nodes
-							mybrowser.currentScene.setup();
+							processAddedNode(addedEl, parser, mybrowser);
 						}
 						//forEach removedNodes
 						//removedNodes still has the removed nodes
