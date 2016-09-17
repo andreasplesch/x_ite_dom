@@ -30,29 +30,25 @@ function processMutation(mutation, mybrowser) {
 	X3D.require(
 		["cobweb/Parser/XMLParser"], // needed for attributes and new nodes
 		function(XMLParser) {
-					var el = mutation.target;
-					var parser = new XMLParser (mybrowser.currentScene, el);
-					if (mutation.type == 'attributes') {
-						processAttributes(mutation, el, parser);
-						}
-					if (mutation.type == 'childList') {
-						var addedNodes = mutation.addedNodes;
-						for (var i = 0; i < addedNodes.length; i++) {
-							processAddedNode(addedNodes[i], parser, mybrowser);
-						}
-						
-						//forEach removedNodes: TODO
-						var removedNodes = mutation.removedNodes;
-						for (var i = 0; i < removedNodes.length; i++) {
-							processRemovedNode(removedNodes[i]);
-						}
-						/*
-						var removedEl = mutation.removedNodes[0];
-						if (removedEl) {
-							processRemovedNode(removedEl)
-						}
-						*/
-					}
+			var el = mutation.target;
+			var parser = new XMLParser (mybrowser.currentScene, el);
+			
+			if (mutation.type == 'attributes') {
+				processAttributes(mutation, el, parser);
+			}
+				
+			if (mutation.type == 'childList') {
+				
+				var addedNodes = mutation.addedNodes;
+				for (var i = 0; i < addedNodes.length; i++) {
+					processAddedNode(addedNodes[i], parser, mybrowser);
+				}
+				
+				var removedNodes = mutation.removedNodes;
+				for (var i = 0; i < removedNodes.length; i++) {
+					processRemovedNode(removedNodes[i]);
+				}
+			}
 		}
 	);
 }
@@ -75,18 +71,20 @@ observer.observe(target, config); //start observing
 
 //events
 var sensors = myx3d.querySelectorAll('TouchSensor'); //TODO any kind of Sensor
-var x3dsensor = sensors[0].x3dnode ;
-var fields = x3dsensor.getFields();
-for (var key in fields) {doFieldCallback(fields[key])};
-function doFieldCallback (field) {
-	field.addFieldCallback(field.getName(),
-	function fieldcallback (value){
-		var evt = new Event(field.getName());
-		evt.value = value;
-		evt.fields = x3dsensor.getFields(); // copy ?
-		evt.x3dnode = x3dsensor; 
-		sensors[0].dispatchEvent(evt);
-	});
+for (var i=0; i < sensors.length; i++) {
+	var x3dsensor = sensors[i].x3dnode ;
+	var fields = x3dsensor.getFields();
+	for (var key in fields) {doFieldCallback(fields[key])};
+	function doFieldCallback (field) {
+		field.addFieldCallback(field.getName(),
+		function fieldcallback (value){
+			var evt = new Event(field.getName());
+			evt.value = value;
+			evt.fields = x3dsensor.getFields(); // copy ?
+			evt.x3dnode = x3dsensor; 
+			sensors[i].dispatchEvent(evt);
+		});
+	}
 }
 });
 });
