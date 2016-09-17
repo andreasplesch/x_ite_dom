@@ -36,22 +36,22 @@ function processMutation(mutation, mybrowser) {
 						processAttributes(mutation, el, parser);
 						}
 					if (mutation.type == 'childList') {
-						//forEach addedNodes: TODO
 						var addedNodes = mutation.addedNodes;
 						for (var i = 0; i < addedNodes.length; i++) {
 							processAddedNode(addedNodes[i], parser, mybrowser);
 						}
-						/*
-						var addedEl = mutation.addedNodes[0];
-						if (addedEl) {
-							processAddedNode(addedEl, parser, mybrowser);
-						}
-						*/
+						
 						//forEach removedNodes: TODO
+						var removedNodes = mutation.removedNodes;
+						for (var i = 0; i < removedNodes.length; i++) {
+							processRemovedNode(removedNodes[i]);
+						}
+						/*
 						var removedEl = mutation.removedNodes[0];
 						if (removedEl) {
 							processRemovedNode(removedEl)
 						}
+						*/
 					}
 		}
 	);
