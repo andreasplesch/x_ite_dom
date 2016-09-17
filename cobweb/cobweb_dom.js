@@ -1,25 +1,9 @@
 //cobweb-dom access
 //load after cobweb.js
-//cobweb-dom access
-//load after cobweb.js
-$(function(){
-console.log('after ready?')
-	X3D(function(el){
-		var mybrowser = X3D.getBrowser(el);
-		//var myscene = mybrowser.createScene(); //probably not needed
-		//myx3d = $('Scene')[0];
-		var myx3d = document.querySelector('Scene');
-		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
-		// select the target node
-		var target = myx3d;
-		X3D.require(
-			["cobweb/Parser/XMLParser"],
-			function(XMLParser) {
-				// create an observer instance
-				var observer = new MutationObserver(function(mutations) {
-					mutations.forEach(function(mutation) {
-					//map attribute to x3dnode field
-						console.log(mutation);
+
+	function processMutation(mutation, mybrowser) {
+						//map attribute to x3dnode field
+						//console.log(mutation);
 						var el = mutation.target;
 						var parser = new XMLParser (mybrowser.currentScene, el);
 						if (mutation.type == 'attributes') {
@@ -89,7 +73,23 @@ console.log('after ready?')
 								}
 							}
 						}
-				  	});
+	}
+
+$(function(){ // make sure jquery is ready 
+	X3D(function(el){ // make sure X3D is ready
+		var mybrowser = X3D.getBrowser(el);
+		var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+		// select the target node
+		var target = myx3d;
+		X3D.require(
+			["cobweb/Parser/XMLParser"], // needed for attributes
+			function(XMLParser) {
+				// create an observer instance
+				var observer = new MutationObserver(function(mutations) {
+					mutations.forEach(function(mutation) {
+					 processMutation(mutation, mybrowser);
+					});
 				});
 				// configuration of the observer:
 				var config = { attributes: true, childList: true, characterData: true, subtree: true };
