@@ -37,10 +37,18 @@ function processMutation(mutation, mybrowser) {
 						}
 					if (mutation.type == 'childList') {
 						//forEach addedNodes: TODO
+						var addedNodes = mutation.addedNodes;
+						if (addedNodes) {
+							addNodes.forEach(function(el){
+								processAddedNode(el, parser, mybrowser);
+							});
+						}
+						/*
 						var addedEl = mutation.addedNodes[0];
 						if (addedEl) {
 							processAddedNode(addedEl, parser, mybrowser);
 						}
+						*/
 						//forEach removedNodes: TODO
 						var removedEl = mutation.removedNodes[0];
 						if (removedEl) {
@@ -63,9 +71,9 @@ var observer = new MutationObserver(function(mutations) {
 	});
 });
 // configuration of the observer:
-var config = { attributes: true, childList: true, characterData: true, subtree: true };
+var config = { attributes: true, childList: true, characterData: fa;se, subtree: true };
 // pass in the target node, as well as the observer options
-observer.observe(target, config);
+observer.observe(target, config); //start observing
 
 //events
 var sensors = myx3d.querySelectorAll('TouchSensor'); //TODO any kind of Sensor
