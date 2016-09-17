@@ -96,8 +96,6 @@ $(function(){ // make sure jquery is ready
 				var config = { attributes: true, childList: true, characterData: true, subtree: true };
 				// pass in the target node, as well as the observer options
 				observer.observe(target, config);
-			}
-		);
 		//events
 		//define callbacks for all fields in all sensor nodes
 		//find all sensor nodes by looking for isActive field ?
@@ -137,5 +135,6 @@ $(function(){ // make sure jquery is ready
 				sensors[0].dispatchEvent(evt);
 			});
 		}
+});
 });
 
