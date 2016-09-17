@@ -3,6 +3,18 @@
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready
 
+function processAttributes(){
+		//attributes
+						var name = mutation.attributeName;
+						var attribute = el.attributes.getNamedItem(name);
+						var val  = el.attributes.getNamedItem(name).value ;
+						parser.attribute(attribute, el.x3dnode);//almost there
+						//only underscore gets update
+						var field = el.x3dnode.getField(name);
+						field.addEvent(); // set_field event
+						//el.x3dnode[name] = val.split(" ");
+}
+
 function processMutation(mutation, mybrowser) {
 	X3D.require(
 		["cobweb/Parser/XMLParser"], // needed for attributes
@@ -12,15 +24,7 @@ function processMutation(mutation, mybrowser) {
 					var el = mutation.target;
 					var parser = new XMLParser (mybrowser.currentScene, el);
 					if (mutation.type == 'attributes') {
-						//attributes
-						var name = mutation.attributeName;
-						var attribute = el.attributes.getNamedItem(name);
-						var val  = el.attributes.getNamedItem(name).value ;
-						parser.attribute(attribute, el.x3dnode);//almost there
-						//only underscore gets update
-						var field = el.x3dnode.getField(name);
-						field.addEvent(); // set_field event
-						//el.x3dnode[name] = val.split(" ");
+						processAttributes();
 						}
 					if (mutation.type == 'childList') {
 						//elements
