@@ -3,7 +3,7 @@
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready
 
-function processAttributes(mutation){
+function processAttributes(mutation, el, parser){
 		//attributes
 						var name = mutation.attributeName;
 						var attribute = el.attributes.getNamedItem(name);
@@ -24,7 +24,7 @@ function processMutation(mutation, mybrowser) {
 					var el = mutation.target;
 					var parser = new XMLParser (mybrowser.currentScene, el);
 					if (mutation.type == 'attributes') {
-						processAttributes(mutation);
+						processAttributes(mutation, el, parser);
 						}
 					if (mutation.type == 'childList') {
 						//elements
