@@ -5,40 +5,40 @@ $(function(){ // make sure jquery is ready
 
 function processRemovedNode(removedEl, mybrowser){
 	var parents = removedEl.x3dnode.getParents(); //parent should be field in parent node
-							//deal with root nodes TODO
-							for (var key in parents) { // only way to find property in parents object
-								var parent = parents[key];
-								//SFNode field or member of MFNode field or rootNode?
-								var grandparents = parent.getParents();
-								for (var k2 in grandparents){
-									var gp = grandparents[k2];
-									if (gp.getTypeName == 'MFNode') {
-										var isMFNode = true;
-										if (gp.getName = 'rootNodes') {
-											var isRootNode = true;
-										}
-									}
-								}
-								parent.setValue(null); // resets value of field to null
-								if (isMFNode) {
-									//gp.addEvent();
-									if (isRootNode) { // also remove from rootnodes
-										var rootNodes = mybrowser.currentScene.getRootNodes();
-										//find in array
-										for (var key in parents) { // look through all parents
-											parent = parents[key];
-											var i = rootNodes.indexOf(parent);
-											if (i !== -1) { break } // found it
-										}																											
-										rootNodes.splice(i,1); 
-									}
-								}
-								else {
-									//parent.addEvent();
-									
-								}
-								// trigger update event for this field
-							}
+	//deal with root nodes TODO
+	for (var key in parents) { // only way to find property in parents object
+		var parent = parents[key];
+		//SFNode field or member of MFNode field or rootNode?
+		var grandparents = parent.getParents();
+		for (var k2 in grandparents){
+			var gp = grandparents[k2];
+			if (gp.getTypeName == 'MFNode') {
+				var isMFNode = true;
+				if (gp.getName = 'rootNodes') {
+					var isRootNode = true;
+				}
+			}
+		}
+		parent.setValue(null); // resets value of field to null
+		if (isMFNode) {
+			//gp.addEvent();
+			if (isRootNode) { // also remove from rootnodes
+				var rootNodes = mybrowser.currentScene.getRootNodes();
+				//find in array
+				for (var key in parents) { // look through all parents
+					parent = parents[key];
+					var i = rootNodes.indexOf(parent);
+					if (i !== -1) { break } // found it
+				}																											
+				rootNodes.splice(i,1); 
+			}
+		}
+		else {
+			//parent.addEvent();
+			
+		}
+		// trigger update event for this field
+	}
 }
 
 
