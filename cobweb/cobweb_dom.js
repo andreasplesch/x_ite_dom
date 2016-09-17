@@ -1,9 +1,9 @@
 //cobweb-dom access
 //load after cobweb.js
-X3D.require(
+	function processMutation(mutation, mybrowser) {
+		X3D.require(
 			["cobweb/Parser/XMLParser"], // needed for attributes
 			function(XMLParser) {
-	function processMutation(mutation, mybrowser) {
 						//map attribute to x3dnode field
 						//console.log(mutation);
 						var el = mutation.target;
@@ -75,9 +75,9 @@ X3D.require(
 								}
 							}
 						}
-	}
 			}
 		);
+	}
 		
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready
