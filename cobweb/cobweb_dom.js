@@ -137,5 +137,5 @@ $(function(){ // make sure jquery is ready
 				sensors[0].dispatchEvent(evt);
 			});
 		}
-	});
-} );
+});
+
