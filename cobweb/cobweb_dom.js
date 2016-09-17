@@ -71,7 +71,7 @@ var observer = new MutationObserver(function(mutations) {
 	});
 });
 // configuration of the observer:
-var config = { attributes: true, childList: true, characterData: fa;se, subtree: true };
+var config = { attributes: true, childList: true, characterData: false, subtree: true };
 // pass in the target node, as well as the observer options
 observer.observe(target, config); //start observing
 
