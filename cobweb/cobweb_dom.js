@@ -71,6 +71,7 @@ var config = { attributes: true, childList: true, characterData: false, subtree:
 observer.observe(target, config); //start observing
 
 //events
+//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector
 var sensors = myx3d.querySelectorAll('TouchSensor'); //TODO any kind of Sensor
 for (var i=0; i < sensors.length; i++) {
 	var sensor = sensors[i];
