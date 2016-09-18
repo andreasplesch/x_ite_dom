@@ -57,10 +57,10 @@ X3D {
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
 		<X3D id='dummy'>
 	<Scene>
-		<KeySensor></KeySensor>	
+		<KeySensor DEF='ks1'></KeySensor>	
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
-			 
+			<ProximitySensor DEF='ps1' size='3'></ProximitySensor> 
 				<Shape>
 				<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
 					<Appearance>
@@ -81,7 +81,7 @@ X3D {
 		</X3D>
 <div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
-<div class='report'>Key Pressed: <span id='keypressed'></span></div>
+<div class='report'>in Proximity: <span id='proxim'></span></div>
 </body>
 <script>
 console.log('START')
@@ -92,6 +92,8 @@ coords = document.querySelector('#coords');
 hitpt = document.querySelector('#hitpoint');
 ks = document.querySelector('KeySensor');
 kp = document.querySelector('#keypressed');
+ps = document.querySelector('ProximitySensor');
+pp = document.querySelector('#proxim');
 
 ///*
 ts.addEventListener('isOver', function(evt) {
@@ -106,9 +108,9 @@ ts.addEventListener('hitPoint_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ks.addEventListener('isActive', function(evt) {
+ps.addEventListener('isActive', function(evt) {
 	if (evt.value) {
-		kp.textContent = " " + evt.value;
+		pp.textContent = " " + evt.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
