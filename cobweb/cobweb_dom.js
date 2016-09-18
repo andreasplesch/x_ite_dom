@@ -77,7 +77,7 @@ observer.observe(target, config); //start observing
 //construct selector
 var selector = "Anchor"; // other special names ?
 for (key in X3D.X3DConstants) {
-	if key.endsWith('Sensor') {selector += "," + key;}
+	if (key.endsWith('Sensor')) {selector += "," + key;}
 }
 
 var sensors = myx3d.querySelectorAll(selector); //TODO any kind of Sensor
