@@ -57,9 +57,10 @@ X3D {
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
 		<X3D id='dummy'>
 	<Scene>
+		<KeySensor></KeySensor>	
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
-			<KeySensor></KeySensor>	 
+			 
 				<Shape>
 				<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
 					<Appearance>
@@ -105,7 +106,7 @@ ts.addEventListener('hitPoint_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ks.addEventListener('keyPress', function(evt) {
+ks.addEventListener('isActive', function(evt) {
 	if (evt.value) {
 		kp.textContent = " " + evt.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
