@@ -84,7 +84,7 @@ var sensors = myx3d.querySelectorAll(selector); //TODO any kind of Sensor
 for (var i=0; i < sensors.length; i++) {
 	var sensor = sensors[i];
 	//var x3dsensor = sensor.x3dnode ;
-	var fields = x3dsensor.getFields();
+	var fields = sensor.x3dnode.getFields();
 	for (var key in fields) {doFieldCallback(fields[key], sensor)};
 	function doFieldCallback (field, sensor) {
 		field.addFieldCallback(field.getName(),
