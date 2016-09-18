@@ -83,16 +83,16 @@ for (key in X3D.X3DConstants) {
 var sensors = myx3d.querySelectorAll(selector); //TODO any kind of Sensor
 for (var i=0; i < sensors.length; i++) {
 	var sensor = sensors[i];
-	var x3dsensor = sensor.x3dnode ;
+	//var x3dsensor = sensor.x3dnode ;
 	var fields = x3dsensor.getFields();
-	for (var key in fields) {doFieldCallback(fields[key])};
-	function doFieldCallback (field) {
+	for (var key in fields) {doFieldCallback(fields[key], sensor)};
+	function doFieldCallback (field, sensor) {
 		field.addFieldCallback(field.getName(),
-		new function fieldcallback (value){
+		function fieldcallback (value){
 			var evt = new Event(field.getName());
 			evt.value = value;
-			evt.fields = x3dsensor.getFields(); // copy ?
-			evt.x3dnode = x3dsensor; 
+			evt.fields = sensor.x3dnode.getFields(); // copy ?
+			evt.x3dnode = sensor.x3dnode; 
 			sensor.dispatchEvent(evt);
 		});
 	}
