@@ -14,6 +14,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
+	//attach fieldcallbacks to new sensor nodes
 }
 
 function processAttributes(mutation, el, parser){
