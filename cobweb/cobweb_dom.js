@@ -88,7 +88,7 @@ for (var i=0; i < sensors.length; i++) {
 	for (var key in fields) {doFieldCallback(fields[key])};
 	function doFieldCallback (field) {
 		field.addFieldCallback(field.getName(),
-		function fieldcallback (value){
+		new function fieldcallback (value){
 			var evt = new Event(field.getName());
 			evt.value = value;
 			evt.fields = x3dsensor.getFields(); // copy ?
