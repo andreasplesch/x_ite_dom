@@ -22,6 +22,11 @@ Ideas and refinements:
  - also reflect back to DOM after internal changes?
  - would need conversion from type to string per type ...
  - perhaps hook into whenever any value is set ? get dom node, set dom attribute
+- Inline: currently is loaded as DOM but not appended to main document
+ - use EXPORT/IMPORT semantics ?
+ - eg. would adding a .x3dnode to IMPORT element suffice: it may but unintuitive
+ - or add dom field to inline node: Inline.x3dnode.dom ? not a field type but still could be js property ?
+ - and ignore IMPORT/EXPORT, eg. every node in inline can be accessed ?
 
 TODO:
 
