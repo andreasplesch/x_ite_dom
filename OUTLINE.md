@@ -51,7 +51,7 @@ TODO:
  - TODO: thinkabout names for DOM events: probably same as field names, but in parallel classic html names as well ?
  - TODO: howto add field callbacks for dynamically added nodes: via DOM just do it after parsing, but via SAI ?
  - hack cobweb createNode() ?
- - is there a node created x3d event ?
+ - is there a node created x3d event ? MSFNode_changed event works for field nodes but for root nodes ?
 
 
 
