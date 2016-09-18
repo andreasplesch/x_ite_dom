@@ -78,8 +78,9 @@ X3D {
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
 		</X3D>
-<div id='report'>mouse over coordinates: <span id='coords'></span></div>
-<div id='report'>hit point coordinates: <span id='hitpoint'></span></div>
+<div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
+<div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
+<div class='report'>Key Pressed: <span id='keypressed'></span></div>
 </body>
 <script>
 console.log('START')
@@ -88,6 +89,8 @@ console.log('START')
 ts = document.querySelector('TouchSensor');
 coords = document.querySelector('#coords');
 hitpt = document.querySelector('#hitpoint');
+ks = document.querySelector('KeySensor');
+kp = document.querySelector('#keypressed');
 
 ///*
 ts.addEventListener('isOver', function(evt) {
@@ -102,7 +105,13 @@ ts.addEventListener('hitPoint_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-//*/
+ks.addEventListener('keyPress_changed', function(evt) {
+	if (evt.value) {
+		kp.textContent = " " + evt.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	}
+	});
+///*
 
 var box_counter = 0;
 var radius = 4;
