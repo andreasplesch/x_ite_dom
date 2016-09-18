@@ -1,52 +1,44 @@
 # cobweb_dom
-fuzzy ideas on how to link cobweb to the dom converted to first code
 
-Ideas and refinements:
+## Summary
 
-- use X3D.createBrowser('x3dcanvas') to create browser at x3dcanvas tag as a placeholder
- - difficult, needs internal changes; just <x3d> as intended
-- use cobweb SAI to create Scene
- - not necessary, scene reference from browser
-- use cobweb XMLParser to parseIntoScene children of x3dcanvas
- - instead use loadDocument(doc.querySelector('Scene'); document needs to be xhtml
-- use MutationObserver on children to monitor attribute changes since it works on UnknownElements
- - works well
-- (x3dom redefines .setattribute to trigger changes to scenegraph): faster ?
-- while parsing build global map linking dom nodes to x3d nodes
-- better just add a property to dom node: domNode._x3dnode = x3dnode; !;
- - works well
-- statements (routes, import,export, proto) probably in separate maps: TODO
-- in mutation observer, use map to find x3d node and use SAI to update/remove/add
- - attribute changes handled
- - uses cobweb parser to convert from string to correct type, then set value to field
- - also reflect back to DOM after internal changes?
- - would need conversion from type to string per type ...
- - perhaps hook into whenever any value is set ? get dom node, set dom attribute
+cobweb_dom.js is intended to be used with the cobweb X3D browser cobweb.js (create3000/cobweb). cobweb_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
+Please be aware that X3D requires a well defined organisation of the scene. If modifying the DOM results in an invalid scene graph, errors result.
 
-TODO:
+## Usage
 
-- add/remove nodes: done
- - SAI: Scene.createNode, .rootNodeHandling.createRootNode or so
- - SAI: node.dispose()
- - o-------------------o
- - instead ended up using Parser for creation
- - dispose does not seem implemented
- - set container(parent) field to null, emit set event
- - check mfnode and rootnodes and handle 
-- mouse EVENTS:
- - canvas events all captured and stopped by cobweb; it then checks if over Shapes in traverse type POINTER
- - need to emit event back to DOM node, somehow, with useful properties 
- - needs reverse mapping of DOM node to x3d node
- - o--------------------o
- - discovered field.addFieldCallback() SAI function
- - use it on all (output?) sensor fields
- - callback then dispatches DOM event with useful properties
- - TODO: howto best find all sensor nodes
- - TODO: ignore input only fields (though may be useful to listen to input to)
- - TODO: thinkabout names for DOM events: probably same as field names, but in parallel classic html names as well ?
- - TODO: howto add field callbacks for dynamically added nodes: via DOM just do it after parsing, but via SAI ?
- - hack cobweb createNode() ?
- - is there a node created x3d event ?
+See the example index.xhtml page for usage of the code.
+
+## Limitations
+
+Since X3D uses an XML encoding, xhtml web pages are required.
+
+- Most attributes of X3D elements should be controllable. 
+- ProtoInstances currently cannot be modified, add or removed.
+- Most other X3D nodes can be added or removed.
+- Routes cannot be removed. It may be possible to add Routes.
+- Inline: X3D nodes added to the scene graph via a inline node cannot be accessed since they are not part of the DOM.
+- Script: X3D script nodes are interpreted by the web browser as dom script nodes; cobweb will execute them in parallel as x3d scripts. 
+- Only the first scene on a web page can be controlled.
+- Events: see below
+
+## Events
+
+Event handling is currently limited to TouchSensor (similar to DOM mouse events).
+
+See index.xhtml for an example.
+
+Events originate from x3d sensor nodes. This means that the x3d scene has to have such a sensor node (TouchSensor) for any mouse events to be dispatched.
+
+Event names parallel x3d field names for sensors. This means the usual events such as 'click' or 'mouseover' are not available. However, there are similar events for x3d sensors albeit with other names.
+
+The onevent attributes are not available. Use el.addEventListener() instead.
+
+The evt parameter provided to the callback function has these properties:
+- .value: the value of the x3d field
+- .fields: an array of al fields of the x3d node with current values
+- .x3dnode: the x3d node object which originated the event (for advanced use)
+
 
 
 
