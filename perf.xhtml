@@ -105,7 +105,7 @@ ts.addEventListener('hitPoint_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ks.addEventListener('keyPress_changed', function(evt) {
+ks.addEventListener('keyPress', function(evt) {
 	if (evt.value) {
 		kp.textContent = " " + evt.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
