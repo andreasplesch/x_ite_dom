@@ -11,10 +11,10 @@ See the example index.xhtml page for usage of the code.
 
 ## Limitations
 
-Since X3D uses an XML encoding, xhtml web pages are required.
+Since X3D uses an XML encoding, xhtml encoded web pages are required.
 
 - Most attributes of X3D elements should be controllable. 
-- ProtoInstances currently cannot be modified, add or removed.
+- ProtoInstances currently cannot be modified, added or removed.
 - Most other X3D nodes can be added or removed.
 - Routes cannot be removed. It may be possible to add Routes.
 - Inline: X3D nodes added to the scene graph via a inline node cannot be accessed since they are not part of the DOM.
