@@ -93,14 +93,14 @@ function bindFieldCallback (field, sensor) {
 	ctx. sensor = sensor;
 	field.addFieldCallback(
 		field.getName(),
-		fieldcallback.bind(ctx));
+		fieldcallback.bind(ctx, field, sensor));
 }
 		
-function fieldcallback (value){
-	var evt = new Event(this.field.getName());
+function fieldcallback (field, sensor, value){
+	var evt = new Event(field.getName());
 	evt.value = value;
-	evt.fields = this.sensor.x3dnode.getFields(); // copy ?
-	evt.x3dnode = this.sensor.x3dnode; 
+	evt.fields = sensor.x3dnode.getFields(); // copy ?
+	evt.x3dnode = sensor.x3dnode; 
 	sensor.dispatchEvent(evt);
 }
 });
