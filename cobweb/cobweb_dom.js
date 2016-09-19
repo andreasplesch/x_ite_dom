@@ -89,8 +89,8 @@ for (var i=0; i < sensors.length; i++) {
 }
 function bindFieldCallback (field, sensor) {
 	var ctx = {};
-	ctx. field = Object.assign({}, field);
-	ctx. sensor = Object.assign({}, sensor);
+	ctx. field = field;
+	ctx. sensor = sensor;
 	field.addFieldCallback(
 		field.getName(),
 		fieldcallback.bind(ctx));
