@@ -88,20 +88,20 @@ for (var i=0; i < sensors.length; i++) {
 	for (var key in fields) {bindFieldCallback(fields[key], sensor)};
 }
 function bindFieldCallback (field, sensor) {
-		var ctx = {};
-		ctx. field = field;
-		ctx. sensor = sensor;
-		field.addFieldCallback(
-			field.getName(),
-			fieldcallback.bind(ctx));
+	var ctx = {};
+	ctx. field = Object.assign({}, field);
+	ctx. sensor = Object.assign({}, sensor);
+	field.addFieldCallback(
+		field.getName(),
+		fieldcallback.bind(ctx));
 }
 		
 function fieldcallback (value){
-			var evt = new Event(this.field.getName());
-			evt.value = value;
-			evt.fields = this.sensor.x3dnode.getFields(); // copy ?
-			evt.x3dnode = this.sensor.x3dnode; 
-			sensor.dispatchEvent(evt);
+	var evt = new Event(this.field.getName());
+	evt.value = value;
+	evt.fields = this.sensor.x3dnode.getFields(); // copy ?
+	evt.x3dnode = this.sensor.x3dnode; 
+	sensor.dispatchEvent(evt);
 }
 });
 });
