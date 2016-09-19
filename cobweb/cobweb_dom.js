@@ -88,11 +88,12 @@ for (var i=0; i < sensors.length; i++) {
 	for (var key in fields) {bindFieldCallback(fields[key], sensor)};
 }
 function bindFieldCallback (field, sensor) {
-		this. field = field;
-		this. sensor = sensor;
+		that = this;
+		that. field = field;
+		that. sensor = sensor;
 		field.addFieldCallback(
 			field.getName(),
-			fieldcallback.bind(this));
+			fieldcallback.bind(that));
 }
 		
 function fieldcallback (value){
