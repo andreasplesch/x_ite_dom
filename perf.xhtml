@@ -92,15 +92,15 @@ X3D {
 console.log('START')
 
 //try out x3d events on touchsensor
-ts = document.querySelector('TouchSensor');
-coords = document.querySelector('#coords');
-hitpt = document.querySelector('#hitpoint');
-ks = document.querySelector('KeySensor');
-kp = document.querySelector('#keypressed');
-ps = document.querySelector('ProximitySensor');
-pp = document.querySelector('#proxim');
-tms = document.querySelector('TimeSensor');
-tmp = document.querySelector('#time');
+var ts = document.querySelector('TouchSensor');
+var coords = document.querySelector('#coords');
+var hitpt = document.querySelector('#hitpoint');
+var ks = document.querySelector('KeySensor');
+var kp = document.querySelector('#keypressed');
+var ps = document.querySelector('ProximitySensor');
+var pp = document.querySelector('#proxim');
+var tms = document.querySelector('TimeSensor');
+var tmp = document.querySelector('#time');
 
 ///*
 ts.addEventListener('x3dTouchSensorts1_isOver', function(evt) {
@@ -124,7 +124,7 @@ ps.addEventListener('isActive', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
-tms.addEventListener('fraction_changed', function(evt) {
+tms.addEventListener('x3dTimeSensortms1_fraction_changed', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		tmp.textContent = " " + e.value;
