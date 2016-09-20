@@ -59,7 +59,9 @@ X3D {
 	<Scene>
 		<Viewpoint></Viewpoint>
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
-		<KeySensor DEF='ks1'></KeySensor>	
+		<KeySensor DEF='ks1'></KeySensor>
+		<TimeSensor DEF='tms1' loop='true' cycleInterval='5'></TimeSensor>
+		
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
 			<ProximitySensor DEF='ps1' size='3'></ProximitySensor> 
@@ -84,6 +86,7 @@ X3D {
 <div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
 <div class='report'>in Proximity: <span id='proxim'></span></div>
+<div class='report'>Time fraction changed: <span id='time'></span></div>
 </body>
 <script>
 console.log('START')
@@ -96,6 +99,8 @@ ks = document.querySelector('KeySensor');
 kp = document.querySelector('#keypressed');
 ps = document.querySelector('ProximitySensor');
 pp = document.querySelector('#proxim');
+tms = document.querySelector('TimeSensor');
+tmp = document.querySelector('#time');
 
 ///*
 ts.addEventListener('isOver', function(evt) {
@@ -113,6 +118,12 @@ ts.addEventListener('hitPoint_changed', function(evt) {
 ps.addEventListener('isActive', function(evt) {
 	//if (evt.value) {
 		pp.textContent = " " + evt.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+tms.addEventListener('fraction_changed', function(evt) {
+	//if (evt.value) {
+		tmp.textContent = " " + evt.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
