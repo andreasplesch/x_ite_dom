@@ -104,26 +104,30 @@ tmp = document.querySelector('#time');
 
 ///*
 ts.addEventListener('isOver', function(evt) {
-	if (evt.value) {
-		coords.textContent = " " + evt.fields.hitPoint_changed;
+	var e = evt.detail;
+	if (e.value) {
+		coords.textContent = " " + e.fields.hitPoint_changed;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
 ts.addEventListener('hitPoint_changed', function(evt) {
-	if (evt.value) {
-		hitpt.textContent = " " + evt.value;
+	var e = evt.detail;
+	if (e.value) {
+		hitpt.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
 ps.addEventListener('isActive', function(evt) {
+	var e = evt.detail;
 	//if (evt.value) {
-		pp.textContent = " " + evt.value;
+		pp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
 tms.addEventListener('fraction_changed', function(evt) {
+	var e = evt.detail;
 	//if (evt.value) {
-		tmp.textContent = " " + evt.value;
+		tmp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
