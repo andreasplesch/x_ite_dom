@@ -85,7 +85,7 @@ X3D {
 		</X3D>
 <div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
-<div class='report'>in Proximity: <span id='proxim'></span></div>
+<div class='report'>key pressed: <span id='keypressed'></span></div>
 <div class='report'>Time fraction changed: <span id='time'></span></div>
 </body>
 <script>
@@ -117,10 +117,10 @@ ts.addEventListener('x3dTouchSensorts1_hitPoint_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ps.addEventListener('isActive', function(evt) {
+ks.addEventListener('x3dKeySensorks1_isActive', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
-		pp.textContent = " " + e.value;
+		kp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
