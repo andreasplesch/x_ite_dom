@@ -98,11 +98,14 @@ function bindFieldCallback (field, sensor) {
 		
 function fieldcallback (field, sensor, value){
 	//var evt = new Event(field.getName()); // better to use official custom event
-	var evt = new CustomEvent(field.getName(), { 
+	var node = sensor.x3dnode;
+	var prefix = "x3d";
+	var event_type = prefix + sensor.nodeName + node.getName() + "_" + field.getName();
+	var evt = new CustomEvent(event_type, { 
 		detail: {
 			value: value,
-			fields: sensor.x3dnode.getFields(),
-			x3dnode: sensor.x3dnode,
+			fields: node.getFields(),
+			x3dnode: node
 		} 
 	});
 	//evt.value = value;
