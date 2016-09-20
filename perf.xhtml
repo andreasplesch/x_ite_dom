@@ -103,14 +103,14 @@ tms = document.querySelector('TimeSensor');
 tmp = document.querySelector('#time');
 
 ///*
-ts.addEventListener('isOver', function(evt) {
+ts.addEventListener('x3dTouchSensorts1_isOver', function(evt) {
 	var e = evt.detail;
 	if (e.value) {
 		coords.textContent = " " + e.fields.hitPoint_changed;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ts.addEventListener('hitPoint_changed', function(evt) {
+ts.addEventListener('x3dTouchSensorts1_hitPoint_changed', function(evt) {
 	var e = evt.detail;
 	if (e.value) {
 		hitpt.textContent = " " + e.value;
