@@ -62,7 +62,7 @@ X3D {
 		<Viewpoint></Viewpoint>
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
 		<KeySensor DEF='ks1'></KeySensor>
-		<TimeSensor DEF='tms1' loop='true' cycleInterval='5'></TimeSensor>
+		<TimeSensor DEF='tms1' loop='true' cycleInterval='20'></TimeSensor>
 		
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
@@ -100,7 +100,7 @@ var firsttrafo = d3.select("Transform");
 firsttrafo.attr("rotation", "0 1 0 0.78");
 
 firsttrafo.transition()
-	.duration(5000)
+	.duration(20000)
 	.ease(d3.easeCubicInOut)
 	.attr("rotation", "0 1 0 3.92");
 
