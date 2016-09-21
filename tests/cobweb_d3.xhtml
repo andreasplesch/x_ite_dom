@@ -100,6 +100,12 @@ var firsttrafo = d3.select("Transform");
 //start at 45 degress
 firsttrafo.attr("rotation", "0 1 0 0.78");
 
+//transition color
+var mat = d3.select("Material");
+var blue = d3.color("steelblue");
+mat.attr("specularColor", blue.r + " " + blue.g + " " + blue.b);
+
+
 // 
 var spins = 20; 
 firsttrafo.transition()
