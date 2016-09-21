@@ -101,7 +101,7 @@ firsttrafo.attr("rotation", "0 1 0 0.78");
 
 firsttrafo.transition()
 	.duration(5000)
-	.ease()
+	.ease(d3.easeCubicInOut)
 	.attr("rotation", "0 1 0 3.92");
 
 //try out x3d events on touchsensor
