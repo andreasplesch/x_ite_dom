@@ -103,7 +103,7 @@ firsttrafo.attr("rotation", "0 1 0 0.78");
 //transition color
 var mat = d3.select("Material");
 var blue = d3.color("steelblue");
-mat.attr("specularColor", blue.r + " " + blue.g + " " + blue.b);
+mat.attr("specularColor", blue.r/255 + " " + blue.g/255 + " " + blue.b/255);
 
 
 // 
