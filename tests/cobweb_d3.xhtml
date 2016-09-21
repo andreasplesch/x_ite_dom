@@ -103,16 +103,16 @@ firsttrafo.attr("rotation", "0 1 0 0.78");
 //transition color
 var mat = d3.select("Material");
 var blue = d3.color("cadetblue"); //css color
-mat.attr("specularColor", blue.r/255 + " " + blue.g/255 + " " + blue.b/255);
+mat.attr("diffuseColor", blue.r/255 + " " + blue.g/255 + " " + blue.b/255);
 var red = d3.color("tomato");
 mat.transition()
-	.duration(10000)
-	.attr("specularColor", red.r/255 + " " + red.g/255 + " " + red.b/255);
+	.duration(5000)
+	.attr("diffuseColor", red.r/255 + " " + red.g/255 + " " + red.b/255);
 
 // 
 var spins = 20; 
 firsttrafo.transition()
-	.delay(10000)
+	.delay(5000)
 	.duration(spins * 10000)
 	.ease(d3.easeCubicInOut)
 	.attr("rotation", "0 1 0 " + spins * 2 * Math.PI);
