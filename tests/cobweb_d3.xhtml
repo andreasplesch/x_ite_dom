@@ -97,13 +97,16 @@ console.log('START')
 //d3 test
 var firsttrafo = d3.select("Transform");
 
+//start at 45 degress
 firsttrafo.attr("rotation", "0 1 0 0.78");
 
+// 
+var spins = 20; 
 firsttrafo.transition()
 	.delay(10000)
-	.duration(10000)
+	.duration(spins * 10000)
 	.ease(d3.easeCubicInOut)
-	.attr("rotation", "0 1 0 3.92");
+	.attr("rotation", "0 1 0 " + spins * 2 * Math.PI);
 
 //try out x3d events on touchsensor
 var ts = document.querySelector('TouchSensor');
