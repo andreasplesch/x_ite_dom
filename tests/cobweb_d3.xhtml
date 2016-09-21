@@ -95,8 +95,12 @@ X3D {
 console.log('START')
 
 //d3 test
-d3.select("Transform").transition()
-	.attr("rotation", "0 1 0 0.78");
+var firsttrafo = d3.select("Transform");
+
+firsttrafo.attr("rotation", "0 1 0 0.78");
+
+firstrafo.transition()
+	.attr("rotation", "0 1 0 3.14");
 
 //try out x3d events on touchsensor
 var ts = document.querySelector('TouchSensor');
