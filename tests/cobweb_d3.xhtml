@@ -20,6 +20,7 @@
 		<!--script type="text/javascript"
 		src="https://raw.githubusercontent.com/andreasplesch/cobweb_dom/2f26ebf9f8afa13b30b7eff6b2d1db2e7c3accdb/cobweb/cobweb_dom.js"
 		></script-->
+		<script src="https://d3js.org/d3.v4.min.js"></script>
 		
 <style id="jsbin-css">
 html, body {
@@ -92,6 +93,9 @@ X3D {
 </body>
 <script>
 console.log('START')
+
+//d3 test
+d3.select("Transform").attr("rotation", "0 1 0 1.57");
 
 //try out x3d events on touchsensor
 var ts = document.querySelector('TouchSensor');
