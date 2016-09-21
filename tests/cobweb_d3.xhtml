@@ -110,11 +110,12 @@ mat.transition()
 	.attr("diffuseColor", red.r/255 + " " + red.g/255 + " " + red.b/255);
 
 // 
-var spins = 20; 
+var spins = 20;
+var msperspin = 5000;
 firsttrafo.transition()
 	.delay(5000)
-	.duration(spins * 10000)
-	.ease(d3.easeCubicInOut)
+	.duration(spins * msperspin)
+	.ease(d3.easeBounceInOut)
 	.attr("rotation", "0 1 0 " + spins * 2 * Math.PI);
 
 //try out x3d events on touchsensor
