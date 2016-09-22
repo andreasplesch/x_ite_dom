@@ -1,0 +1,38 @@
+<Group>
+<Shape>
+<Appearance>
+<!-- MAT ROUTE:  [from SC.diffuseColor_changed to set_diffuseColor ] -->
+<Material DEF='MAT' diffuseColor='0 0 1'/>
+</Appearance>
+<Box/>
+</Shape>
+<!-- TS ROUTE:  [from isOver to SC.isOver ] -->
+<TouchSensor DEF='TS'/>
+</Group>
+<!-- SC ROUTEs:  [from TS.isOver to isOver ] [from diffuseColor_changed to MAT.set_diffuseColor ] -->
+<Script DEF='SC'>
+<field name='isOver' type='SFBool' accessType='inputOnly'/>
+<field name='diffuseColor_changed' type='SFColor' accessType='outputOnly'/>
+<![CDATA[
+
+      
+ecmascript:
+
+function isOver(val) 
+{ 
+    if (val == true) 
+    { 
+        diffuseColor_changed = new SFColor(1,0,0); 
+    } 
+    else 
+    { 
+        diffuseColor_changed = new SFColor(0,0,1);
+    }
+}
+
+    
+
+]]>
+</Script>
+<ROUTE fromNode='TS' fromField='isOver' toNode='SC' toField='isOver'/>
+<ROUTE fromNode='SC' fromField='diffuseColor_changed' toNode='MAT' toField='set_diffuseColor'/> 
