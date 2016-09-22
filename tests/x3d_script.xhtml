@@ -124,7 +124,7 @@ function isOver(val)
 
 <div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
-<div class='report'>key pressed: <span id='keypressed'></span></div>
+<div class='report'>Proximity ? <span id='proxq'></span></div>
 <div class='report'>Time fraction changed: <span id='time'></span></div>
 </body>
 <script>
@@ -161,7 +161,7 @@ var hitpt = document.querySelector('#hitpoint');
 var ks = document.querySelector('KeySensor');
 var kp = document.querySelector('#keypressed');
 var ps = document.querySelector('ProximitySensor');
-var pp = document.querySelector('#proxim');
+var pp = document.querySelector('#proxq');
 var tms = document.querySelector('TimeSensor');
 var tmp = document.querySelector('#time');
 
@@ -179,6 +179,13 @@ ts.addEventListener('x3dTouchSensorts1_hitPoint_changed', function(evt) {
 		hitpt.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
+	});
+ps.addEventListener('x3dProximitySensorps1_isActive', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		pp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
 	});
 ks.addEventListener('x3dKeySensorks1_keyPress', function(evt) {
 	var e = evt.detail;
