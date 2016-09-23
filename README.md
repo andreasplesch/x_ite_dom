@@ -7,7 +7,7 @@ Please be aware that X3D requires a well defined organisation of the scene. If m
 
 ## Usage
 
-See the example index.xhtml page for usage of the code.
+See index.xhtml and the examples in tests/ for usage of the code.
 
 ## Limitations
 
@@ -17,28 +17,29 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 - ProtoInstances currently cannot be modified, added or removed.
 - Most other X3D nodes can be added or removed.
 - Routes cannot be removed. It may be possible to add Routes.
-- Inline: X3D nodes added to the scene graph via a inline node cannot be accessed since they are not part of the DOM.
-- Script: X3D script nodes are interpreted by the web browser as dom script nodes; cobweb will execute them in parallel as x3d scripts. 
+- Inline: X3D nodes added to the scene graph via a inline node cannot be accessed since they are not part of the DOM. (TODO: EXPORT/IMPORTed nodes are a target).
+- Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes; 
 - Only the first scene on a web page can be controlled.
 - Events: see below
 
 ## Events
 
-Event handling is currently limited to TouchSensor (similar to DOM mouse events).
-
-See index.xhtml for an example.
+Event handling currently covers most(all?) sensor events.
 
 Events originate from x3d sensor nodes. This means that the x3d scene has to have such a sensor node (TouchSensor) for any mouse events to be dispatched.
 
-Event names parallel x3d field names for sensors. This means the usual events such as 'click' or 'mouseover' are not available. However, there are similar events for x3d sensors albeit with other names.
+Event type names parallel x3d field names for sensors. The name construction is "x3d" + sensor_type + "_" + x3d event name.
+
+This means the usual events such as 'click' or 'mouseover' are not available. However, there are similar events for x3d sensors albeit with other names (for example x3dTouchSensor_isOver).
 
 The onevent attributes are not available. Use el.addEventListener() instead.
 
 The evt parameter provided to the callback function has these properties:
-- .value: the value of the x3d field
-- .fields: an array of al fields of the x3d node with current values
-- .x3dnode: the x3d node object which originated the event (for advanced use)
+- detail.value: the value of the x3d field
+- detail.name: The DEF name of the sensor node; empty if there is no DEF name.
+- detail.fields: an array of al fields of the x3d node with current values
+- detail.x3dnode: the x3d node object which originated the event (for advanced use)
 
+The dispatched events do not bubble back up, eg. usually there should be no need to stop propagation.
 
-
-
+Event listeners attached to elements above the sensor element the hierarchy can receive the event. This means if there are multiple sensor (say TouchSensors) below a listener, the listener receives the events from all of the sensors of the type requested (TouchSensors). The detail.name property then can be used to identify which sensor emitted the event.
