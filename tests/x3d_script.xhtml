@@ -19,10 +19,10 @@
 		</script-->
 		<script type="text/javascript" 
 			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.uncompressed.js"></script>
-		<!--script type="text/javascript" src="../cobweb/cobweb_dom.js"></script-->
-		<script type="text/javascript"
+		<script type="text/javascript" src="../cobweb/cobweb_dom.js"></script>
+		<!--script type="text/javascript"
 			src="https://raw.githubusercontent.com/andreasplesch/cobweb_dom/1d15891ba2898d99b95e6fa3bad795c6d53859c9/cobweb/cobweb_dom.js">
-		</script>
+		</script-->
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		
 <style id="jsbin-css">
@@ -156,7 +156,7 @@ firsttrafo.transition()
 	.ease(d3.easeBounceInOut)
 	.attr("rotation", "1 0 0 " + spins * 2 * Math.PI);
 
-//try out x3d events on touchsensor
+//try out x3d events
 var ts = document.querySelector('TouchSensor');
 var coords = document.querySelector('#coords');
 var hitpt = document.querySelector('#hitpoint');
@@ -168,35 +168,35 @@ var tms = document.querySelector('TimeSensor');
 var tmp = document.querySelector('#time');
 
 ///*
-ts.addEventListener('x3dTouchSensorts1_isOver', function(evt) {
+ts.addEventListener('x3dTouchSensor_isOver', function(evt) {
 	var e = evt.detail;
 	if (e.value) {
-		coords.textContent = " " + e.fields.hitPoint_changed;
+		coords.textContent = e.name + " " + e.fields.hitPoint_changed;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ts.addEventListener('x3dTouchSensorts1_hitPoint_changed', function(evt) {
+ts.addEventListener('x3dTouchSensor_hitPoint_changed', function(evt) {
 	var e = evt.detail;
 	if (e.value) {
 		hitpt.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ps.addEventListener('x3dProximitySensorps1_isActive', function(evt) {
+ps.addEventListener('x3dProximitySensor_isActive', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		pp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
-ks.addEventListener('x3dKeySensorks1_keyPress', function(evt) {
+ks.addEventListener('x3dKeySensor_keyPress', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		kp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
-tms.addEventListener('x3dTimeSensortms1_fraction_changed', function(evt) {
+tms.addEventListener('x3dTimeSensor_fraction_changed', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		tmp.textContent = " " + e.value;
