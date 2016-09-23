@@ -13,14 +13,14 @@
 		<!--link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css"/-->
 		<!--script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script-->
 		<script type="text/javascript"
-		src="https://rawgit.com/create3000/cobweb/69cc37503d1cea4d835a8a384ef923b169cdd963/stable/1/1.28/cobweb.js">
+		src="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.js">
 		</script>
 		<!--script type="text/javascript" src="./cobweb/cobweb_dom.js"></script-->
 		<!--script type="text/javascript" 
 		src="https://rawgit.com/andreasplesch/cobweb_dom/40851431a8a3c6dee830dca06083c2aec9c188ab/cobweb/cobweb_dom.js">
 		</script-->
 		<script type="text/javascript" 
-		src="https://rawgit.com/andreasplesch/cobweb_dom/master/release/cobweb_dom.0.1.js">
+		src="https://rawgit.com/andreasplesch/cobweb_dom/master/release/cobweb_dom.0.3.js">
 		</script>
 		
 <style id="jsbin-css">
@@ -80,13 +80,14 @@ X3D {
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
 		</X3D>
-<div id='report'>mouse over coordinates: <span id='coords'></span></div>
-<div id='report'>hit point coordinates: <span id='hitpoint'></span></div>
+<!--div id='report'>mouse over coordinates: <span id='coords'></span></div>
+<div id='report'>hit point coordinates: <span id='hitpoint'></span></div-->
 </body>
 <script>
 console.log('START')
 
 //try out x3d events on touchsensor
+/*
 ts = document.querySelector('TouchSensor');
 coords = document.querySelector('#coords');
 hitpt = document.querySelector('#hitpoint');
@@ -102,7 +103,7 @@ ts.addEventListener('hitPoint_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-
+*/
 var box_counter = 0;
 var radius = 4;
 var perBoxAngle = 2*Math.PI/12;
