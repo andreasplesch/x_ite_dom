@@ -57,6 +57,14 @@ function processMutation(mutation, mybrowser) {
 var mybrowser = X3D.getBrowser(el);
 var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+
+//add internal inline DOMs to document DOM before starting to observe mutations.
+var inlines = document.querySelectorAll('Inline');
+for (var i = 0; i < inlines.length; i++) {
+	var iEl = inlines[i];
+	iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
+}
+		
 // select the target node
 var target = myx3d;
 // create an observer instance
