@@ -59,6 +59,8 @@ var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TO
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 
 //add internal inline DOMs to document DOM before starting to observe mutations.
+mybrowser.beginUpdate();
+mybrowser.endUpdate(); // finish async loading of Inlines ?
 var inlines = document.querySelectorAll('Inline');
 for (var i = 0; i < inlines.length; i++) {
 	var iEl = inlines[i];
