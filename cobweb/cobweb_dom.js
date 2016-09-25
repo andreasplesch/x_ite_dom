@@ -62,6 +62,9 @@ mybrowser.importDocument(myx3d); //now also attached x3dnode property to each no
 var inlines = document.querySelectorAll('Inline');
 for (var i = 0; i < inlines.length; i++) {
 	var iEl = inlines[i];
+	var lF = iEl.x3dnode.getField('load');
+	lF.setValue(true);
+	
 	//are loaded async, so not yet available ?
 	if (iEl.x3dnode.dom)
 		iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
