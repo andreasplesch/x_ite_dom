@@ -64,7 +64,7 @@ for (var i = 0; i < inlines.length; i++) {
 	var iEl = inlines[i];
 	//var lF = iEl.x3dnode.getField('load');
 	//lF.setValue(true);
-	iEl.x3dnode.requestImmediateLoad();
+	//iEl.x3dnode.requestImmediateLoad();
 	//are loaded async, so not yet available ?
 	if (iEl.x3dnode.dom)
 		iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
