@@ -69,7 +69,7 @@ isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 function appendInternalDoms (isLoadedValue) {
 	//still need to wait a bit since Loader has a bit of a timeout for async
 	//importDocument for some reason
-	var TIMEOUT = 200; // 17 for importDocument
+	var TIMEOUT = 2000; // 17 for importDocument
 	setTimeout (function() {
 		if (isLoadedValue) { //probably better to also try if isLoaded = false
 			var inlines = document.querySelectorAll('Inline');
