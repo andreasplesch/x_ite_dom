@@ -67,20 +67,25 @@ var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
 function appendInternalDoms (isLoadedValue) {
-	if (isLoadedValue) {
-		var inlines = document.querySelectorAll('Inline');
-		for (var i = 0; i < inlines.length; i++) {
-			var iEl = inlines[i];
-			//var lF = iEl.x3dnode.getField('load');
-			//lF.setValue(true);
-			//iEl.x3dnode.requestImmediateLoad();
-			//are loaded async, so not yet available ?
-			if (iEl.x3dnode.dom)
-				iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
+	//still need to wait a bit since Loader has a bit of a timeout for async
+	//importDocument for some reason
+	var TIMEOUT = 20; // 17 for importDocument
+	setTimeout (function() {
+		if (isLoadedValue) { //probably better to also try if isLoaded = false
+			var inlines = document.querySelectorAll('Inline');
+			for (var i = 0; i < inlines.length; i++) {
+				var iEl = inlines[i];
+				//var lF = iEl.x3dnode.getField('load');
+				//lF.setValue(true);
+				//iEl.x3dnode.requestImmediateLoad();
+				//are loaded async, so not yet available ?
+				if (iEl.x3dnode.dom)
+					iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
+			}
+			//remove FieldCallback
+			//start observing here
 		}
-		//remove FieldCallback
-		//start observing here
-	}
+	}, TIMEOUT);
 }
 		
 // select the target node
