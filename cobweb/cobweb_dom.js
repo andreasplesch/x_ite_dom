@@ -59,17 +59,28 @@ var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TO
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 
 //add internal inline DOMs to document DOM before starting to observe mutations.
-mybrowser.beginUpdate();
-mybrowser.endUpdate(); // finish async loading of Inlines ?
-var inlines = document.querySelectorAll('Inline');
-for (var i = 0; i < inlines.length; i++) {
-	var iEl = inlines[i];
-	//var lF = iEl.x3dnode.getField('load');
-	//lF.setValue(true);
-	//iEl.x3dnode.requestImmediateLoad();
-	//are loaded async, so not yet available ?
-	if (iEl.x3dnode.dom)
-		iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
+
+//browser has attached LoadSensor
+var loadsensor = mybrowser.getLoadSensor();
+//use isLoaded field to detect when all inlines are loaded
+var isLoadedField = loadsensor.getField("isLoaded");
+isLoadedField.addFieldcallback("isLoaded", appendInternalDoms);
+
+function appendInternalDoms (isLoadedValue) {
+	if (isLoadedValue) {
+		var inlines = document.querySelectorAll('Inline');
+		for (var i = 0; i < inlines.length; i++) {
+			var iEl = inlines[i];
+			//var lF = iEl.x3dnode.getField('load');
+			//lF.setValue(true);
+			//iEl.x3dnode.requestImmediateLoad();
+			//are loaded async, so not yet available ?
+			if (iEl.x3dnode.dom)
+				iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
+		}
+		//remove FieldCallback
+		//start observing here
+	}
 }
 		
 // select the target node
