@@ -5,6 +5,10 @@
 cobweb_dom.js is intended to be used with the cobweb X3D browser cobweb.js (create3000/cobweb). cobweb_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
 Please be aware that X3D requires a well defined organisation of the scene. If modifying the DOM results in an invalid scene graph, errors result.
 
+## Design
+
+The design is based around the idea that cobweb_dom.js is an optional, thin bridge layer which only requires minimal or no modification to cobweb as a X3D browser. To a large extent it tries to use the external SAI as it is defined for standard conforming X3D browsers.
+
 ## Usage
 
 See index.xhtml and the examples in tests/ for usage of the code.
