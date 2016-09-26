@@ -63,6 +63,7 @@ mybrowser.importDocument(myx3d); //now also attached x3dnode property to each no
 //browser has attached LoadSensor
 var loadsensor = mybrowser.getLoadSensor();
 //use isLoaded field to detect when all inlines are loaded
+//actually does not sense inlines by default
 var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
