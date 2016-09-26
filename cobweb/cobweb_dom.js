@@ -64,13 +64,15 @@ mybrowser.importDocument(myx3d); //now also attached x3dnode property to each no
 var loadsensor = mybrowser.getLoadSensor();
 //use isLoaded field to detect when all inlines are loaded
 //actually does not sense inlines by default
-var isLoadedField = loadsensor.getField("isLoaded");
+loadsensor.watchList_.push(inline.x3dnode);
+//var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
+
 
 function appendInternalDoms (isLoadedValue) {
 	//still need to wait a bit since Loader has a bit of a timeout for async
 	//importDocument for some reason
-	var TIMEOUT = 1000; // 17 for importDocument
+	var TIMEOUT = 20; // 17 for importDocument
 	setTimeout (function() {
 		if (isLoadedValue) { //probably better to also try if isLoaded = false
 			var inlines = document.querySelectorAll('Inline');
