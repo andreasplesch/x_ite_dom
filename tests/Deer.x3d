@@ -12,8 +12,8 @@
 		                avatarSize="0.25, 1.75, 0.75"
 		                />
 		<Background DEF="WO_World"
-		            groundColor='"0.8 0.8 0.8"'
-		            skyColor='"0.8 0.8 0.8"'
+		            groundColor="0.8 0.8 0.8"
+		            skyColor="0.8 0.8 0.8"
 		            />		            
 		<Transform DEF="Sun_TRANSFORM"
 		           translation="0.240168 0.542886 0.457424"
