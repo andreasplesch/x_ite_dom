@@ -72,7 +72,7 @@ var observer = new MutationObserver(function(mutations) {
 //browser has attached LoadSensor
 var loadsensor = mybrowser.getLoadSensor();
 //use isLoaded field to detect when all inlines are loaded
-//actually does not sense inlines by default
+//actually does not sense inlines by default; add inlines to LoadSensor
 var inlines = document.querySelectorAll('Inline');
 var wList = loadsensor.getField('watchList');
 for (var i = 0; i < inlines.length; i++) {
@@ -87,7 +87,7 @@ function appendInternalDoms (isLoadedValue) {
 	//importDocument for some reason
 	//var TIMEOUT = 0; // 17 for importDocument
 	//setTimeout (function() {
-		if (isLoadedValue) { //probably better to also try if isLoaded = false
+		//if (isLoadedValue) { //probably better to also try if isLoaded = false
 			var inlines = document.querySelectorAll('Inline');
 			for (var i = 0; i < inlines.length; i++) {
 				var iEl = inlines[i];
@@ -99,7 +99,8 @@ function appendInternalDoms (isLoadedValue) {
 					iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
 			}
 			//remove FieldCallback
-		}
+			isLoadedField.removeFieldCallback("isLoaded");
+		//}
 		// configuration of the observer:
 		var config = { attributes: true, childList: true, characterData: false, subtree: true };
 		// pass in the target node, as well as the observer options
