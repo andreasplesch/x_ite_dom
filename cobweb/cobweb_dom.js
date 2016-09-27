@@ -65,8 +65,9 @@ var loadsensor = mybrowser.getLoadSensor();
 //use isLoaded field to detect when all inlines are loaded
 //actually does not sense inlines by default
 var inline = document.querySelector('Inline');
-loadsensor.watchList_.push(inline.x3dnode);
-loadsensor.reset();
+var wList = loadsensor.getField('watchList');
+wList.setValue(wList.getValue().push(inline.x3dnode));
+
 var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
