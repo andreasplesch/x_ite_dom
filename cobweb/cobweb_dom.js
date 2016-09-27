@@ -58,6 +58,15 @@ var mybrowser = X3D.getBrowser(el);
 var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 
+// select the target node
+var target = myx3d;
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+	mutations.forEach(function(mutation) {
+		processMutation(mutation, mybrowser);
+	});
+});
+		
 //add internal inline DOMs to document DOM before starting to observe mutations.
 
 //browser has attached LoadSensor
@@ -76,8 +85,8 @@ isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 function appendInternalDoms (isLoadedValue) {
 	//still need to wait a bit since Loader has a bit of a timeout for async
 	//importDocument for some reason
-	var TIMEOUT = 0; // 17 for importDocument
-	setTimeout (function() {
+	//var TIMEOUT = 0; // 17 for importDocument
+	//setTimeout (function() {
 		if (isLoadedValue) { //probably better to also try if isLoaded = false
 			var inlines = document.querySelectorAll('Inline');
 			for (var i = 0; i < inlines.length; i++) {
@@ -90,23 +99,15 @@ function appendInternalDoms (isLoadedValue) {
 					iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
 			}
 			//remove FieldCallback
-			//start observing here
 		}
-	}, TIMEOUT);
+		// configuration of the observer:
+		var config = { attributes: true, childList: true, characterData: false, subtree: true };
+		// pass in the target node, as well as the observer options
+		observer.observe(target, config); //start observing only after DOM is fully populated
+	//}, TIMEOUT);
 }
 		
-// select the target node
-var target = myx3d;
-// create an observer instance
-var observer = new MutationObserver(function(mutations) {
-	mutations.forEach(function(mutation) {
-		processMutation(mutation, mybrowser);
-	});
-});
-// configuration of the observer:
-var config = { attributes: true, childList: true, characterData: false, subtree: true };
-// pass in the target node, as well as the observer options
-observer.observe(target, config); //start observing
+
 
 //events
 //var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
