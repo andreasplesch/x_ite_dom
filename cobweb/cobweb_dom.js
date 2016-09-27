@@ -55,6 +55,7 @@ function processMutation(mutation, mybrowser) {
 }
 		
 var mybrowser = X3D.getBrowser(el);
+mybrowser.createScene();
 var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 
