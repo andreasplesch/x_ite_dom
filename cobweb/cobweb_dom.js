@@ -67,7 +67,7 @@ var loadsensor = mybrowser.getLoadSensor();
 var inlines = document.querySelectorAll('Inline');
 var wList = loadsensor.getField('watchList');
 for (var i = 0; i < inlines.length; i++) {
-	var inline = inline[i];
+	var inline = inlines[i];
 	wList.setValue(wList.getValue().push(inline.x3dnode));
 }
 var isLoadedField = loadsensor.getField("isLoaded");
