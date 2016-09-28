@@ -68,9 +68,14 @@ X3D(function(el) {
 	//browser.importDocument(myx3d);
 	//try workaround
 	var importScene = browser.createScene();
-	new X3D.XMLParser (importScene, myx3d) .parseIntoScene ();
-	importScene .setup ();
-	browser.replaceWorld(importScene);
+	X3D.require(
+		["cobweb/Parser/XMLParser"], // needed for attributes and new nodes
+		function(XMLParser) {
+			new X3D.XMLParser (importScene, myx3d) .parseIntoScene ();
+			importScene .setup ();
+			browser.replaceWorld(importScene);
+		}
+	);
 });
 </script>
 </html>
