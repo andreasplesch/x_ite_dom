@@ -67,6 +67,12 @@ X3D(function(el) {
 	var myx3d = document.querySelector('Scene');
 	//browser.importDocument(myx3d);
 	//try workaround
+	x3d2 = document.createElement('X3D2');
+	X3D.createBrowser(x3d2);
+	var br2 = X3D.getBrowser(x3d2);
+	br2.importDocument(myx3d);
+	browser.replaceWorld(br2.currentScene);
+	/*
 	var importScene = browser.createScene();
 	X3D.require(
 		["cobweb/Parser/XMLParser"], // needed for attributes and new nodes
@@ -76,6 +82,7 @@ X3D(function(el) {
 			browser.replaceWorld(importScene);
 		}
 	);
+	*/
 });
 </script>
 </html>
