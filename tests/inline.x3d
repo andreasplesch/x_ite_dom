@@ -12,8 +12,8 @@
 		                avatarSize="0.25, 1.75, 0.75"
 		                />
 		<Background DEF="WO_World"
-		            groundColor='0.8 0.8 0.8'
-		            skyColor='0.8 0.8 0.8'
+		            groundColor='0.2 0.8 0.8'
+		            skyColor='0.8 0.2 0.8'
 		            />
 		<Inline url='"Deer.x3d"' />
 	</Scene>
