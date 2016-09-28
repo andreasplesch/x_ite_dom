@@ -71,7 +71,7 @@ X3D(function(el) {
 	X3D.require(
 		["cobweb/Parser/XMLParser"], // needed for attributes and new nodes
 		function(XMLParser) {
-			new X3D.XMLParser (importScene, myx3d) .parseIntoScene ();
+			new XMLParser (importScene, myx3d) .parseIntoScene ();
 			importScene .setup ();
 			browser.replaceWorld(importScene);
 		}
