@@ -55,12 +55,15 @@ function processMutation(mutation, mybrowser) {
 }
 		
 var mybrowser = X3D.getBrowser(el);
-mybrowser.createScene();
-var fullProfile = mybrowser.getProfile("Full");
-mybrowser.currentScene.setProfile(fullProfile);
+//mybrowser.createScene();
+//var fullProfile = mybrowser.getProfile("Full");
+//mybrowser.currentScene.setProfile(fullProfile);
 var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
-
+//workaround to bind bindable nodes such as Viewpoint
+var importScene = mybrowser.currentScene;
+mybrowser.replaceWorld(importScene);
+		
 // select the target node
 var target = myx3d;
 // create an observer instance
