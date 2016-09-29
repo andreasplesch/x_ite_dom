@@ -90,6 +90,7 @@ isLoadedField.addFieldCallback("isLoaded", appendInternalDoms.bind(this));
 
 function appendInternalDoms (isLoadedValue) {
 	//if (isLoadedValue) { //probably better to also try if isLoaded = false
+	var allAppended = true;
 	var inlines = document.querySelectorAll('Inline');
 	for (var i = 0; i < inlines.length; i++) {
 		var iEl = inlines[i];
@@ -98,6 +99,7 @@ function appendInternalDoms (isLoadedValue) {
 		//if (iEl.firstChild && iEl.firstChild.nodeName !== "Scene") {
 			var iDom = iEl.x3dnode.dom || null;
 			if (iDom) {
+				allAppended = false;
 				var iScene = iEl.appendChild(iDom.querySelector('Scene'));
 				var iinlines = iScene.querySelectorAll('Inline');
 				//not yet loaded
@@ -106,15 +108,16 @@ function appendInternalDoms (isLoadedValue) {
 					var iinline = iinlines[i];
 					wList.setValue(wList.getValue().push(iinline.x3dnode));
 				}
-			}	//isLoadedField = loadsensor.getField("isLoaded");
+			}	
 		}
 	}
-	//isLoadedField.removeFieldCallback("isLoaded");
-	//}
-	// configuration of the observer:
-	var config = { attributes: true, childList: true, characterData: false, subtree: true };
-	// pass in the target node, as well as the observer options
-	observer.observe(target, config); //start observing only after DOM is fully populated
+	if (allAppended) {
+		isLoadedField.removeFieldCallback("isLoaded");
+		// configuration of the observer:
+		var config = { attributes: true, childList: true, characterData: false, subtree: true };
+		// pass in the target node, as well as the observer options
+		observer.observe(target, config); //start observing only after DOM is fully populated
+	}
 	//}
 }
 		
