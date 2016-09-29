@@ -108,7 +108,7 @@ function appendInternalDoms (isLoadedValue) {
 			}	//isLoadedField = loadsensor.getField("isLoaded");
 		}
 	}
-	isLoadedField.removeFieldCallback("isLoaded");
+	//isLoadedField.removeFieldCallback("isLoaded");
 	//}
 	// configuration of the observer:
 	var config = { attributes: true, childList: true, characterData: false, subtree: true };
