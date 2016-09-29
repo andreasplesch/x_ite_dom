@@ -86,17 +86,26 @@ for (var i = 0; i < inlines.length; i++) {
 	wList.setValue(wList.getValue().push(inline.x3dnode));
 }
 var isLoadedField = loadsensor.getField("isLoaded");
-isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
+isLoadedField.addFieldCallback("isLoaded", appendInternalDoms.bind(this));
 
 function appendInternalDoms (isLoadedValue) {
 	//if (isLoadedValue) { //probably better to also try if isLoaded = false
 	var inlines = document.querySelectorAll('Inline');
 	for (var i = 0; i < inlines.length; i++) {
 		var iEl = inlines[i];
-		var iDom = iEl.x3dnode.dom || null;
-		if (iDom) {
-			var iScene = iEl.appendChild(iDom.querySelector('Scene'));
-			var iinlines = iScene.querySelectorAll('Inline');
+		//check if iEl already has child scene
+		if (iEl.firstChild && iEl.firstChild.nodeName !== "Scene") {
+			var iDom = iEl.x3dnode.dom || null;
+			if (iDom) {
+				var iScene = iEl.appendChild(iDom.querySelector('Scene'));
+				var iinlines = iScene.querySelectorAll('Inline');
+				//not yet loaded
+				//put on watchList
+				for (var i = 0; i < iinlines.length; i++) {
+					var iinline = iinlines[i];
+					wList.setValue(wList.getValue().push(iinline.x3dnode));
+				}
+			}	//isLoadedField = loadsensor.getField("isLoaded");
 		}
 	}
 	isLoadedField.removeFieldCallback("isLoaded");
