@@ -6,6 +6,7 @@
 		<meta name="generator" content="Blender 2.70 (sub 0)" />
 	</head>
 	<Scene>
+		<Viewpoint DEF='DeerVP1' />
 		<NavigationInfo headlight="false"
 		                visibilityLimit="0.0"
 		                type='"EXAMINE", "ANY"'
