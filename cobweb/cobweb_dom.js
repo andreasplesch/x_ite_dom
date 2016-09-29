@@ -60,6 +60,9 @@ var mybrowser = X3D.getBrowser(el);
 //mybrowser.currentScene.setProfile(fullProfile);
 var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+//workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
+	var importScene = mybrowser.currentScene;
+	mybrowser.replaceWorld(importScene);
 		
 // select the target node
 var target = myx3d;
@@ -86,9 +89,7 @@ var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
 function appendInternalDoms (isLoadedValue) {
-	//workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
-	var importScene = mybrowser.currentScene;
-	mybrowser.replaceWorld(importScene);
+	
 	
 	//still need to wait a bit since Loader has a bit of a timeout for async
 	//importDocument for some reason
