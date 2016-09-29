@@ -65,8 +65,8 @@ X3D {
 X3D(function(el) {
 	var browser = X3D.getBrowser(el);
 	var myx3d = document.querySelector('Scene');
-	//browser.importDocument(myx3d);
-	//try workaround
+	browser.importDocument(myx3d);
+	//try workaround: does not work: scenes do not transfer between browsers
 	/*
 	x3d2 = document.createElement('X3D');
 	X3D.createBrowser(x3d2);
@@ -74,7 +74,8 @@ X3D(function(el) {
 	br2.importDocument(myx3d);
 	browser.replaceWorld(br2.currentScene);
 	*/
-	
+	//second workaround: works
+	/*
 	var importScene = browser.createScene();
 	X3D.require(
 		["cobweb/Parser/XMLParser"], // needed for attributes and new nodes
@@ -84,6 +85,10 @@ X3D(function(el) {
 			browser.replaceWorld(importScene);
 		}
 	);
+	*/
+	//third workaround; strange but effective
+	var importScene = browser.currentScene;
+	browser.replaceWorld(importScene); // effectively reload scene
 	
 });
 </script>
