@@ -89,32 +89,23 @@ var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
 function appendInternalDoms (isLoadedValue) {
-	
-	
-	//still need to wait a bit since Loader has a bit of a timeout for async
-	//importDocument for some reason
-	//var TIMEOUT = 0; // 17 for importDocument
-	//setTimeout (function() {
-		//if (isLoadedValue) { //probably better to also try if isLoaded = false
-	
-			var inlines = document.querySelectorAll('Inline');
-			for (var i = 0; i < inlines.length; i++) {
-				var iEl = inlines[i];
-				//var lF = iEl.x3dnode.getField('load');
-				//lF.setValue(true);
-				//iEl.x3dnode.requestImmediateLoad();
-				//are loaded async, so not yet available ?
-				if (iEl.x3dnode.dom)
-					iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
-			}
-			//remove FieldCallback
-			isLoadedField.removeFieldCallback("isLoaded");
-		//}
-		// configuration of the observer:
-		var config = { attributes: true, childList: true, characterData: false, subtree: true };
-		// pass in the target node, as well as the observer options
-		observer.observe(target, config); //start observing only after DOM is fully populated
-	//}, TIMEOUT);
+	//if (isLoadedValue) { //probably better to also try if isLoaded = false
+	var inlines = document.querySelectorAll('Inline');
+	for (var i = 0; i < inlines.length; i++) {
+		var iEl = inlines[i];
+		var iDom = iEl.x3dnode.dom || null;
+		if (iDom) {
+			var iScene = iEl.appendChild(iDom.querySelector('Scene'));
+			var iinlines = iScene.querySelectorAll('Inline');
+		}
+	}
+	isLoadedField.removeFieldCallback("isLoaded");
+	//}
+	// configuration of the observer:
+	var config = { attributes: true, childList: true, characterData: false, subtree: true };
+	// pass in the target node, as well as the observer options
+	observer.observe(target, config); //start observing only after DOM is fully populated
+	//}
 }
 		
 
