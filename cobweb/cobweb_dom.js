@@ -94,7 +94,8 @@ function appendInternalDoms (isLoadedValue) {
 	for (var i = 0; i < inlines.length; i++) {
 		var iEl = inlines[i];
 		//check if iEl already has child scene
-		if (iEl.firstChild && iEl.firstChild.nodeName !== "Scene") {
+		if (iEl.querySelectorAll('Scene').length !== 0) {
+		//if (iEl.firstChild && iEl.firstChild.nodeName !== "Scene") {
 			var iDom = iEl.x3dnode.dom || null;
 			if (iDom) {
 				var iScene = iEl.appendChild(iDom.querySelector('Scene'));
