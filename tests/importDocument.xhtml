@@ -66,6 +66,7 @@ X3D(function(el) {
 	var browser = X3D.getBrowser(el);
 	var myx3d = document.querySelector('Scene');
 	browser.importDocument(myx3d);
+	browser.getWorld().bind();
 });
 </script>
 </html>
