@@ -116,6 +116,7 @@ function appendInternalDoms (isLoadedValue) {
 		// configuration of the observer:
 		var config = { attributes: true, childList: true, characterData: false, subtree: true };
 		// pass in the target node, as well as the observer options
+		var target = document.querySelector('Scene'); // reget target
 		observer.observe(target, config); //start observing only after DOM is fully populated
 	}
 	//}
