@@ -102,10 +102,10 @@ function appendInternalDoms (isLoadedValue) {
 			//put on watchList	
 			wList.setValue(wList.getValue().push(iEl.x3dnode));
 			allAppended = false;
-		}
-		var iDom = iEl.x3dnode.dom || null;
-		if (iDom) {
-			var iScene = iEl.appendChild(iDom.querySelector('Scene'));		
+			var iDom = iEl.x3dnode.dom || null;
+			if (iDom) {
+				var iScene = iEl.appendChild(iDom.querySelector('Scene'));		
+			}
 		}
 			//var iinlines = iScene.querySelectorAll('Inline');
 		/*
