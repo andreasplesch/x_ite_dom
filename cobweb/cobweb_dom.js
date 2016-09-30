@@ -90,17 +90,16 @@ function appendInternalDoms (isLoadedValue) {
 		var iEl = inlines[i];
 		//check if iEl already has child scene
 		if (iEl.querySelectorAll('Scene').length == 0) {
-			//not yet loaded
-			//put on watchList	
-			wList.setValue(wList.getValue().push(iEl.x3dnode)); // will trigger isLoaded event for this inline
-			allAppended = false;
-			// check if dom available from previous isLoaded
-			// x3dnode not available  if USE is used
-			//if (iEl.x3dnode) {
+			if (iEl.x3dnode) { ;// USE does not have x3dnode
+				//not yet loaded
+				//put on watchList	
+				wList.setValue(wList.getValue().push(iEl.x3dnode)); // will trigger isLoaded event for this inline
+				allAppended = false;
+				// check if dom available from previous isLoaded
 				if (iEl.x3dnode.dom) {
 					iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
 				}
-			//}
+			}
 		}
 	}
 	if (allAppended) {
