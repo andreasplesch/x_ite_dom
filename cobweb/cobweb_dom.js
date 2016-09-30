@@ -101,12 +101,12 @@ function appendInternalDoms (isLoadedValue) {
 		//if (iEl.firstChild && iEl.firstChild.nodeName !== "Scene") {
 			var iDom = iEl.x3dnode.dom || null;
 			if (iDom) {
-				allAppended = false;
 				var iScene = iEl.appendChild(iDom.querySelector('Scene'));
 				var iinlines = iScene.querySelectorAll('Inline');
 				//not yet loaded
 				//put on watchList
 				for (var i = 0; i < iinlines.length; i++) {
+					allAppended = false;
 					var iinline = iinlines[i];
 					wList.setValue(wList.getValue().push(iinline.x3dnode));
 				}
@@ -123,7 +123,7 @@ function appendInternalDoms (isLoadedValue) {
 	}
 	//}
 }
-		
+
 
 
 //events
