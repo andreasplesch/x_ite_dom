@@ -77,7 +77,7 @@ var observer = new MutationObserver(function(mutations) {
 var loadsensor = mybrowser.getLoadSensor();
 //use isLoaded field to detect when all inlines are loaded
 //actually does not sense inlines by default; add inlines to LoadSensor
-var inlines = document.querySelectorAll('Inline');
+//var inlines = document.querySelectorAll('Inline');
 var wList = loadsensor.getField('watchList');
 var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
@@ -96,7 +96,7 @@ function appendInternalDoms (isLoadedValue) {
 			allAppended = false;
 			var iDom = iEl.x3dnode.dom || null; // check if dom available from previous isLoaded
 			if (iDom) {
-				var iScene = iEl.appendChild(iDom.querySelector('Scene')); // iScene not used		
+				iEl.appendChild(iDom.querySelector('Scene'));
 			}
 		}
 	}
