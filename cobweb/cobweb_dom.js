@@ -64,8 +64,6 @@ mybrowser.importDocument(myx3d); //now also attached x3dnode property to each no
 var importScene = mybrowser.currentScene;
 mybrowser.replaceWorld(importScene);
 
-// select the target node
-//var target = myx3d;
 // create an observer instance
 var observer = new MutationObserver(function(mutations) {
 	mutations.forEach(function(mutation) {
@@ -81,14 +79,7 @@ var loadsensor = mybrowser.getLoadSensor();
 //actually does not sense inlines by default; add inlines to LoadSensor
 var inlines = document.querySelectorAll('Inline');
 var wList = loadsensor.getField('watchList');
-/*
-for (var i = 0; i < inlines.length; i++) {
-	var inline = inlines[i];
-	wList.setValue(wList.getValue().push(inline.x3dnode));
-}
-*/
 var isLoadedField = loadsensor.getField("isLoaded");
-//isLoadedField.addFieldCallback("isLoaded", appendInternalDoms.bind(this));
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
 function appendInternalDoms (isLoadedValue) {
@@ -101,21 +92,13 @@ function appendInternalDoms (isLoadedValue) {
 		if (iEl.querySelectorAll('Scene').length == 0) {
 			//not yet loaded
 			//put on watchList	
-			wList.setValue(wList.getValue().push(iEl.x3dnode));
+			wList.setValue(wList.getValue().push(iEl.x3dnode)); // will trigger isLoaded event for this inline
 			allAppended = false;
-			var iDom = iEl.x3dnode.dom || null;
+			var iDom = iEl.x3dnode.dom || null; // check if dom available from previous isLoaded
 			if (iDom) {
-				var iScene = iEl.appendChild(iDom.querySelector('Scene'));		
+				var iScene = iEl.appendChild(iDom.querySelector('Scene')); // iScene not used		
 			}
 		}
-			//var iinlines = iScene.querySelectorAll('Inline');
-		/*
-				for (var i = 0; i < iinlines.length; i++) {
-					allAppended = false;
-					var iinline = iinlines[i];
-					wList.setValue(wList.getValue().push(iinline.x3dnode));
-				}
-		*/	
 	}
 	if (allAppended) {
 		isLoadedField.removeFieldCallback("isLoaded");
@@ -124,11 +107,11 @@ function appendInternalDoms (isLoadedValue) {
 		// pass in the target node, as well as the observer options
 		var target = document.querySelector('Scene'); // reget target
 		observer.observe(target, config); //start observing only after DOM is fully populated
+		//TODO
+		//attach event callbacks here afer all is loaded
+		//so inlined sensor also get included
 	}
-	//}
 }
-
-
 
 //events
 //var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
