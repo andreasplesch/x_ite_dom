@@ -53,9 +53,10 @@ X3D {
 				/>
 			<!--Viewpoint></Viewpoint-->
 			<!--NavigationInfo type='"FLY", "ANY"'></NavigationInfo-->
-    			<Inline url='"inline_USE.x3d"'>
-    				
-    			</Inline>
+    			<Inline DEF='usedDeer" url='"inline_USE.x3d"' />
+    			<Transform translation="1 0 -3">
+			    <Inline USE="usedDeer" />
+		    	</Transform>								 
 		</Scene>
 		<p class="fallback">
 			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
