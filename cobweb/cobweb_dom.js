@@ -98,20 +98,23 @@ function appendInternalDoms (isLoadedValue) {
 		var iEl = inlines[i];
 		//check if iEl already has child scene
 		if (iEl.querySelectorAll('Scene').length == 0) {
-		//if (iEl.firstChild && iEl.firstChild.nodeName !== "Scene") {
-			var iDom = iEl.x3dnode.dom || null;
-			if (iDom) {
-				var iScene = iEl.appendChild(iDom.querySelector('Scene'));
-				var iinlines = iScene.querySelectorAll('Inline');
-				//not yet loaded
-				//put on watchList
+			//not yet loaded
+			//put on watchList	
+			wList.setValue(wList.getValue().push(iEl.x3dnode));
+			allAppended = false;
+		}
+		var iDom = iEl.x3dnode.dom || null;
+		if (iDom) {
+			var iScene = iEl.appendChild(iDom.querySelector('Scene'));		
+		}
+			//var iinlines = iScene.querySelectorAll('Inline');
+		/*
 				for (var i = 0; i < iinlines.length; i++) {
 					allAppended = false;
 					var iinline = iinlines[i];
 					wList.setValue(wList.getValue().push(iinline.x3dnode));
 				}
-			}	
-		}
+		*/	
 	}
 	if (allAppended) {
 		isLoadedField.removeFieldCallback("isLoaded");
