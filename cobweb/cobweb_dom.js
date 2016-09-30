@@ -96,9 +96,8 @@ function appendInternalDoms (isLoadedValue) {
 			allAppended = false;
 			// check if dom available from previous isLoaded
 			// x3dnode not available  if USE is used
-			var iDom = iEl.x3dnode ? iEl.x3dnode.dom || null : null;
-			if (iDom) {
-				iEl.appendChild(iDom.querySelector('Scene'));
+			if (iEl.x3dnode && iEl.x3dnode.dom) {
+				iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
 			}
 		}
 	}
