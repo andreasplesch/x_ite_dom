@@ -94,7 +94,9 @@ function appendInternalDoms (isLoadedValue) {
 			//put on watchList	
 			wList.setValue(wList.getValue().push(iEl.x3dnode)); // will trigger isLoaded event for this inline
 			allAppended = false;
-			var iDom = iEl.x3dnode.dom || null; // check if dom available from previous isLoaded
+			// check if dom available from previous isLoaded
+			// also not available  if USE is used
+			var iDom = iEl.x3dnode.dom || null;
 			if (iDom) {
 				iEl.appendChild(iDom.querySelector('Scene'));
 			}
