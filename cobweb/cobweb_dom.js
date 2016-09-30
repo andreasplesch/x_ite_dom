@@ -61,11 +61,11 @@ var mybrowser = X3D.getBrowser(el);
 var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 //workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
-	var importScene = mybrowser.currentScene;
-	mybrowser.replaceWorld(importScene);
-		
+var importScene = mybrowser.currentScene;
+mybrowser.replaceWorld(importScene);
+
 // select the target node
-var target = myx3d;
+//var target = myx3d;
 // create an observer instance
 var observer = new MutationObserver(function(mutations) {
 	mutations.forEach(function(mutation) {
@@ -88,7 +88,8 @@ for (var i = 0; i < inlines.length; i++) {
 }
 */
 var isLoadedField = loadsensor.getField("isLoaded");
-isLoadedField.addFieldCallback("isLoaded", appendInternalDoms.bind(this));
+//isLoadedField.addFieldCallback("isLoaded", appendInternalDoms.bind(this));
+isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
 function appendInternalDoms (isLoadedValue) {
 	//if (isLoadedValue) { //probably better to also try if isLoaded = false
