@@ -81,10 +81,12 @@ var loadsensor = mybrowser.getLoadSensor();
 //actually does not sense inlines by default; add inlines to LoadSensor
 var inlines = document.querySelectorAll('Inline');
 var wList = loadsensor.getField('watchList');
+/*
 for (var i = 0; i < inlines.length; i++) {
 	var inline = inlines[i];
 	wList.setValue(wList.getValue().push(inline.x3dnode));
 }
+*/
 var isLoadedField = loadsensor.getField("isLoaded");
 isLoadedField.addFieldCallback("isLoaded", appendInternalDoms.bind(this));
 
