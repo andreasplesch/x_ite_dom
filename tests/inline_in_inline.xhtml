@@ -46,6 +46,8 @@ X3D {
 </head>
 <body>
 	<button onclick='rotateDeer()'>Rotate Deer</button>
+	<button onclick='rotateUseDeer()'>Rotate Inlined Deer</button>
+	
 	<X3D id='dummy'>
 		<Scene>
 			<Background DEF="WO_World"
@@ -70,10 +72,16 @@ X3D {
 //inlines are added as child of inline element
 	
 	var rot = 0;
+	var urot = 0;
 	function rotateDeer() {
 		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		rot = rot + Math.PI/18;
 		deerTrafo.setAttribute("rotation","0 1 0 " + rot);
+	}
+	function rotateUseDeer() {
+		var deerUTrafo = document.querySelector("[DEF='usedDeer'] Transform");
+		urot = urot + Math.PI/18;
+		deerUTrafo.setAttribute("rotation","0 1 0 " + rot);
 	}
 </script>	
 </html>
