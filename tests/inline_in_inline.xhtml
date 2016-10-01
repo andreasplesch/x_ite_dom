@@ -72,7 +72,7 @@ X3D {
 	var rot = 0;
 	function rotateDeer() {
 		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
-		rot = rot + 0.01;
+		rot = rot + Math.PI/18;
 		deerTrafo.setAttribute("rotation","0 1 0 " + rot);
 	}
 </script>	
