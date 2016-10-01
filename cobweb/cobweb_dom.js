@@ -20,15 +20,19 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//the setup function initializes only uninitialized nodes
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	//attach fieldcallbacks to new sensor nodes
+	if (addedEl.nodeName == 'Inline') {appendInlineDOM (addedEl);}
 }
 
 function findAncestor (element, name) {
+	element = element.parentNode;
 	while (element && element.nodeType == 1) { //probably bad for performance
 		if (element.nodeName == name) { return element; }
 		element = element.parentNode;
 	}
 	return null;
 }
+		
+function
 		
 function processAttributes(mutation, el, parser){
 	var name = mutation.attributeName; // TODO: check if mutation can have multiple changed attributes
