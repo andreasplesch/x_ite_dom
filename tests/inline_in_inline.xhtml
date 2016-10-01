@@ -68,9 +68,10 @@ X3D {
 </body>
 <script>
 //inlines are added as child of inline element
-	var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
+	
 	var rot = 0;
 	function rotateDeer() {
+		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		rot = rot + 0.01;
 		deerTrafo.setAttribute("rotation","0 1 0 " + rot);
 	}
