@@ -28,6 +28,7 @@ function findAncestor (element, name) {
 		element = element.parentNode;
 	}
 	return null;
+}
 		
 function processAttributes(mutation, el, parser){
 	var name = mutation.attributeName; // TODO: check if mutation can have multiple changed attributes
