@@ -14,11 +14,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//if (addedEl.closest('Inline') !== null) {return} // .closest experimental
 	//climb up to check if inline
 	//see https://github.com/jonathantneal/closest/blob/master/closest.js
-	var element = addedEl;
-	while (element && element.nodeType == 1) { //probably bad for performance
-		if (element.nodeName == 'Inline') { return; }
-		element = element.parentNode;
-	}
+	if findAncestor (addedEl, 'Inline') { return; }
 	parser.statement(addedEl);
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
@@ -26,6 +22,13 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//attach fieldcallbacks to new sensor nodes
 }
 
+function findAncestor (element, name) {
+	while (element && element.nodeType == 1) { //probably bad for performance
+		if (element.nodeName == name) { return element; }
+		element = element.parentNode;
+	}
+	return null;
+		
 function processAttributes(mutation, el, parser){
 	var name = mutation.attributeName; // TODO: check if mutation can have multiple changed attributes
 	var attribute = el.attributes.getNamedItem(name);
