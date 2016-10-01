@@ -10,6 +10,15 @@ function processRemovedNode(removedEl){
 }
 
 function processAddedNode(addedEl, parser, mybrowser) {
+	//do not add to x3d if child of inline
+	//if (addedEl.closest('Inline') !== null) {return} // .closest experimental
+	//climb up to check if inline
+	//see https://github.com/jonathantneal/closest/blob/master/closest.js
+	var element = addedEl;
+	while (element && element.nodeType == 1) { //probably bad for performance
+		if (element.nodeName == 'Inline') { return; }
+		element = element.parentNode;
+	}
 	parser.statement(addedEl);
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
@@ -72,7 +81,9 @@ var observer = new MutationObserver(function(mutations) {
 });
 		
 //add internal inline DOMs to document DOM before starting to observe mutations.
-
+//CHANGE: start immediately to observe but deal with adding DOMs in observer.
+		
+		
 //browser has attached LoadSensor
 var loadsensor = mybrowser.getLoadSensor();
 //use isLoaded field to detect when all inlines are loaded
