@@ -14,7 +14,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//if (addedEl.closest('Inline') !== null) {return} // .closest experimental
 	//climb up to check if inline
 	//see https://github.com/jonathantneal/closest/blob/master/closest.js
-	if findAncestor (addedEl, 'Inline') { return; }
+	if (findAncestor (addedEl, 'Inline')) { return; }
 	parser.statement(addedEl);
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
