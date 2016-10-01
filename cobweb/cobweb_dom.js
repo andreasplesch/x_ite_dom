@@ -32,7 +32,9 @@ function findAncestor (element, name) {
 	return null;
 }
 		
-function
+function appendInlineDOM (element) {
+	return;
+}
 		
 function processAttributes(mutation, el, parser){
 	var name = mutation.attributeName; // TODO: check if mutation can have multiple changed attributes
