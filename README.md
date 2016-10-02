@@ -53,7 +53,7 @@ Event listeners attached to elements above the sensor element the hierarchy can 
 
 - working on access to Inline scenes
 - Prototype handling
-- hook into render loop ?
+- allow hook into render loop ?
 - allow mutated attributes to be parsed objects, eg. skip parsing; useful if X3D math function are used on native types
 - multiple scenes per page
 - adapt more x3dom examples
