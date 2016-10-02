@@ -10,17 +10,19 @@ function processRemovedNode(removedEl){
 }
 
 function processAddedNode(addedEl, parser, mybrowser) {
-	//do not add to x3d if child of inline
+	//do not add to x3d if original child of inline
 	//if (addedEl.closest('Inline') !== null) {return} // .closest experimental
 	//climb up to check if inline
 	//see https://github.com/jonathantneal/closest/blob/master/closest.js
-	if (findAncestor (addedEl, 'Inline')) { return; }
+	//if (findAncestor (addedEl, 'Inline')) { return; }
+	//better to check if added node already was parsed, eg. has .x3dnode ? yes
+	if ( addedEl.xdnode ) { return; }
 	parser.statement(addedEl);
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	//attach fieldcallbacks to new sensor nodes
-	if (addedEl.nodeName == 'Inline') {appendInlineDOM (addedEl);}
+	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
 }
 
 function findAncestor (element, name) {
@@ -32,8 +34,25 @@ function findAncestor (element, name) {
 	return null;
 }
 		
-function appendInlineDOM (element) {
+function processInlineDOM (element) {
+	//if element.x3dnode // check for USE inline
+	//isLoadedField.addFieldCallback("loaded"+element.id, appendInlineDOM.bind(this, element, wList.getValue())) 
+	//just add to watchlist ?
+	//wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
+	
+	//callback after loaded then appends and remove from watchlist ?
 	return;
+}
+		
+function appendInlineDOM (element, wlistValue, isLoadedValue) {
+	//now loaded and in .dom
+	//append
+	//iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
+	//remove callback
+	//isLoadedField.removeFieldCallback("loaded"+element.id)
+	//remove from watchlist
+	// perhaps restore passed, original watchlist ?
+	//wList.setValue(wListValue) ;
 }
 		
 function processAttributes(mutation, el, parser){
