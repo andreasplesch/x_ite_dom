@@ -56,4 +56,5 @@ Event listeners attached to elements above the sensor element the hierarchy can 
 - allow hook into render loop ?
 - allow mutated attributes to be parsed objects, eg. skip parsing; useful if X3D math function are used on native types
 - multiple scenes per page
+- perhaps add onevent properties to DOM nodes.
 - adapt more x3dom examples
