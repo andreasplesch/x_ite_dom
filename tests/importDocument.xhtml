@@ -41,25 +41,27 @@ X3D {
 </style>
 </head>
 <body>
-	<X3D id='dummy'>
-		<Scene>
-			<Background DEF="WO_World"
-		            		groundColor="0.8 0.8 0.8"
-		            		skyColor="0.1 0.1 0.8"
-				/>
-			<Viewpoint DEF='1stVP'></Viewpoint>
-			<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
-    			<!--Inline url='"Deer.x3d"'>
-			
-    			</Inline-->
-			<Shape><Cylinder/></Shape>
-		</Scene>
+	<X3DCanvas id='dummy'>
+		<X3D>
+			<Scene>
+				<Background DEF="WO_World"
+						groundColor="0.8 0.8 0.8"
+						skyColor="0.1 0.1 0.8"
+					/>
+				<Viewpoint DEF='1stVP'></Viewpoint>
+				<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
+				<!--Inline url='"Deer.x3d"'>
+
+				</Inline-->
+				<Shape><Cylinder/></Shape>
+			</Scene>
+		</X3D>
 		<p class="fallback">
 			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
 			because this is currently the choice of the choice. We will continuously keep you informed <br/>
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
-	</X3D>
+	</X3DCanvas>
 </body>
 <script>
 X3D(function(el) {
