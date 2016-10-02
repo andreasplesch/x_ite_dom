@@ -21,6 +21,7 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 - ProtoInstances currently cannot be modified, added or removed.
 - Most other X3D nodes can be added or removed.
 - Routes cannot be removed. It may be possible to add Routes.
+- Manipulation of USE and DEF attributes do not have the desired or any effect.
 - Inline: X3D nodes added to the scene graph via a inline node cannot be accessed since they are not part of the DOM. (TODO: EXPORT/IMPORTed nodes are a target).
 - Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes; 
 - Only the first scene on a web page can be controlled.
@@ -47,3 +48,10 @@ The evt parameter provided to the callback function has these properties:
 The dispatched events do not bubble back up, eg. usually there should be no need to stop propagation.
 
 Event listeners attached to elements above the sensor element the hierarchy can receive the event. This means if there are multiple sensor (say TouchSensors) below a listener, the listener receives the events from all of the sensors of the type requested (TouchSensors). The detail.name property then can be used to identify which sensor emitted the event.
+
+## TODO
+
+- working on access to Inline scenes
+- Prototype handling: Instance may work, Declare needs special Parser
+- hook into render loop ?
+- adapt more x3dom examples
