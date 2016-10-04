@@ -121,8 +121,19 @@ var loadsensor = mybrowser.getLoadSensor();
 //var inlines = document.querySelectorAll('Inline');
 var wList = loadsensor.getField('watchList');
 var isLoadedField = loadsensor.getField("isLoaded");
-isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
+//isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
+var inlines = document.querySelectorAll('Inline');
+for (var i = 0; i < inlines.length; i++) {
+	processInlineDOM(inlines[i]);
+}
+		
+// configuration of the observer:
+var config = { attributes: true, childList: true, characterData: false, subtree: true };
+// pass in the target node, as well as the observer options
+var target = document.querySelector('Scene'); // reget target
+observer.observe(target, config); //start observing only after DOM is fully populated
+		
 function appendInternalDoms (isLoadedValue) {
 	//if (isLoadedValue) { //probably better to also try if isLoaded = false
 	var allAppended = true;
