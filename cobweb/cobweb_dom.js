@@ -35,7 +35,7 @@ function findAncestor (element, name) {
 }
 		
 function processInlineDOM (element) {
-	//if element.x3dnode // check for USE inline
+	//if (element.x3dnode == undefined) { return; }// check for USE inline
 	//isLoadedField.addFieldCallback("loaded"+element.id, appendInlineDOM.bind(this, element, wList.getValue())) 
 	//just add to watchlist ?
 	//wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
