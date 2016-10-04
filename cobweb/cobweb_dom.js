@@ -35,10 +35,10 @@ function findAncestor (element, name) {
 }
 		
 function processInlineDOM (element) {
-	//if (element.x3dnode == undefined) { return; }// check for USE inline
-	//isLoadedField.addFieldCallback("loaded"+element.id, appendInlineDOM.bind(this, element, wList.getValue())) 
+	if (element.x3dnode == undefined) { return; }// check for USE inline
+	isLoadedField.addFieldCallback("loaded"+element.x3dnode.getId(), appendInlineDOM.bind(this, element, wList.getValue())) 
 	//just add to watchlist ?
-	//wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
+	wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
 	
 	//callback after loaded then appends and remove from watchlist ?
 	return;
@@ -47,12 +47,13 @@ function processInlineDOM (element) {
 function appendInlineDOM (element, wlistValue, isLoadedValue) {
 	//now loaded and in .dom
 	//append
-	//iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
+	element.appendChild(element.x3dnode.dom.querySelector('Scene'));
 	//remove callback
-	//isLoadedField.removeFieldCallback("loaded"+element.id)
+	isLoadedField.removeFieldCallback("loaded"+element.x3dnode.getId())
 	//remove from watchlist
 	// perhaps restore passed, original watchlist ?
-	//wList.setValue(wListValue) ;
+	wList.setValue(wListValue) ;
+	return;
 }
 		
 function processAttributes(mutation, el, parser){
