@@ -77,7 +77,7 @@ X3D {
 	
 	var rot = 0;
 	var urot = 0;
-	var range = 5
+	var range = 10;
 	function rotateDeer() {
 		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		rot = rot + Math.PI/18;
@@ -89,8 +89,8 @@ X3D {
 		deerUTrafo.setAttribute("rotation","0 1 0 " + urot);
 	}
 	function addDeer() {
-		var x = -range/2+range*Math.random();
-		var z = -range/2+range*Math.random();
+		var x = range * (Math.random() - 0.5);
+		var z = range * (Math.random() - 0.5);
 		var transform = document.createElement('Transform');
 		transform.setAttribute('translation', x + " " + 0 + " " + z);
 		var inline = document.createElement('Inline');
