@@ -50,6 +50,7 @@ X3D {
 <body>
 	<button onclick='rotateDeer()'>Rotate Deer</button>
 	<button onclick='rotateUseDeer()'>Rotate Inlined Deer</button>
+	<button onclick='addDeer()'>Add Deer</button>
 	
 	<X3D id='dummy'>
 		<Scene>
@@ -76,6 +77,7 @@ X3D {
 	
 	var rot = 0;
 	var urot = 0;
+	var range = 5
 	function rotateDeer() {
 		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		rot = rot + Math.PI/18;
@@ -86,5 +88,17 @@ X3D {
 		urot = urot + Math.PI/18;
 		deerUTrafo.setAttribute("rotation","0 1 0 " + urot);
 	}
+	function addDeer() {
+		var x = -range/2+range*Math.random();
+		var z = -range/2+range*Math.random();
+		var transform = document.createElement('Transform');
+		transform.setAttribute('translation', x + " " + 0 + " " + z);
+		var inline = document.createElement('Inline');
+		inline.setAttribute("url","'Deer.x3d'");
+		var scene = document.querySelector('Scene');
+		transform.appendChild(inline);
+		scene.appendChild(transform);
+	}
+	
 </script>	
 </html>
