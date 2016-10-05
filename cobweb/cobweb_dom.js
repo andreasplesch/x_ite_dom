@@ -16,7 +16,10 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//see https://github.com/jonathantneal/closest/blob/master/closest.js
 	//if (findAncestor (addedEl, 'Inline')) { return; }
 	//better to check if added node already was parsed, eg. has .x3dnode ? yes
-	if ( addedEl.xdnode ) { return; }
+	if ( addedEl.xdnode ) { 
+		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
+		return; 
+	}
 	parser.statement(addedEl);
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
@@ -123,17 +126,17 @@ var wList = loadsensor.getField('watchList');
 var isLoadedField = loadsensor.getField("isLoaded");
 //isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
 
-var inlines = document.querySelectorAll('Inline');
-for (var i = 0; i < inlines.length; i++) {
-	processInlineDOM(inlines[i]);
-}
-		
 // configuration of the observer:
 var config = { attributes: true, childList: true, characterData: false, subtree: true };
 // pass in the target node, as well as the observer options
 var target = document.querySelector('Scene'); // reget target
 observer.observe(target, config); //start observing only after DOM is fully populated
-		
+
+var inlines = document.querySelectorAll('Inline');
+for (var i = 0; i < inlines.length; i++) {
+	processInlineDOM(inlines[i]);
+}
+				
 function appendInternalDoms (isLoadedValue) {
 	//if (isLoadedValue) { //probably better to also try if isLoaded = false
 	var allAppended = true;
