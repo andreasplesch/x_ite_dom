@@ -61,10 +61,12 @@ function appendInlineDOM (element, wListValue, isLoadedValue) {
 	// may need to look for element and remove it
 	wList.setValue(wListValue) ;
 	//also append any potential doms in childnodes
+	/*
 	var inlines = element.querySelectorAll('Inline') ; // or recursive childnodes ?
 	for ( var i = 0; i < inlines.length; i++ ) {
 		processInlineDOM(inlines[i]) ;
 	}
+	*/
 	return;
 }
 	
