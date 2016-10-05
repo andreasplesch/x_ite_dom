@@ -26,6 +26,10 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	//attach fieldcallbacks to new sensor nodes
 	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
+	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
+	for ( var i = 0; i < inlines.length; i++ ) {
+		processInlineDOM(inlines[i]) ;
+	}
 }
 
 function findAncestor (element, name) {
