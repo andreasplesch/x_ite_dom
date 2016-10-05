@@ -48,13 +48,8 @@ X3D {
 </style>
 </head>
 <body>
-	<!--
-	<button onclick='rotateDeer()'>Rotate all doubled deer</button>
-	<button onclick='rotateDoubledDeer()'>Rotate linked doubled deer</button>
-	<button onclick='addDeer()'>Add one independant deer</button>
-	<button onclick='addUseDeer()'>Add one linked deer</button>
-	<button onclick='rotateUseDeer()'>rotate linked deer</button>
-	-->
+	
+	<button onclick='moveHouse()'>Move House</button>
 	
 	<X3D id='dummy'>
 		<Scene>
@@ -77,51 +72,15 @@ X3D {
 <script>
 //inlines are added as child of inline element
 	
-	var rot = 0;
-	var urot = 0;
-	var lrot = 0;
 	var range = 10;
 	
-	function rotateDeer() {
-		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
-		rot = rot + Math.PI/18;
-		deerTrafo.setAttribute("rotation","0 1 0 " + rot);
-	}
-	
-	function rotateDoubledDeer() {
-		var deerUTrafo = document.querySelector("[DEF='usedDeer'] Transform[translation='-5 0 0']");
-		urot = urot + Math.PI/18;
-		deerUTrafo.setAttribute("rotation","0 1 0 " + urot);
-	}
-	
-	function addDeer() {
-		var x = -2 + range * (Math.random() - 0.5);
-		var z = range * (Math.random() - 0.5);
-		var transform = document.createElement('Transform');
-		transform.setAttribute('translation', x + " " + 0 + " " + z);
-		var inline = document.createElement('Inline');
-		inline.setAttribute("url",'"Deer.x3d"');
-		var scene = document.querySelector('Scene');
-		transform.appendChild(inline);
-		scene.appendChild(transform);
-	}
-	
-	function addUseDeer() {
-		var x = 2 + range * (Math.random() - 0.5);
-		var z = range * (Math.random() - 0.5);
-		var transform = document.createElement('Transform');
-		transform.setAttribute('translation', x + " " + 0 + " " + z);
-		var inline = document.createElement('Inline');
-		inline.setAttribute("USE","singleDeer");
-		var scene = document.querySelector('Scene');
-		transform.appendChild(inline);
-		scene.appendChild(transform);
-	}
-	
-	function rotateUseDeer() {
-		var deerUTrafo = document.querySelector("[DEF='singleDeer'] Transform[DEF='Deer_Stag_ifs_TRANSFORM']");
-		lrot = lrot + Math.PI/18;
-		deerUTrafo.setAttribute("rotation","0 1 0 " + lrot);
+	function moveHouse() {
+		var houseTrafo = document.querySelector("[DEF='pilzhaus']"); //unique DEF inside inlined inlines
+		var pos = houseTrafo.getAttribute("translation").split(' '); //poor man's parse
+		var x = pos[0] + range * ( Math.random() - 0.5 );
+		var y = pos[1] ;
+		var z = pos[2] + range * ( Math.random() - 0.5 );
+		houseTrafo.setAttribute("translation", x + " " + y + " " + z);
 	}
 	
 </script>	
