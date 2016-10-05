@@ -43,11 +43,7 @@ function processInlineDOM (element) {
 	isLoadedField.addFieldCallback("loaded"+element.x3dnode.getId(), callback) 
 	//just add to watchlist
 	wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
-	//also append any potential doms in childnodes
-	var inlines = element.querySelectorAll('Inline') ; // or recursive childnodes ?
-	for ( var i = 0; i < inlines.length; i++ ) {
-		processInlineDOM(inlines[i]) ;
-	}
+	
 	return;
 }
 		
@@ -60,9 +56,14 @@ function appendInlineDOM (element, wListValue, isLoadedValue) {
 	// perhaps restore passed, original watchlist ?
 	// may need to look for element and remove it
 	wList.setValue(wListValue) ;
+	//also append any potential doms in childnodes
+	var inlines = element.querySelectorAll('Inline') ; // or recursive childnodes ?
+	for ( var i = 0; i < inlines.length; i++ ) {
+		processInlineDOM(inlines[i]) ;
+	}
 	return;
 }
-		
+	
 function processAttributes(mutation, el, parser){
 	var name = mutation.attributeName; // TODO: check if mutation can have multiple changed attributes
 	var attribute = el.attributes.getNamedItem(name);
