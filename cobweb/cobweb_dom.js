@@ -47,7 +47,6 @@ function processInlineDOM (element) {
 		
 function appendInlineDOM (element, wListValue, isLoadedValue) {
 	//now loaded and in .dom
-	//append
 	element.appendChild(element.x3dnode.dom.querySelector('Scene')) ;
 	//remove callback
 	isLoadedField.removeFieldCallback("loaded"+element.x3dnode.getId()) ;
