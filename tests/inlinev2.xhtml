@@ -50,20 +50,25 @@ X3D {
 <body>
 	<button onclick='rotateDeer()'>Rotate each orginal deer</button>
 	<button onclick='rotateUseDeer()'>Rotate doubled deer</button>
-	<button onclick='addDeer()'>Add one individual deer</button>
+	<button onclick='addDeer()'>Add one independant deer</button>
+	<button onclick='addUseDeer()'>Add one linked deer</button>
 	
 	<X3D id='dummy'>
 		<Scene>
-			<Background DEF="WO_World"
-		            		groundColor="0.8 0.8 0.8"
-		            		skyColor="0.1 0.1 0.8"
-				/>
+			<Background 
+				DEF="WO_World"
+				groundColor="0.8 0.3 0.8"
+				skyColor="0.1 0.1 0.8"
+			/>
 			<!--Viewpoint></Viewpoint-->
 			<!--NavigationInfo type='"FLY", "ANY"'></NavigationInfo-->
     			<Inline DEF="usedDeer" url='"inline_USE.x3d"' />
     			<Transform translation="1 0 -3">
 			    <Inline USE="usedDeer" />
-		    	</Transform>								 
+		    	</Transform>
+			<Transform translation="2 0 2">
+				<Inline DEF="singleDeer" url='"Deer.x3d"' />
+			</Transform>
 		</Scene>
 		<p class="fallback">
 			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
@@ -89,12 +94,23 @@ X3D {
 		deerUTrafo.setAttribute("rotation","0 1 0 " + urot);
 	}
 	function addDeer() {
-		var x = range * (Math.random() - 0.5);
+		var x = -2 + range * (Math.random() - 0.5);
 		var z = range * (Math.random() - 0.5);
 		var transform = document.createElement('Transform');
 		transform.setAttribute('translation', x + " " + 0 + " " + z);
 		var inline = document.createElement('Inline');
 		inline.setAttribute("url",'"Deer.x3d"');
+		var scene = document.querySelector('Scene');
+		transform.appendChild(inline);
+		scene.appendChild(transform);
+	}
+	function addUseDeer() {
+		var x = 2 + range * (Math.random() - 0.5);
+		var z = range * (Math.random() - 0.5);
+		var transform = document.createElement('Transform');
+		transform.setAttribute('translation', x + " " + 0 + " " + z);
+		var inline = document.createElement('Inline');
+		inline.setAttribute("USE","singleDeer");
 		var scene = document.querySelector('Scene');
 		transform.appendChild(inline);
 		scene.appendChild(transform);
