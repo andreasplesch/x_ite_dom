@@ -84,6 +84,7 @@ function processMutation(mutation, mybrowser) {
 				
 				var addedNodes = mutation.addedNodes;
 				for (var i = 0; i < addedNodes.length; i++) {
+					//go through childnodes as well ..
 					processAddedNode(addedNodes[i], parser, mybrowser);
 				}
 				
