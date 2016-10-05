@@ -10,12 +10,8 @@ function processRemovedNode(removedEl){
 }
 
 function processAddedNode(addedEl, parser, mybrowser) {
-	//do not add to x3d if original child of inline
-	//if (addedEl.closest('Inline') !== null) {return} // .closest experimental
-	//climb up to check if inline
-	//see https://github.com/jonathantneal/closest/blob/master/closest.js
-	//if (findAncestor (addedEl, 'Inline')) { return; }
-	//better to check if added node already was parsed, eg. has .x3dnode ? yes
+	//do not add to x3d if already parsed as cild of inline
+	//although Scene does not have .x3dnode so should never happen ?
 	if ( addedEl.xdnode ) { 
 		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
 		return; 
@@ -24,27 +20,22 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
-	//attach fieldcallbacks to new sensor nodes
+	
+	//need to look for Inline doms to add to dom
 	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
 	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
 	for ( var i = 0; i < inlines.length; i++ ) {
 		processInlineDOM(inlines[i]) ;
 	}
-}
-
-function findAncestor (element, name) {
-	element = element.parentNode;
-	while (element && element.nodeType == 1) { //probably bad for performance
-		if (element.nodeName == name) { return element; }
-		element = element.parentNode;
-	}
-	return null;
+	//TODO: attach fieldcallbacks to new sensor nodes
 }
 		
 function processInlineDOM (element) {
-	if (element.x3dnode == undefined) { return; }// check for USE inline
-	var callback = appendInlineDOM.bind(this, element, wList.getValue().slice());
-	isLoadedField.addFieldCallback("loaded"+element.x3dnode.getId(), callback) 
+	// check for USE inline as it does not have dom
+	if (element.x3dnode === undefined) { return; }
+	// individual callback per inline
+	var callback = appendInlineDOM.bind(this, element, wList.getValue().slice()) ;
+	isLoadedField.addFieldCallback("loaded" + element.x3dnode.getId(), callback) ;
 	//just add to watchlist
 	wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
 	
@@ -53,20 +44,15 @@ function processInlineDOM (element) {
 		
 function appendInlineDOM (element, wListValue, isLoadedValue) {
 	//now loaded and in .dom
-	element.appendChild(element.x3dnode.dom.querySelector('Scene')) ;
-	//remove callback
-	isLoadedField.removeFieldCallback("loaded"+element.x3dnode.getId()) ;
+	//Inline must have Scene
+	element.appendChild(element.x3dnode.dom.querySelector('Scene')) ; // or root nodes ?
+	//not needed any more, remove callback
+	isLoadedField.removeFieldCallback("loaded" + element.x3dnode.getId()) ;
 	//remove from watchlist
-	// perhaps restore passed, original watchlist ?
-	// may need to look for element and remove it
-	wList.setValue(wListValue) ;
-	//also append any potential doms in childnodes
-	/*
-	var inlines = element.querySelectorAll('Inline') ; // or recursive childnodes ?
-	for ( var i = 0; i < inlines.length; i++ ) {
-		processInlineDOM(inlines[i]) ;
-	}
-	*/
+	// restore passed, original watchlist
+	// instead may need to look for element and remove it
+	wList.setValue(wListValue) ; // seems to work
+	//any inlines in appended dom are picked up when Scene is a addedNode for Mutations
 	return;
 }
 	
@@ -127,15 +113,10 @@ var observer = new MutationObserver(function(mutations) {
 //add internal inline DOMs to document DOM before starting to observe mutations.
 //CHANGE: start immediately to observe but deal with adding DOMs in observer.
 		
-		
-//browser has attached LoadSensor
+//browser has attached LoadSensor; setup for use with inlines
 var loadsensor = mybrowser.getLoadSensor();
-//use isLoaded field to detect when all inlines are loaded
-//actually does not sense inlines by default; add inlines to LoadSensor
-//var inlines = document.querySelectorAll('Inline');
-var wList = loadsensor.getField('watchList');
-var isLoadedField = loadsensor.getField("isLoaded");
-//isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
+var wList = loadsensor.getField('watchList'); // is used to detect when inline is loaded
+var isLoadedField = loadsensor.getField("isLoaded"); // is used to add callbacks to
 
 // configuration of the observer:
 var config = { attributes: true, childList: true, characterData: false, subtree: true };
@@ -143,44 +124,12 @@ var config = { attributes: true, childList: true, characterData: false, subtree:
 var target = document.querySelector('Scene'); // reget target
 observer.observe(target, config); //start observing only after DOM is fully populated
 
-var inlines = document.querySelectorAll('Inline');
+//add inline doms from initial scene
+var inlines = myx3d.querySelectorAll('Inline');
 for (var i = 0; i < inlines.length; i++) {
 	processInlineDOM(inlines[i]);
 }
 				
-function appendInternalDoms (isLoadedValue) {
-	//if (isLoadedValue) { //probably better to also try if isLoaded = false
-	var allAppended = true;
-	var inlines = document.querySelectorAll('Inline');
-	for (var i = 0; i < inlines.length; i++) {
-		var iEl = inlines[i];
-		//check if iEl already has child scene
-		if (iEl.querySelectorAll('Scene').length == 0) {
-			if (iEl.x3dnode) { ;// USE does not have x3dnode
-				//not yet loaded
-				//put on watchList	
-				wList.setValue(wList.getValue().push(iEl.x3dnode)); // will trigger isLoaded event for this inline
-				allAppended = false;
-				// check if dom available from previous isLoaded
-				if (iEl.x3dnode.dom) {
-					iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
-				}
-			}
-		}
-	}
-	if (allAppended) {
-		isLoadedField.removeFieldCallback("isLoaded");
-		// configuration of the observer:
-		var config = { attributes: true, childList: true, characterData: false, subtree: true };
-		// pass in the target node, as well as the observer options
-		var target = document.querySelector('Scene'); // reget target
-		observer.observe(target, config); //start observing only after DOM is fully populated
-		//TODO
-		//attach event callbacks here afer all is loaded
-		//so inlined sensor also get included
-	}
-}
-
 //events
 //var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
 //use key in X3D.X3DConstants and match Sensor
