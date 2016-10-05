@@ -41,10 +41,13 @@ function processInlineDOM (element) {
 	if (element.x3dnode == undefined) { return; }// check for USE inline
 	var callback = appendInlineDOM.bind(this, element, wList.getValue().slice());
 	isLoadedField.addFieldCallback("loaded"+element.x3dnode.getId(), callback) 
-	//just add to watchlist ?
+	//just add to watchlist
 	wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
-	
-	//callback after loaded then appends and remove from watchlist ?
+	//also append any potential doms in childnodes
+	var inlines = element.querySelectorAll('Inline') ; // or recursive childnodes ?
+	for ( var i = 0; i < inlines.length; i++ ) {
+		processInlineDOM(inlines[i]) ;
+	}
 	return;
 }
 		
@@ -55,6 +58,7 @@ function appendInlineDOM (element, wListValue, isLoadedValue) {
 	isLoadedField.removeFieldCallback("loaded"+element.x3dnode.getId()) ;
 	//remove from watchlist
 	// perhaps restore passed, original watchlist ?
+	// may need to look for element and remove it
 	wList.setValue(wListValue) ;
 	return;
 }
@@ -84,7 +88,6 @@ function processMutation(mutation, mybrowser) {
 				
 				var addedNodes = mutation.addedNodes;
 				for (var i = 0; i < addedNodes.length; i++) {
-					//go through childnodes as well ..
 					processAddedNode(addedNodes[i], parser, mybrowser);
 				}
 				
