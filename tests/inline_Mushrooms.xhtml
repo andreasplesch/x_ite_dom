@@ -72,14 +72,14 @@ X3D {
 <script>
 //inlines are added as child of inline element
 	
-	var range = 10;
+	var range = 1;
 	
 	function moveHouse() {
 		var houseTrafo = document.querySelector("[DEF='pilzhaus']"); //unique DEF inside inlined inlines
 		var pos = houseTrafo.getAttribute("translation").split(' '); //poor man's parse
-		var x = pos[0] + range * ( Math.random() - 0.5 );
-		var y = pos[1] ;
-		var z = pos[2] + range * ( Math.random() - 0.5 );
+		var x = 1.0*pos[0] + range * ( Math.random() - 0.5 );
+		var y = 1.0*pos[1] ;
+		var z = 1.0*pos[2] + range * ( Math.random() - 0.5 );
 		houseTrafo.setAttribute("translation", x + " " + y + " " + z);
 	}
 	
