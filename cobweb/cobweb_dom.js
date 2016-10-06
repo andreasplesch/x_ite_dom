@@ -54,6 +54,7 @@ function appendInlineDOM (element, wListValue, isLoadedValue) {
 	// instead may need to look for element and remove it
 	//wList.setValue(wList.getValue().filter(function(val) { return val !== element.x3dnode ; })); // does not work
 	//wList.remove(0, wList.length, element.x3dnode);
+	wList.remove(0, wList.length, function(val) { return val == element.x3dnode } );
 	
 	//any inlines in appended dom are picked up when Scene is a addedNode for Mutations
 	return;
