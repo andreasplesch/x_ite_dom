@@ -50,11 +50,11 @@ function appendInlineDOM (element, wListValue, isLoadedValue) {
 	isLoadedField.removeFieldCallback("loaded" + element.x3dnode.getId()) ;
 	//remove from watchlist
 	// restore passed, original watchlist
-	//wList.setValue(wListValue) ; // seems to work
+	wList.setValue(wListValue) ; // seems to work
 	// instead may need to look for element and remove it
 	//wList.setValue(wList.getValue().filter(function(val) { return val !== element.x3dnode ; })); // does not work
 	//wList.remove(0, wList.length, element.x3dnode);
-	wList.remove(0, wList.length, function(val) { return val.getValue() == element.x3dnode } );
+	//wList.remove(0, wList.length, function(val) { return val.getValue() == element.x3dnode } );
 	
 	//any inlines in appended dom are picked up when Scene is a addedNode for Mutations
 	return;
