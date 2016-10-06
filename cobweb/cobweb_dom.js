@@ -37,7 +37,8 @@ function processInlineDOM (element) {
 	var callback = appendInlineDOM.bind(this, element, wList.getValue().slice()) ;
 	isLoadedField.addFieldCallback("loaded" + element.x3dnode.getId(), callback) ;
 	//just add to watchlist
-	wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
+	//wList.setValue(wList.getValue().push(element.x3dnode)); // will trigger isLoaded event for this inline
+	wList.push(element.x3dnode));
 	
 	return;
 }
