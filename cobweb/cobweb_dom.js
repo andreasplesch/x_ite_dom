@@ -10,10 +10,10 @@ function processRemovedNode(removedEl){
 }
 
 function processAddedNode(addedEl, parser, mybrowser) {
-	//do not add to x3d if already parsed as cild of inline
+	//do not add to scene if already parsed as child of inline
 	//although Scene does not have .x3dnode so should never happen ?
 	if ( addedEl.xdnode ) { 
-		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
+		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); } //only add dom
 		return; 
 	}
 	parser.statement(addedEl);
@@ -37,7 +37,7 @@ function processInlineDOM (element) {
 	//var callback = appendInlineDOM.bind(this, element, wList.getValue().slice()) ;
 	var callback = appendInlineDOM.bind(this, element) ;
 	isLoadedField.addFieldCallback("loaded" + element.x3dnode.getId(), callback) ;
-	//just add to watchlist
+	//just add to loadsensor watchlist; triggers isLoaded event after loading
 	wList.push(element.x3dnode);
 	
 	return;
