@@ -64,6 +64,7 @@ X3DCanvas {
 <script>
 X3D(function(el) {
 	var browser = X3D.getBrowser(el);
+	var numRootNodes = browser .currentScene .rootNodes .length;
 	var myx3d = document.querySelector('Scene');
 	browser.importDocument(myx3d);
 	//try workaround: does not work: scenes do not transfer between browsers
@@ -86,10 +87,14 @@ X3D(function(el) {
 		}
 	);
 	*/
-	//third workaround; strange but effective
-	var importScene = browser.currentScene;
-	browser.replaceWorld(importScene); // effectively reload scene
-	
+	//third workaround; strange but effective and works well
+	//var importScene = browser.currentScene;
+	//browser.replaceWorld(importScene); // effectively reload scene
+	//recommended solution
+	//manually bind all new root nodes
+	for (i = numRootNodes + 1; i < browser .currentScene .rootNodes .length; ++i) {
+		browser .currentScene .rootNodes [i] .set_bind = true;
+	}
 });
 </script>
 </html>
