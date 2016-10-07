@@ -67,9 +67,10 @@ X3DCanvas {
 X3D(function(el) {
 	var browser = X3D.getBrowser(el);
 	var myx3d = document.querySelector('Scene');
-	browser.importDocument(myx3d);
+	//browser.importDocument(myx3d);
 	//var importedScene = browser.currentScene;
-	//browser.replaceWorld(importedScene);
+	var importedScene = browser.importDocument(myx3d);
+	browser.replaceWorld(importedScene);
 });
 </script>
 </html>
