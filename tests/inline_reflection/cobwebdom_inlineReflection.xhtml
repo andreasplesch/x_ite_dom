@@ -15,10 +15,16 @@
 			href="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.css"/>
 		<style>
 			X3D {
-		background: #414141;
-		width: 600px;
-		height: 400px;
-		}
+				background: #414141;
+				width: 600px;
+				height: 400px;
+				position:relative;    /* in order to be able to position stat-div within X3D */
+				float:left;           /* float the element so it has the same size like the canvas */
+				cursor:pointer;
+				margin: 0;
+				padding: 0;
+				border: 1px solid #000;
+			}
 		</style>
 	</head>
        
