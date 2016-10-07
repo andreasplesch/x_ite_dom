@@ -58,6 +58,14 @@ function appendInlineDOM (element, isLoadedValue) {
 		function(val) { return val .getValue() !== element.x3dnode ; }
 		);
 	wList .setValue(wListUpdate);
+	//check if all inlines are appended and dispatch event; would be also dispatched later whenever
+	//if (wList == wListInit) { // also check loadCount ?
+	// document.dispatchEvent(
+	//    new Event("X3Dload")); // or so, add .browser = browser ?
+	//}
+	
+	//attach sensor callbacks
+	//create processSensor, and use initially and here
 	
 	//any inlines in appended dom are picked up when Scene is a addedNode for Mutations
 	return;
