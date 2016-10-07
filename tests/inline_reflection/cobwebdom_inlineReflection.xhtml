@@ -18,60 +18,92 @@
 <body>
 	<h1>Inline HTML Reflection</h1>
     <p>This example shows how to use the reflection of inline into HTML</p>
-	<X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" width="500px" height="500px">
-	  <Scene>
+<X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" width="500px" height="500px">
+	<Scene>
 		<Viewpoint position='0 0 10'/>
 		<Background skyColor='0 0 0'/>
-	    <Transform>
+		<Transform>
 			<Inline nameSpaceName="test1" url="scene/reflection_box1.x3d" />
 		</Transform>
-	  </Scene>
-    </X3D>
+	</Scene>
+</X3D>
     
-    <X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" width="500px" height="500px">
-	  <Scene>
+<X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" width="500px" height="500px">
+	<Scene>
 		<Viewpoint position='0 0 10'/>
 		<Background skyColor='0 0 0'/>
-	    <Transform>
+		<Transform>
 			<Inline nameSpaceName="test3" url="scene/reflection_box3.x3d" />
 		</Transform>
-	  </Scene>
-    </X3D>
+	</Scene>
+</X3D>
     
     <script type="text/javascript" >
 	<![CDATA[
-	    var test1 = function (event) {	
-			//document.getElementById('test1__color1').setAttribute('diffuseColor', '0 1 0');
-			document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '0 1 0');
-        };	
-		var test2 = function (event) {		
-			//document.getElementById('test1__color1').setAttribute('diffuseColor', '1 1 0');
-			document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '1 1 0');
-        };	
-		var test3 = function (event) {		
-			//document.getElementById('test2__color2').setAttribute('diffuseColor', '0 0 1');
-			document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '0 0 1');
+	var test1 = function (event) {	
+		//document.getElementById('test1__color1').setAttribute('diffuseColor', '0 1 0');
+		if (event) { //mouseOver
+		document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '0 1 0');
+		}
         };
-		var test4 = function (event) {		
-			//document.getElementById('test2__color2').setAttribute('diffuseColor', '1 0 0');
-			document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '1 0 0');
+	document.querySelector("[DEF='box1TS']").addEventListener('x3dTouchSensor_isOver', test1);
+
+	var test2 = function (event) {		
+		//document.getElementById('test1__color1').setAttribute('diffuseColor', '1 1 0');
+		if (!event) { //mouseOut
+		document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '1 1 0');
+		}
         };
-		var test5 = function (event) {		
-			//document.getElementById('test3__color1').setAttribute('diffuseColor', '0 1 1');
-			document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '0 1 1');
-        };	
-		var test6 = function (event) {		
-			//document.getElementById('test3__color1').setAttribute('diffuseColor', '1 1 0');
-			document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '1 1 0');
-        };	
-		var test7 = function (event) {		
-			//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 1');
-			document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 1');
+	document.querySelector("[DEF='box1TS']").addEventListener('x3dTouchSensor_isOver', test2);
+
+	var test3 = function (event) {		
+		//document.getElementById('test2__color2').setAttribute('diffuseColor', '0 0 1');
+		if (event) { //mouseOver
+		document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '0 0 1');
+		}
         };
-		var test8 = function (event) {		
-			//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 0');
-			document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 0');
+	document.querySelector("[DEF='box2TS']").addEventListener('x3dTouchSensor_isOver', test3);
+		
+	var test4 = function (event) {		
+		//document.getElementById('test2__color2').setAttribute('diffuseColor', '1 0 0');
+		if (!event) { //mouseOut
+		document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '1 0 0');
+		}
         };
+	document.querySelector("[DEF='box2TS']").addEventListener('x3dTouchSensor_isOver', test4);
+
+	var test5 = function (event) {		
+		//document.getElementById('test3__color1').setAttribute('diffuseColor', '0 1 1');
+		if (event) { //mouseOver
+		document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '0 1 1');
+		}
+	};
+	document.querySelector("[DEF='box3c1TS']").addEventListener('x3dTouchSensor_isOver', test5);
+		
+	var test6 = function (event) {		
+		//document.getElementById('test3__color1').setAttribute('diffuseColor', '1 1 0');
+		if (!event) { //mouseOut
+		document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '1 1 0');
+		}
+	};
+	document.querySelector("[DEF='box3c1TS']").addEventListener('x3dTouchSensor_isOver', test6);
+		
+	var test7 = function (event) {		
+		//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 1');
+		if (event) { //mouseOver
+		document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 1');
+		}
+	};
+	document.querySelector("[DEF='box3c2TS']").addEventListener('x3dTouchSensor_isOver', test7);
+		
+	var test8 = function (event) {		
+		//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 0');
+		if (!event) { //mouseOut
+		document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 0');
+		}
+        };
+	document.querySelector("[DEF='box3c2TS']").addEventListener('x3dTouchSensor_isOver', test8);
+
 	]]>
 </script>
 </body>
