@@ -62,6 +62,7 @@ X3DCanvas {
 	</X3DCanvas>
 </body>
 <script>
+	<![CDATA[
 X3D(function(el) {
 	var browser = X3D.getBrowser(el);
 	var numRootNodes = browser .currentScene .rootNodes .length;
@@ -96,5 +97,6 @@ X3D(function(el) {
 		browser .currentScene .rootNodes [i] .set_bind = true;
 	}
 });
+		]]>
 </script>
 </html>
