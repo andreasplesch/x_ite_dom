@@ -36,32 +36,35 @@
 	<![CDATA[
 	    var test1 = function (event) {	
 			//document.getElementById('test1__color1').setAttribute('diffuseColor', '0 1 0');
-			document.querySelector('[nameSpaceName="test1"] [DEF="color1"]').setAttribute('diffuseColor', '0 1 0');
-
+			document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '0 1 0');
         };	
 		var test2 = function (event) {		
-			document.getElementById('test1__color1').setAttribute('diffuseColor', '1 1 0');
+			//document.getElementById('test1__color1').setAttribute('diffuseColor', '1 1 0');
+			document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '1 1 0');
         };	
-		
-		
 		var test3 = function (event) {		
-			document.getElementById('test2__color2').setAttribute('diffuseColor', '0 0 1');
+			//document.getElementById('test2__color2').setAttribute('diffuseColor', '0 0 1');
+			document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '0 0 1');
         };
 		var test4 = function (event) {		
-			document.getElementById('test2__color2').setAttribute('diffuseColor', '1 0 0');
+			//document.getElementById('test2__color2').setAttribute('diffuseColor', '1 0 0');
+			document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '1 0 0');
         };
-		
 		var test5 = function (event) {		
-			document.getElementById('test3__color1').setAttribute('diffuseColor', '0 1 1');
+			//document.getElementById('test3__color1').setAttribute('diffuseColor', '0 1 1');
+			document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '0 1 1');
         };	
 		var test6 = function (event) {		
-			document.getElementById('test3__color1').setAttribute('diffuseColor', '1 1 0');
+			//document.getElementById('test3__color1').setAttribute('diffuseColor', '1 1 0');
+			document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '1 1 0');
         };	
 		var test7 = function (event) {		
-			document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 1');
+			//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 1');
+			document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 1');
         };
 		var test8 = function (event) {		
-			document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 0');
+			//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 0');
+			document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 0');
         };
 	]]>
 </script>
