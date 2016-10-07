@@ -34,7 +34,8 @@ function processInlineDOM (element) {
 	// check for USE inline as it does not have dom
 	if (element.x3dnode === undefined) { return; }
 	// individual callback per inline
-	var callback = appendInlineDOM.bind(this, element, wList.getValue().slice()) ;
+	//var callback = appendInlineDOM.bind(this, element, wList.getValue().slice()) ;
+	var callback = appendInlineDOM.bind(this, element) ;
 	isLoadedField.addFieldCallback("loaded" + element.x3dnode.getId(), callback) ;
 	//just add to watchlist
 	wList.push(element.x3dnode);
@@ -42,7 +43,8 @@ function processInlineDOM (element) {
 	return;
 }
 		
-function appendInlineDOM (element, wListValue, isLoadedValue) {
+//function appendInlineDOM (element, wListValue, isLoadedValue) {
+function appendInlineDOM (element, isLoadedValue) {
 	//now loaded and in .dom
 	//Inline must have Scene
 	element.appendChild(element.x3dnode.dom.querySelector('Scene')) ; // or root nodes ?
@@ -51,14 +53,11 @@ function appendInlineDOM (element, wListValue, isLoadedValue) {
 	//remove from watchlist
 	// restore passed, original watchlist
 	//wList.setValue(wListValue) ; // seems to work
-	// instead may need to look for element and remove it
+	// instead look for node and remove it
 	var wListUpdate = wList .getValue() .filter( 
 		function(val) { return val .getValue() !== element.x3dnode ; }
 		);
 	wList .setValue(wListUpdate);
-	//wList.setValue(wList.getValue().filter(function(val) { return val !== element.x3dnode ; })); // does not work
-	//wList.remove(0, wList.length, element.x3dnode);
-	//wList.remove(0, wList.length, function(val) { return val.getValue() == element.x3dnode } );
 	
 	//any inlines in appended dom are picked up when Scene is a addedNode for Mutations
 	return;
@@ -108,6 +107,7 @@ var mybrowser = X3D.getBrowser(el);
 var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 //workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
+//update to spec. conforming, latest use
 var importScene = mybrowser.currentScene;
 mybrowser.replaceWorld(importScene);
 
