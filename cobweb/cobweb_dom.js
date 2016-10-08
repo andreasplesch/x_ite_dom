@@ -22,7 +22,8 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); } //only add dom
 		return; 
 	}
-	parser.statement(addedEl);
+	parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
+	//new SFNode(addedEL); parent.addChildren(SFNode) ?
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
