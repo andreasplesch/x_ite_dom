@@ -10,11 +10,11 @@
 		<meta http-equiv="Expires" content="0"/>
 		<meta charset="utf-8"/>
 		<link rel="stylesheet" type="text/css"
-			href="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.css"/>
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
 		<!--link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css"/-->
 		<!--script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script-->
 		<script type="text/javascript" 
-			src="https://rawgit.com/andreasplesch/cobweb/inline/stable/1/1.28/APcobweb.js">
+			src="https://rawgit.com/create3000/cobweb/cobweb.js/cobweb.min.js">
 		</script>
 		<script type="text/javascript" 
 			src="https://rawgit.com/andreasplesch/cobweb_dom/inlineSensor/cobweb/cobweb_dom.js">
@@ -61,7 +61,7 @@ X3D {
 	<button onclick='toggle_boxSensor()'>toggle box sensor</button>
 	
 		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
-		<X3D id='dummy'>
+		<X3DCanvas id='dummy'>
 	<Scene>
 		<Viewpoint></Viewpoint>
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
@@ -88,7 +88,7 @@ X3D {
 				because this is currently the choice of the choice. We will continuously keep you informed <br/>
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
-		</X3D>
+		</X3DCanvas>
 
 <div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
