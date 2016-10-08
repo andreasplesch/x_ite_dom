@@ -66,7 +66,7 @@ function appendInlineDOM (element, isLoadedValue) {
 		);
 	wList .setValue(wListUpdate);
 	//check if all inlines are appended and dispatch event; would be also dispatched later whenever
-	if (wListUpdate.length === wList0.length && node.dom.querySelector('Inline') === null) { // also check loadCount ?
+	if (wListUpdate.length === wList0.length && element.querySelector('Inline') === null) { // also check loadCount ?
 		var evt = new Event("x3dload");
 		evt.element = mybrowser.getElement();
 		document.dispatchEvent(evt);
