@@ -7,7 +7,9 @@ $(function(){ // make sure jquery is ready
 for (i = 0; i < el.length; ++i) {
 	relayDOM(el[i]);
 }
-		
+
+function relayDOM (el) {
+			
 function processRemovedNode(removedEl){
 	
 	removedEl.x3dnode.dispose(); // works also for root nodes since scene is effectively a MFNode in cobweb
@@ -112,8 +114,6 @@ function processMutation(mutation, mybrowser) {
 		}
 	);
 }
-
-function relayDOM (el) {
 	
 var mybrowser = X3D.getBrowser(el);
 //mybrowser.createScene();
