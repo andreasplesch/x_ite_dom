@@ -24,8 +24,8 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	
 	var parent = addedEl.parentNode;
-	//var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
-	var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
+	var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
+	//var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
 	addedNode = addedNode.rootNodes[0].getValue();
 	if (parent.nodeName == 'Scene') { // but needed for Inline
 		parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
@@ -148,10 +148,11 @@ function processMutation(mutation, mybrowser) {
 var mybrowser = X3D.getBrowser(el);
 var myx3d = el.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 if (myx3d === null) { return; } // if src or url was used
-mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+//mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 //workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
 //update to spec. conforming, latest use
-var importScene = mybrowser.currentScene;
+var importScene = mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+//var importScene = mybrowser.currentScene;
 mybrowser.replaceWorld(importScene);
 
 // create an observer instance
