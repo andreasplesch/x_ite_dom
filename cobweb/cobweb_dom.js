@@ -3,6 +3,11 @@
 $(function(){ // make sure jquery is ready 
 	X3D(function(el){ // make sure X3D is ready, el has all x3d elements
 
+//go through all passed x3dcanvas elements
+for (i = 0; i < el.length; ++i) {
+	relayDOM(el[i]);
+}
+		
 function processRemovedNode(removedEl){
 	
 	removedEl.x3dnode.dispose(); // works also for root nodes since scene is effectively a MFNode in cobweb
@@ -107,12 +112,14 @@ function processMutation(mutation, mybrowser) {
 		}
 	);
 }
-		
-var mybrowser = X3D.getBrowser(el[0]);
+
+function relayDOM (el) {
+	
+var mybrowser = X3D.getBrowser(el);
 //mybrowser.createScene();
 //var fullProfile = mybrowser.getProfile("Full");
 //mybrowser.currentScene.setProfile(fullProfile);
-var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+var myx3d = el.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 //workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
 //update to spec. conforming, latest use
@@ -137,7 +144,7 @@ var isLoadedField = loadsensor.getField("isLoaded"); // is used to add callbacks
 // configuration of the observer:
 var config = { attributes: true, childList: true, characterData: false, subtree: true };
 // pass in the target node, as well as the observer options
-var target = document.querySelector('Scene'); // reget target
+var target = myx3d ; // document.querySelector('Scene'); // reget target
 observer.observe(target, config); //start observing only after DOM is fully populated
 
 //add inline doms from initial scene
@@ -190,6 +197,9 @@ function fieldcallback (field, sensor, value){
 	//evt.x3dnode = sensor.x3dnode; 
 	sensor.dispatchEvent(evt);
 }
+
+}
+
 });
 });
 
