@@ -71,7 +71,7 @@ function sceneLoaded (evt) {
 
 	var test1 = function (event) {	
 		//document.getElementById('test1__color1').setAttribute('diffuseColor', '0 1 0');
-		if (event) { //mouseOver
+		if (event.detail.value) { //mouseOver
 		document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '0 1 0');
 		}
         };
@@ -79,7 +79,7 @@ function sceneLoaded (evt) {
 
 	var test2 = function (event) {		
 		//document.getElementById('test1__color1').setAttribute('diffuseColor', '1 1 0');
-		if (!event) { //mouseOut
+		if (!event.detail.value) { //mouseOut
 		document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '1 1 0');
 		}
         };
@@ -87,7 +87,7 @@ function sceneLoaded (evt) {
 
 	var test3 = function (event) {		
 		//document.getElementById('test2__color2').setAttribute('diffuseColor', '0 0 1');
-		if (event) { //mouseOver
+		if (event.detail.value) { //mouseOver
 		document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '0 0 1');
 		}
         };
@@ -95,7 +95,7 @@ function sceneLoaded (evt) {
 		
 	var test4 = function (event) {		
 		//document.getElementById('test2__color2').setAttribute('diffuseColor', '1 0 0');
-		if (!event) { //mouseOut
+		if (!event.detail.value) { //mouseOut
 		document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '1 0 0');
 		}
         };
@@ -103,7 +103,7 @@ function sceneLoaded (evt) {
 
 	var test5 = function (event) {		
 		//document.getElementById('test3__color1').setAttribute('diffuseColor', '0 1 1');
-		if (event) { //mouseOver
+		if (event.detail.value) { //mouseOver
 		document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '0 1 1');
 		}
 	};
@@ -111,7 +111,7 @@ function sceneLoaded (evt) {
 		
 	var test6 = function (event) {		
 		//document.getElementById('test3__color1').setAttribute('diffuseColor', '1 1 0');
-		if (!event) { //mouseOut
+		if (!event.detail.value) { //mouseOut
 		document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '1 1 0');
 		}
 	};
@@ -119,7 +119,7 @@ function sceneLoaded (evt) {
 		
 	var test7 = function (event) {		
 		//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 1');
-		if (event) { //mouseOver
+		if (event.detail.value) { //mouseOver
 		document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 1');
 		}
 	};
@@ -127,7 +127,7 @@ function sceneLoaded (evt) {
 		
 	var test8 = function (event) {		
 		//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 0');
-		if (!event) { //mouseOut
+		if (!event.detail.value) { //mouseOut
 		document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 0');
 		}
         };
