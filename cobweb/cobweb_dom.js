@@ -120,6 +120,7 @@ var mybrowser = X3D.getBrowser(el);
 //var fullProfile = mybrowser.getProfile("Full");
 //mybrowser.currentScene.setProfile(fullProfile);
 var myx3d = el.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+if (myx3d === null) { return; }
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 //workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
 //update to spec. conforming, latest use
