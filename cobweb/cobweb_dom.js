@@ -37,6 +37,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	else if (typeof parent.x3dnode.addChildren === 'function') { // other way to check if grouping node ?
 		var addChildrenField = parent.x3dnode.getField('addChildren');
 		addChildrenField.setValue(addedNode);
+		addedEl.x3dnode = addedNode;
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); } 
 	//need to look for Inline doms to add to dom
