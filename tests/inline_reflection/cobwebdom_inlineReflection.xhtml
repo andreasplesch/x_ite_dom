@@ -6,15 +6,15 @@
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<title>Inline HTML Reflection</title>
 		<script type="text/javascript" 
-				src="https://rawgit.com/andreasplesch/cobweb/inline/stable/1/1.28/APcobweb.js">
+				src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.min.js">
 		</script>
 		<script type="text/javascript" 
 			src="https://rawgit.com/andreasplesch/cobweb_dom/inlineSensor/cobweb/cobweb_dom.js">
 		</script>
 		<link rel="stylesheet" type="text/css"
-			href="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.css"/>
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
 		<style>
-			X3D {
+			X3DCanvas {
 				background: #414141;
 				width: 500px;
 				height: 500px;
@@ -40,7 +40,8 @@
 <body>
 	<h1>Inline HTML Reflection</h1>
     <p>This example shows how to use the reflection of inline into HTML</p>
-<X3D>
+
+<X3DCanvas>
 	<Scene>
 		<Viewpoint position='0 0 10'/>
 		<Background skyColor='0 0 0.01'/>
@@ -48,9 +49,9 @@
 			<Inline nameSpaceName="test1" url='"scene/reflection_box1.x3d"' />
 		</Transform>
 	</Scene>
-</X3D>
+</X3DCanvas>
     
-<X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" width="500px" height="500px">
+<X3DCanvas xmlns="http://www.web3d.org/specifications/x3d-namespace" width="500px" height="500px">
 	<Scene>
 		<Viewpoint position='0 0 10'/>
 		<Background skyColor='0 0.01 0'/>
@@ -58,7 +59,7 @@
 			<Inline nameSpaceName="test3" url='"scene/reflection_box3.x3d"' />
 		</Transform>
 	</Scene>
-</X3D>
+</X3DCanvas>
 	
     
     <script type="text/javascript" >
