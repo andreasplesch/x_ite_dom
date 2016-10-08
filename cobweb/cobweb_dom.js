@@ -18,7 +18,7 @@ function processRemovedNode(removedEl){
 function processAddedNode(addedEl, parser, mybrowser) {
 	//do not add to scene if already parsed as child of inline
 	//although Scene does not have .x3dnode so should never happen ?
-	if ( addedEl.xdnode || addedEl.nodeName == 'Scene' ) { 
+	if ( addedEl.xdnode ) { 
 		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); } //only add dom
 		return; 
 	}
@@ -27,7 +27,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
 	var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
 	addedNode = addedNode.rootNodes[0].getValue();
-	if (parent.nodeName == 'Scene') {
+	if (parent.nodeName == 'Scene') { // but needed for Inline
 		parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
 		//new SFNode(addedEL); parent.addChildren(SFNode) ?
 		//parser only adds uninitialized x3d nodes to scene
