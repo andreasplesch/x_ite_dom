@@ -35,7 +35,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	}
 	else if (typeof parent.x3dnode.addChildren === 'function') { // other way to check if grouping node ?
-		var addField = parent.x3dnode.getField('addChildren').getValue();
+		var addField = parent.x3dnode.getField('addChildren');
 		addField.setValue(addedNode);
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); } 
