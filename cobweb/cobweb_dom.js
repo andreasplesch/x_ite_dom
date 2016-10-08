@@ -1,7 +1,7 @@
 //cobweb-dom access
 //load after cobweb.js
 $(function(){ // make sure jquery is ready 
-	X3D(function(el){ // make sure X3D is ready
+	X3D(function(el){ // make sure X3D is ready, el has all x3d elements
 
 function processRemovedNode(removedEl){
 	
@@ -108,7 +108,7 @@ function processMutation(mutation, mybrowser) {
 	);
 }
 		
-var mybrowser = X3D.getBrowser(el);
+var mybrowser = X3D.getBrowser(el[0]);
 //mybrowser.createScene();
 //var fullProfile = mybrowser.getProfile("Full");
 //mybrowser.currentScene.setProfile(fullProfile);
