@@ -204,7 +204,7 @@ function toggle_box_sensor() {
 		//remove listeners?
 		return;
 	}
-	var ts = document.createElement('TouchSensor');
+	ts = document.createElement('TouchSensor');
 	ts.setAttribute('DEF', 'ts_' + last_trafo.getAttribute('DEF'));
 	last_trafo.appendChild(ts);
 	//now also react to events
@@ -213,7 +213,7 @@ function toggle_box_sensor() {
 		var mat = evt.target.querySelector('Material');
 		var color = e.detail.value ? "1 0 0" : "0.5 0.5 0.5" ; //mouseOver:mouseOut
 		mat.setAttribute("diffuseColor", color);
-	}
+	});
 }
 	
 function remove_last_box() {
