@@ -39,14 +39,15 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		addChildrenField.setValue(new X3D.MFNode(addedNode));
 		addedEl.x3dnode = addedNode; //importDocument() would already add it
 	}
-	else { console.log('do not know how to add: ' + addedEl.outerHTML); } 
+	else { console.log('do not know how to add: ' + addedEl.outerHTML); }
+	
 	//need to look for Inline doms to add to dom
 	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
 	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
 	for ( var i = 0; i < inlines.length; i++ ) {
 		processInlineDOM(inlines[i]) ;
 	}
-	//TODO: attach fieldcallbacks to new sensor nodesche
+	
 	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
 	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
 	var sensors = addedEl.querySelectorAll(sensorSelector);
