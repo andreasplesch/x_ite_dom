@@ -208,7 +208,7 @@ function toggle_boxSensor() {
 	ts.setAttribute('DEF', 'ts_' + last_trafo.getAttribute('DEF'));
 	last_trafo.appendChild(ts);
 	//now also react to events
-	ts.addEventListener('x3dTouchSensor_isOver', function(evt) {
+	last_trafo.addEventListener('x3dTouchSensor_isOver', function(evt) {
 		var e = evt.detail;
 		var mat = evt.target.querySelector('Material');
 		var color = e.value ? "1 0 0" : "0.5 0.5 0.5" ; //mouseOver:mouseOut
