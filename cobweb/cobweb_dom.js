@@ -18,7 +18,7 @@ function processRemovedNode(removedEl){
 function processAddedNode(addedEl, parser, mybrowser) {
 	//do not add to scene if already parsed as child of inline
 	//although Scene does not have .x3dnode so should never happen ?
-	if ( addedEl.xdnode ) { 
+	if ( addedEl.xdnode || addedEl.nodeName == 'Scene' ) { 
 		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); } //only add dom
 		return; 
 	}
