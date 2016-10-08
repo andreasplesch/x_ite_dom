@@ -53,19 +53,20 @@ function processInlineDOM (element) {
 function appendInlineDOM (element, isLoadedValue) {
 	//now loaded and in .dom
 	//Inline must have Scene
-	element.appendChild(element.x3dnode.dom.querySelector('Scene')) ; // or root nodes ?
+	var node = element.x3dnode;
+	element.appendChild(node.dom.querySelector('Scene')) ; // or root nodes ?
 	//not needed any more, remove callback
-	isLoadedField.removeFieldCallback("loaded" + element.x3dnode.getId()) ;
+	isLoadedField.removeFieldCallback("loaded" + node.getId()) ;
 	//remove from watchlist
 	// restore passed, original watchlist
 	//wList.setValue(wListValue) ; // seems to work
 	// instead look for node and remove it
 	var wListUpdate = wList .getValue() .filter( 
-		function(val) { return val .getValue() !== element.x3dnode ; }
+		function(val) { return val .getValue() !== node ; }
 		);
 	wList .setValue(wListUpdate);
 	//check if all inlines are appended and dispatch event; would be also dispatched later whenever
-	if (wListUpdate.length == wList0.length) { // also check loadCount ?
+	if (wListUpdate.length === wList0.length && node.dom.querySelector('Inline') === null) { // also check loadCount ?
 		var evt = new Event("x3dload");
 		evt.element = mybrowser.getElement();
 		document.dispatchEvent(evt);
