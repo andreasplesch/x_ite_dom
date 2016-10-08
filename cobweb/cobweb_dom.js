@@ -34,6 +34,13 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		processInlineDOM(inlines[i]) ;
 	}
 	//TODO: attach fieldcallbacks to new sensor nodes
+	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
+	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
+	var sensors = addedEl.querySelectorAll(sensorSelector);
+	for (var i=0; i < sensors.length; i++) {
+		var sensor = sensors[i];
+		addEventDispatchers(sensor);
+	}
 }
 		
 function processInlineDOM (element) {
