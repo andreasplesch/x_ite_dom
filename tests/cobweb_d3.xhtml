@@ -206,7 +206,7 @@ function toggle_boxSensor() {
 	}
 	ts = document.createElement('TouchSensor');
 	ts.setAttribute('DEF', 'ts_' + last_trafo.getAttribute('DEF'));
-	last_trafo.appendChild(ts);
+	last_trafo.appendChild(ts); //x3dnode added to root instead, not allow ?
 	//now also react to events
 	ts.addEventListener('x3dTouchSensor_isOver', function(evt) {
 		var e = evt.detail;
