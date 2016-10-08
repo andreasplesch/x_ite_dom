@@ -234,7 +234,7 @@ function remove_last_material() {
 
 	var mats = document.querySelectorAll("Material");
 	var last_mat = mats[mats.length - 1];
-	last_mat.remove();
+	last_mat.setAttribute('diffuseColor', '1 1 1');
 }
 
 </script>
