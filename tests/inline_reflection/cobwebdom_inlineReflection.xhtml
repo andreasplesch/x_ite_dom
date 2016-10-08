@@ -60,9 +60,15 @@
 	</Scene>
 </X3D>
 	
-    <!--
+    
     <script type="text/javascript" >
 	<![CDATA[
+document.addEventListener("x3dload", sceneLoaded);
+var numScenes = document.querySelectorAll('X3D').length;
+var loadedScenes = 0;
+function sceneLoaded (evt) {
+	if (++loadedScenes < numScenes) { return; }
+
 	var test1 = function (event) {	
 		//document.getElementById('test1__color1').setAttribute('diffuseColor', '0 1 0');
 		if (event) { //mouseOver
@@ -126,9 +132,9 @@
 		}
         };
 	document.querySelector("[DEF='box3c2TS']").addEventListener('x3dTouchSensor_isOver', test8);
-
+}
 	]]>
 </script>
--->
+
 </body>
 </html>
