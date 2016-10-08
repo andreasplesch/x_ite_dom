@@ -180,7 +180,7 @@ function add_box() {
 
 	var transform = document.createElement('Transform');
 	transform.setAttribute('DEF', "box_" + box_counter);
-	transform.setAttribute('translation', radius * Math.cos(perBoxAngle * box_counter) + " " + radius * Math.sin(perBoxAngle * box_counter++) + " " + 0);
+	transform.setAttribute('translation', radius * Math.cos(perBoxAngle * box_counter) + " " + radius * Math.sin(perBoxAngle * box_counter) + " " + 0);
 	var shape = document.createElement('Shape');
 	var app = document.createElement('Appearance');
 	var mat = document.createElement('Material');
@@ -191,6 +191,7 @@ function add_box() {
 	shape.appendChild(box);
 	transform.appendChild(shape);
 	shell.appendChild(transform);
+	box_counter++;
 	radius = radius + box_counter/100;
 }
 
@@ -200,6 +201,7 @@ function toggle_boxSensor() {
 	var last_trafo = trafos[trafos.length - 1];
 	var ts = last_trafo.querySelector('TouchSensor');
 	if (ts !== null) {
+		ts.removeEventListener('x3dTouchSensor_isOver', toRed);
 		ts.remove();
 		//remove listeners?
 		return;
@@ -208,12 +210,14 @@ function toggle_boxSensor() {
 	ts.setAttribute('DEF', 'ts_' + last_trafo.getAttribute('DEF'));
 	last_trafo.appendChild(ts); //x3dnode added to root instead, not allow ?
 	//now also react to events
-	ts.addEventListener('x3dTouchSensor_isOver', function(evt) {
-		var e = evt.detail;
-		var mat = evt.target.parentNode.querySelector('Material');
-		var color = e.value ? "1 0 0" : "0.5 0.5 0.5" ; //mouseOver:mouseOut
-		mat.setAttribute("diffuseColor", color);
-	});
+	ts.addEventListener('x3dTouchSensor_isOver', toRed);
+}
+	
+function toRed (evt) {
+	var e = evt.detail;
+	var mat = evt.target.parentNode.querySelector('Material');
+	var color = e.value ? "1 0 0" : "0.5 0.5 0.5" ; //mouseOver:mouseOut
+	mat.setAttribute("diffuseColor", color);
 }
 	
 function remove_last_box() {
