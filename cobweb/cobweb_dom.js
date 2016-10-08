@@ -22,19 +22,29 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); } //only add dom
 		return; 
 	}
-	parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
-	//new SFNode(addedEL); parent.addChildren(SFNode) ?
-	//parser only adds uninitialized x3d nodes to scene
-	//the setup function initializes only uninitialized nodes
-	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	
+	var parent = addedEl.parentNode;
+	//var addedNode = mybrowser.importDocument(addedEl).rootNodes[0].getValue();
+	var addedNode = mybrowser.currentScene.createX3DfromString(addedEl.outerHTML);
+	addedNode = addedNode.rootNodes[0].getValue();
+	if (parent.nodeName = 'Scene') {
+		parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
+		//new SFNode(addedEL); parent.addChildren(SFNode) ?
+		//parser only adds uninitialized x3d nodes to scene
+		//the setup function initializes only uninitialized nodes
+		mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
+	}
+	else if (typeof parent.x3dnode.addChildren === 'function') { // other way to check if grouping node ?
+		parent.x3dnode.addChildren(addedNode);
+	}
+	else { console.log('do not know how to add: ' + addedEl.outerHTML); } 
 	//need to look for Inline doms to add to dom
 	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
 	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
 	for ( var i = 0; i < inlines.length; i++ ) {
 		processInlineDOM(inlines[i]) ;
 	}
-	//TODO: attach fieldcallbacks to new sensor nodes
+	//TODO: attach fieldcallbacks to new sensor nodesche
 	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
 	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
 	var sensors = addedEl.querySelectorAll(sensorSelector);
@@ -134,7 +144,7 @@ function processMutation(mutation, mybrowser) {
 	
 var mybrowser = X3D.getBrowser(el);
 var myx3d = el.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
-if (myx3d === null) { return; }
+if (myx3d === null) { return; } // if src or url was used
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 //workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
 //update to spec. conforming, latest use
