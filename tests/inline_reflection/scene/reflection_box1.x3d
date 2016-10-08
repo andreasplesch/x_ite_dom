@@ -11,7 +11,7 @@
 		<TouchSensor DEF="box1TS" />
 	</Transform>
 	<Transform id="5">
-		<Inline id="6" nameSpaceName="test2" url="reflection_box2.x3d" />
+		<Inline id="6" nameSpaceName="test2" url='"reflection_box2.x3d"' />
 	</Transform>
   </Scene>
 </X3D>
