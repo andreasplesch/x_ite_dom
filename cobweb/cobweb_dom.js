@@ -27,7 +27,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	//var addedNode = mybrowser.importDocument(addedEl).rootNodes[0].getValue();
 	var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
 	addedNode = addedNode.rootNodes[0].getValue();
-	if (parent.nodeName = 'Scene') {
+	if (parent.nodeName == 'Scene') {
 		parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
 		//new SFNode(addedEL); parent.addChildren(SFNode) ?
 		//parser only adds uninitialized x3d nodes to scene
