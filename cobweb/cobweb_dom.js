@@ -10,8 +10,7 @@ for (i = 0; i < el.length; ++i) {
 
 function relayDOM (el) {
 			
-function processRemovedNode(removedEl){
-	
+function processRemovedNode(removedEl){	
 	removedEl.x3dnode.dispose(); // works also for root nodes since scene is effectively a MFNode in cobweb
 	// all done! cobweb has TODO for Routes and such
 }
@@ -116,9 +115,6 @@ function processMutation(mutation, mybrowser) {
 }
 	
 var mybrowser = X3D.getBrowser(el);
-//mybrowser.createScene();
-//var fullProfile = mybrowser.getProfile("Full");
-//mybrowser.currentScene.setProfile(fullProfile);
 var myx3d = el.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 if (myx3d === null) { return; }
 mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
