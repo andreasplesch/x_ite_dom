@@ -65,7 +65,7 @@
     <script type="text/javascript" >
 	<![CDATA[
 document.addEventListener("x3dload", sceneLoaded);
-var numScenes = document.querySelectorAll('X3D').length;
+var numScenes = document.querySelectorAll('X3DCanvas').length;
 var loadedScenes = 0;
 function sceneLoaded (evt) {
 	if (++loadedScenes < numScenes) { return; }
