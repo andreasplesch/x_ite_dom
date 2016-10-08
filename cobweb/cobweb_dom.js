@@ -36,7 +36,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	else if (typeof parent.x3dnode.addChildren === 'function') { // other way to check if grouping node ?
 		var addChildrenField = parent.x3dnode.getField('addChildren');
-		addChildrenField.setValue(addedNode);
+		addChildrenField.setValue(new X3D.MFNode(addedNode));
 		addedEl.x3dnode = addedNode; //importDocument() would already add it
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); } 
