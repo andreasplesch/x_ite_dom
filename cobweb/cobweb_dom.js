@@ -24,7 +24,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	
 	var parent = addedEl.parentNode;
-	//var addedNode = mybrowser.importDocument(addedEl).rootNodes[0].getValue();
+	//var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
 	var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
 	addedNode = addedNode.rootNodes[0].getValue();
 	if (parent.nodeName == 'Scene') {
@@ -37,7 +37,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	else if (typeof parent.x3dnode.addChildren === 'function') { // other way to check if grouping node ?
 		var addChildrenField = parent.x3dnode.getField('addChildren');
 		addChildrenField.setValue(addedNode);
-		addedEl.x3dnode = addedNode;
+		addedEl.x3dnode = addedNode; //importDocument() would already add it
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); } 
 	//need to look for Inline doms to add to dom
