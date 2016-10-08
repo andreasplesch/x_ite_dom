@@ -65,14 +65,23 @@ function appendInlineDOM (element, isLoadedValue) {
 		);
 	wList .setValue(wListUpdate);
 	//check if all inlines are appended and dispatch event; would be also dispatched later whenever
-	//if (wList == wListInit) { // also check loadCount ?
-	// document.dispatchEvent(
+	if (wListUpdate == wList0) { // also check loadCount ?
+		var evt = new Event("x3dload");
+		evt.element = mybrowser.getElement();
+		document.dispatchEvent(evt);
+		console.log(evt);
+	}
 	//    new Event("X3Dload")); // or so, add .browser = browser ?
 	//}
 	
 	//attach sensor callbacks
 	//create processSensor, and use initially and here
-	
+	var sensors = element.querySelectorAll(sensorSelector);
+	for (var i=0; i < sensors.length; i++) {
+		var sensor = sensors[i];
+		addEventDispatchers(sensor);
+	}
+
 	//any inlines in appended dom are picked up when Scene is a addedNode for Mutations
 	return;
 }
@@ -136,6 +145,7 @@ var observer = new MutationObserver(function(mutations) {
 //browser has attached LoadSensor; setup for use with inlines
 var loadsensor = mybrowser.getLoadSensor();
 var wList = loadsensor.getField('watchList'); // is used to detect when inline is loaded
+var wList0 = wList.getValue();
 var isLoadedField = loadsensor.getField("isLoaded"); // is used to add callbacks to
 
 // configuration of the observer:
@@ -144,29 +154,34 @@ var config = { attributes: true, childList: true, characterData: false, subtree:
 var target = myx3d ; // document.querySelector('Scene'); // reget target
 observer.observe(target, config); //start observing only after DOM is fully populated
 
+//events
+
+//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
+//use key in X3D.X3DConstants and match Sensor
+
+//construct selector
+var sensorSelector = "Anchor"; // other special names ?
+for (var key in X3D.X3DConstants) {
+	if (key.endsWith('Sensor')) {sensorSelector += "," + key;}
+}
+
 //add inline doms from initial scene
 var inlines = myx3d.querySelectorAll('Inline');
 for (var i = 0; i < inlines.length; i++) {
 	processInlineDOM(inlines[i]);
 }
-				
-//events
-//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
-//use key in X3D.X3DConstants and match Sensor
 
-//construct selector
-var selector = "Anchor"; // other special names ?
-for (var key in X3D.X3DConstants) {
-	if (key.endsWith('Sensor')) {selector += "," + key;}
-}
-
-var sensors = myx3d.querySelectorAll(selector); //TODO any kind of Sensor
+var sensors = myx3d.querySelectorAll(sensorSelector);
 for (var i=0; i < sensors.length; i++) {
 	var sensor = sensors[i];
-	//var x3dsensor = sensor.x3dnode ;
+	addEventDispatchers(sensor);
+}
+
+function addEventDispatchers (sensor) {
 	var fields = sensor.x3dnode.getFields();
 	for (var key in fields) {bindFieldCallback(fields[key], sensor)};
 }
+
 function bindFieldCallback (field, sensor) {
 	/*var ctx = {};
 	ctx. field = field;
