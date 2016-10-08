@@ -16,9 +16,17 @@ function processRemovedNode(removedEl){
 }
 
 function processAddedNode(addedEl, parser, mybrowser) {
+	
+	//need to look for Inline doms to add to dom
+	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
+	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
+	for ( var i = 0; i < inlines.length; i++ ) {
+		processInlineDOM(inlines[i]) ;
+	}
+	
 	//do not add to scene if already parsed as child of inline
 	//although Scene does not have .x3dnode so should never happen ?
-	if ( addedEl.xdnode ) { 
+	if ( addedEl.xdnode || addedEl.nodeName == 'Scene' ) { 
 		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); } //only add dom
 		return; 
 	}
@@ -40,14 +48,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		addedEl.x3dnode = addedNode; //importDocument() would already add it
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); }
-	
-	//need to look for Inline doms to add to dom
-	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
-	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
-	for ( var i = 0; i < inlines.length; i++ ) {
-		processInlineDOM(inlines[i]) ;
-	}
-	
+		
 	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
 	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
 	var sensors = addedEl.querySelectorAll(sensorSelector);
