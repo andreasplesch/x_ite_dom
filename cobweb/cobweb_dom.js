@@ -40,7 +40,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	
 	var parent = addedEl.parentNode;
-	if (parent.x3dnode) {parser.pushParent(parent.x3dnode); // else leave parser.parents empty for root nodes
+	if (parent.x3dnode) { parser.pushParent(parent.x3dnode); }; // else leave parser.parents empty for root nodes
 	//var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
 	//var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
 	//addedNode = addedNode.rootNodes[0].getValue();
@@ -59,7 +59,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); }
 	*/	
-     	if (parent.x3dnode) (parser.popParent());	
+     	if (parent.x3dnode) { parser.popParent(); };	
 }
 		
 function processInlineDOM (element) {
