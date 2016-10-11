@@ -17,13 +17,21 @@ function processRemovedNode(removedEl){
 
 function processAddedNode(addedEl, parser, mybrowser) {
 	
-	//need to look for Inline doms to add to dom
+	//first need to look for Inline doms to add to dom
 	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
 	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
 	for ( var i = 0; i < inlines.length; i++ ) {
 		processInlineDOM(inlines[i]) ;
 	}
 	
+	//then attach event dispatchers
+	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
+	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
+	var sensors = addedEl.querySelectorAll(sensorSelector);
+	for (var i=0; i < sensors.length; i++) {
+		var sensor = sensors[i];
+		addEventDispatchers(sensor);
+	}
 	//do not add to scene if already parsed as child of inline
 	//although Scene does not have .x3dnode so should never happen ?
 	if ( addedEl.xdnode || addedEl.nodeName == 'Scene' ) { 
@@ -32,30 +40,26 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	
 	var parent = addedEl.parentNode;
-	var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
+	if (parent.x3dnode) {parser.pushParent(parent.x3dnode); // else leave parser.parents empty for root nodes
+	//var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
 	//var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
-	addedNode = addedNode.rootNodes[0].getValue();
-	if (parent.nodeName == 'Scene') { // but needed for Inline
+	//addedNode = addedNode.rootNodes[0].getValue();
+	//if (parent.nodeName == 'Scene') { // but needed for Inline
 		parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
 		//new SFNode(addedEL); parent.addChildren(SFNode) ?
 		//parser only adds uninitialized x3d nodes to scene
 		//the setup function initializes only uninitialized nodes
 		mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
-	}
+	//}
+	/*
 	else if (typeof parent.x3dnode.addChildren === 'function') { // other way to check if grouping node ?
 		var addChildrenField = parent.x3dnode.getField('addChildren');
 		addChildrenField.setValue(new X3D.MFNode(addedNode));
 		addedEl.x3dnode = addedNode; //importDocument() would already add it
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); }
-		
-	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
-	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
-	var sensors = addedEl.querySelectorAll(sensorSelector);
-	for (var i=0; i < sensors.length; i++) {
-		var sensor = sensors[i];
-		addEventDispatchers(sensor);
-	}
+	*/	
+     	if (parent.x3dnode) (parser.popParent());	
 }
 		
 function processInlineDOM (element) {
