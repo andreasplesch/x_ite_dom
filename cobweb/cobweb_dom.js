@@ -24,14 +24,6 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		processInlineDOM(inlines[i]) ;
 	}
 	
-	//then attach event dispatchers
-	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
-	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
-	var sensors = addedEl.querySelectorAll(sensorSelector);
-	for (var i=0; i < sensors.length; i++) {
-		var sensor = sensors[i];
-		addEventDispatchers(sensor);
-	}
 	//do not add to scene if already parsed as child of inline
 	//although Scene does not have .x3dnode so should never happen ?
 	if ( addedEl.xdnode || addedEl.nodeName == 'Scene' ) { 
@@ -59,7 +51,17 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	else { console.log('do not know how to add: ' + addedEl.outerHTML); }
 	*/	
-     	if (parent.x3dnode) { parser.popParent(); };	
+     	if (parent.x3dnode) { parser.popParent(); };
+	
+	//then attach event dispatchers
+	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
+	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
+	var sensors = addedEl.querySelectorAll(sensorSelector);
+	for (var i=0; i < sensors.length; i++) {
+		var sensor = sensors[i];
+		addEventDispatchers(sensor);
+	}
+	
 }
 		
 function processInlineDOM (element) {
