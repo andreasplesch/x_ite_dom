@@ -218,7 +218,12 @@ function toggle_boxSensor() {
 function toRed (evt) {
 	var e = evt.detail;
 	var mat = evt.target.parentNode.querySelector('Material');
-	var color = e.value ? "1 0 0" : "0.5 0.5 0.5" ; //mouseOver:mouseOut
+	if (mat === null) { // add Material node if previously removed
+		var app = evt.target.parentNode.querySelector('Appearance');
+		var mat = document.createElement('Material');
+		app.appendChild(mat);
+	}
+	var color = e.value ? "1 0 0" : "0.5 0.5 0.8" ; //mouseOver:mouseOut
 	mat.setAttribute("diffuseColor", color);
 }
 	
@@ -236,7 +241,8 @@ function remove_last_material() {
 
 	var mats = document.querySelectorAll("Material");
 	var last_mat = mats[mats.length - 1];
-	last_mat.setAttribute('diffuseColor', '1 1 1');
+	//last_mat.setAttribute('diffuseColor', '1 1 1');
+	last_mat.remove();
 }
 
 </script>
