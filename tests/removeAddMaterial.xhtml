@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>dom remove/add for cobweb</title>
+
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+		<script type="text/javascript" 
+			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.uncompressed.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/addNode/cobweb/cobweb_dom.js">
+		</script>
+	
+<style>
+
+X3DCanvas {
+	background: #414141;
+	width: 600px;
+	height: 400px;
+}
+
+</style>
+</head>
+<body>
+	<button onclick='remove_material()'>remove material</button>
+	<button onclick='add_material()'>add material</button>
+	
+		<X3DCanvas id='dummy'>
+<X3D>
+	<Scene>
+		<Viewpoint></Viewpoint>
+		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
+		
+		<Transform translation='2 0 0'>
+				<Shape>
+				<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
+					<Appearance>
+						<Material></Material>
+					</Appearance>
+					<Box></Box>
+				</Shape>
+		</Transform>
+		
+		<Transform id='shell'>
+		</Transform>
+	</Scene>
+</X3D>
+			<p class="fallback">
+				Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
+				because this is currently the choice of the choice. We will continuously keep you informed <br/>
+				on technical developments and as soon as Cobweb is running in other browser too.
+			</p>
+		</X3DCanvas>
+
+</body>
+
+<script>
+console.log('START')
+
+function remove_material() {
+
+	var mat = document.querySelector("Material");
+	if (mat !== null) { mat.remove(); } // disposes Material node
+}
+
+function add_material() {
+
+	var mat = document.createElement("Material");
+  var app = document.querySelector("Appearance");
+	if ( mat === null) {
+	  app.appendChild(mat); // parses and adds node to parent appearance node's material field
+}
+
+</script>
+
+</html>
