@@ -11,6 +11,8 @@ The design is based around the idea that cobweb_dom.js is an optional, thin brid
 
 The overall idea is to use the DOM mutation observer facility to relay changes in the DOM to the X3D scene graph which is internal to cobweb. After creating an initial X3D scene from X3D XML under the X3DCanvas tag, the bridge code installs a mutation observer to catch all changes within a Scene element. Depending on what was changed, then X3D SAI as well as some internal cobweb.js methods are invoked to realize these changes within the parallel scene graph.
 
+A design goal is to keep the code lines count small enough to keep all code in a single file. If the code base grows larger, I would not be able to support development, and it would indicate that there are too many features.
+
 ## Usage
 
 See index.xhtml and the examples in tests/ for usage of the code.
