@@ -69,4 +69,4 @@ To help with attaching listeners to sensor within inlines, a new 'x3dload' event
 
 ## Releases
 
-0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event
+0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
