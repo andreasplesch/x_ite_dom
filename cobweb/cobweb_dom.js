@@ -41,7 +41,10 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		//new SFNode(addedEL); parent.addChildren(SFNode) ?
 		//parser only adds uninitialized x3d nodes to scene
 		//the setup function initializes only uninitialized nodes
-		if ( parent.x3dnode ) { addedEl.x3dnode.addEvent(); }
+		if ( parent.x3dnode ) { 
+			var field = parent.x3dnode.getField (addedEl.x3dnode.getContainerField ());
+			field.setValue(addedEl.x3dnode);
+		}
 		mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	//}
 	/*
