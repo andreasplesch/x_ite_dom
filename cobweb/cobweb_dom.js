@@ -32,35 +32,24 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	
 	var parent = addedEl.parentNode;
-	if ( parent.x3dnode ) { parser.pushParent( parent.x3dnode ); }; // else leave parser.parents empty for root nodes
-	//var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
-	//var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
-	//addedNode = addedNode.rootNodes[0].getValue();
-	//if (parent.nodeName == 'Scene') { // but needed for Inline
-		parser.statement(addedEl); //check if inside grouping node ? check parent's x3dnode ?
-		//new SFNode(addedEL); parent.addChildren(SFNode) ?
-		//parser only adds uninitialized x3d nodes to scene
-		//the setup function initializes only uninitialized nodes
-		if ( parent.x3dnode ) {
-			
-			var fieldName = addedEl.getAttribute("containerField");
-			if (fieldName === null) {
-				fieldName = addedEl.x3dnode.getContainerField ();
-			}
-			var field = parent.x3dnode.getField (fieldName);
-			
-			field.setValue(addedEl.x3dnode);
+	if ( parent.x3dnode ) { 
+		var pnode = parent.x3dnode;
+		parser.pushParent( pnode );
+		parser.statement(addedEl);
+		//still need to set Value
+		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
+		if (fieldName === null) {
+			fieldName = addedEl.x3dnode.getContainerField ();
 		}
-		mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
-	//}
-	/*
-	else if (typeof parent.x3dnode.addChildren === 'function') { // other way to check if grouping node ?
-		var addChildrenField = parent.x3dnode.getField('addChildren');
-		addChildrenField.setValue(new X3D.MFNode(addedNode));
-		addedEl.x3dnode = addedNode; //importDocument() would already add it
-	}
-	else { console.log('do not know how to add: ' + addedEl.outerHTML); }
-	*/	
+		var field = parent.x3dnode.getField (fieldName);
+		
+		field.setValue(addedEl.x3dnode);	
+	} // else leave parser.parents empty for root nodes
+	else {	parser.statement(addedEl); }
+	//parser only adds uninitialized x3d nodes to scene
+	//the setup function initializes only uninitialized nodes, but only root nodes ?
+	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
+		
      	if (parent.x3dnode) { parser.popParent(); };
 	
 	//then attach event dispatchers
