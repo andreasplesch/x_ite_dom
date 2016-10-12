@@ -26,9 +26,9 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 - Most other X3D nodes can be added or removed.
 - Routes cannot be removed. It may be possible to add Routes.
 - Manipulation of USE and DEF attributes do not have the desired or any effect.
-- Inline: X3D nodes added to the scene graph via a inline node cannot be accessed since they are not part of the DOM. (TODO: EXPORT/IMPORTed nodes are a target).
+- Inline: X3D nodes added to the scene graph via a inline node are appended to the inline element and can be manipulated there.
 - Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes. 
-- Only the first scene on a web page can be controlled.
+- Muliple scenes on a web page can coexist and can be controlled.
 - Events: see below
 
 ## Events
@@ -55,6 +55,8 @@ The dispatched events do not bubble back up, eg. usually there should be no need
 
 Needs testing: [Event listeners attached to elements above the sensor element the hierarchy can receive the event. This means if there are multiple sensor (say TouchSensors) below a listener, the listener receives the events from all of the sensors of the type requested (TouchSensors). The detail.name property then can be used to identify which sensor emitted the event.]
 
+To help with attaching listeners to sensor within inlines, a new 'x3dload' event is dispatched on the document target to signal when all inlines per scene are loaded.
+
 ## TODO
 
 - working on access to Inline scenes: done
@@ -64,3 +66,7 @@ Needs testing: [Event listeners attached to elements above the sensor element th
 - multiple scenes per page: done
 - perhaps add onevent properties to DOM nodes.
 - adapt more x3dom examples: done inline_reflection
+
+## Releases
+
+0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event
