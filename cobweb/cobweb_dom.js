@@ -206,6 +206,7 @@ for (var i=0; i < sensors.length; i++) {
 }
 
 function addEventDispatchers (sensor) {
+	if (sensor.x3dnode === undefined) { return; } // check for USE sensors; they do not emit events
 	var fields = sensor.x3dnode.getFields();
 	for (var key in fields) {bindFieldCallback(fields[key], sensor)};
 }
