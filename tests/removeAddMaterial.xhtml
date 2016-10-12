@@ -74,7 +74,7 @@ function add_material() {
 
 	var mat = document.createElement("Material");
 	var app = document.querySelector("Appearance");
-	if ( mat === null) { app.appendChild(mat); }; // parses and adds node to parent appearance node's material field
+	if ( document.querySelector("Material") === null) { app.appendChild(mat); }; // parses and adds node to parent appearance node's material field
 }
 
 </script>
