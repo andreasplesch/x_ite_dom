@@ -32,7 +32,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	}
 	
 	var parent = addedEl.parentNode;
-	if (parent.x3dnode) { parser.pushParent(parent.x3dnode); }; // else leave parser.parents empty for root nodes
+	if ( parent.x3dnode ) { parser.pushParent( parent.x3dnode ); }; // else leave parser.parents empty for root nodes
 	//var addedNode = mybrowser.importDocument(addedEl); //should also add x3dnode prop
 	//var addedNode = mybrowser.createX3DFromString(addedEl.outerHTML);
 	//addedNode = addedNode.rootNodes[0].getValue();
@@ -41,6 +41,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		//new SFNode(addedEL); parent.addChildren(SFNode) ?
 		//parser only adds uninitialized x3d nodes to scene
 		//the setup function initializes only uninitialized nodes
+		if ( parent.x3dnode ) { addedEl.x3dnode.addEvent(); }
 		mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	//}
 	/*
