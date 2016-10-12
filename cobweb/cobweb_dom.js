@@ -43,16 +43,15 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		}
 		var field = parent.x3dnode.getField (fieldName);
 		
-		field.setValue(addedEl.x3dnode);	
+		field.setValue(addedEl.x3dnode);
+		parser.popParent();
 	} // else leave parser.parents empty for root nodes
 	else {	parser.statement(addedEl); }
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes, but only root nodes ?
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 		
-     	if (parent.x3dnode) { parser.popParent(); };
-	
-	//then attach event dispatchers
+     	//then attach event dispatchers
 	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
 	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
 	var sensors = addedEl.querySelectorAll(sensorSelector);
