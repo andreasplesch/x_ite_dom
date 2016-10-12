@@ -55,7 +55,7 @@ The dispatched events do not bubble back up, eg. usually there should be no need
 
 Needs testing: [Event listeners attached to elements above the sensor element the hierarchy can receive the event. This means if there are multiple sensor (say TouchSensors) below a listener, the listener receives the events from all of the sensors of the type requested (TouchSensors). The detail.name property then can be used to identify which sensor emitted the event.]
 
-To help with attaching listeners to sensor within inlines, a new 'x3dload' event is dispatched on the document target to signal when all inlines per scene are loaded.
+To help with attaching listeners to sensors within inlines, a new 'x3dload' event is dispatched on the document target to signal when all inlines per scene are appended to the document.
 
 ## TODO
 
