@@ -43,7 +43,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		//the setup function initializes only uninitialized nodes
 		if ( parent.x3dnode ) {
 			
-			var fieldName = addedeEl.getAttribute("containerField");
+			var fieldName = addedEl.getAttribute("containerField");
 			if (fieldName === null) {
 				fieldName = addedEl.x3dnode.getContainerField ();
 			}
