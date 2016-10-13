@@ -3,23 +3,22 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>dom access for cobweb</title>
+		<title>inline in inline access for cobweb</title>
 
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 		<meta http-equiv="Pragma" content="no-cache"/>
 		<meta http-equiv="Expires" content="0"/>
 		<meta charset="utf-8"/>
-		<link rel="stylesheet" type="text/css"
-			href="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.css"/>
 		<script type="text/javascript" 
-			src="https://rawgit.com/andreasplesch/cobweb/inline/stable/1/1.28/APcobweb.js">
+			src="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.min.js">
 		</script>
-		<!--script type="text/javascript" 
-			src="https://rawgit.com/andreasplesch/cobweb/master/stable/latest/cobweb.js">
-		</script-->
-		<script type="text/javascript" src="../cobweb/cobweb_dom.js"></script>
-
-<style id="jsbin-css">
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.css"/>
+	
+<style >
 html, body {
 	margin: 0px;
 	padding: 0px;
@@ -32,7 +31,7 @@ body {
 	background: black;
 	color: white;
 }
-X3D {
+X3DCanvas {
 	background: #414141;
 	width: 600px;
 	height: 400px;
@@ -48,7 +47,7 @@ X3D {
 	<button onclick='rotateDeer()'>Rotate Deer</button>
 	<button onclick='rotateUseDeer()'>Rotate Inlined Deer</button>
 	
-	<X3D id='dummy'>
+	<X3DCanvas >
 		<Scene>
 			<Background DEF="WO_World"
 		            		groundColor="0.8 0.8 0.8"
@@ -66,7 +65,7 @@ X3D {
 			because this is currently the choice of the choice. We will continuously keep you informed <br/>
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
-	</X3D>
+	</X3DCanvas>
 </body>
 <script>
 //inlines are added as child of inline element
