@@ -65,8 +65,8 @@ To help with attaching listeners to sensors within inlines, a new 'x3dload' even
 - allow mutated attributes to be parsed objects, eg. skip parsing; useful if X3D math function are used on native types
 - multiple scenes per page: done
 - perhaps add onevent properties to DOM nodes.
-- adapt more x3dom examples: done inline_reflection, addremoveNodes, jquery
-- clean up and organise tests
+- adapt more x3dom examples: done inline_reflection, addremoveNodes, jquery done
+- clean up and organise tests: updated all to v0.4
 
 ## Releases
 
