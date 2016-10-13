@@ -5,10 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>JQuery Manipulation</title>
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/create3000/cobweb/master/stable/1/1.26/cobweb.css"/>
-    <script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script>
-		
-  <style id="jsbin-css">
+    	<script type="text/javascript" 
+	src="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.min.js">
+	</script>
+	<script type="text/javascript" 
+		src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+	</script>
+	<link rel="stylesheet" type="text/css"
+		href="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.css"/>
+	
+  <style>
   html, body {
   	margin: 0px;
   	padding: 0px;
@@ -23,7 +29,7 @@
   	color: white;
   }
   
-  X3D {
+  X3DCanvas {
   	background: #414141;
   	height: 50%;
   	width: 400px;
@@ -49,7 +55,7 @@
 
     <h1>JQuery Manipulation: Using jQuery to manipulate an Attribute</h1>
 
-    <X3D >
+    <X3DCanvas >
         <Scene DEF='scene'>
             <Viewpoint position='0 0 10' />
 			<Background skyColor='1 1 1' />
@@ -62,7 +68,7 @@
                 </Shape>
             </Transform>
         </Scene>
-    </X3D>
+    </X3DCanvas>
 	
     <div id="ctrlContainer">
         <p>Change the color of the cube using the RGB sliders, which updates the "diffuseColor" attribute of the Material node using jQuery.</p>
@@ -78,48 +84,10 @@
 	 
   
 </body>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <link type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/humanity/jquery-ui.css" rel="stylesheet" />
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-	<script>
-$(function(){
-
-	X3D(function(el){
-		var mybrowser = X3D.getBrowser(el);
-		var myscene = mybrowser.createScene(); //probably not needed
-		//myx3d = $('Scene')[0];
-		var myx3d = document.querySelector('Scene');
-		mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
-		// select the target node
-		var target = myx3d;
-		X3D.require(
-			["cobweb/Parser/XMLParser"],
-			function(XMLParser) {
-				// create an observer instance
-				var observer = new MutationObserver(function(mutations) {
-					mutations.forEach(function(mutation) {
-					//map attribute to x3dnode field
-						console.log(mutation);
-						var el = mutation.target;
-	    					var name = mutation.attributeName;
-	    					var attribute = el.attributes.getNamedItem(name);
-		    				var val  = el.attributes.getNamedItem(name).value ;
-		    				var parser = new XMLParser (mybrowser.currentScene, el);
-		    				parser.attribute(attribute, el.x3dnode);//almost there
-		    				//only underscore gets update
-		    				var field = el.x3dnode.getField(name);
-		    				field.addEvent(); // set_field event
-		    				//el.x3dnode[name] = val.split(" ");
-				  	});
-				});
-				// configuration of the observer:
-				var config = { attributes: true, childList: true, characterData: true, subtree: true };
-				// pass in the target node, as well as the observer options
-				observer.observe(target, config);
-			}
-		);
-	});
-	
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<link type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/humanity/jquery-ui.css" rel="stylesheet" />
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script>
 	          // Create the sliders
             $(".slider").slider({min: 0, max: 1, step: 0.01, slide: function(e, ui) {
                 var newCol =   $("#redSlider").slider('option', 'value') + " " 
