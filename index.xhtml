@@ -9,21 +9,16 @@
 		<meta http-equiv="Pragma" content="no-cache"/>
 		<meta http-equiv="Expires" content="0"/>
 		<meta charset="utf-8"/>
-		<link rel="stylesheet" type="text/css" href="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.css"/>
-		<!--link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css"/-->
-		<!--script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script-->
-		<script type="text/javascript"
-		src="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.js">
-		</script>
-		<!--script type="text/javascript" src="./cobweb/cobweb_dom.js"></script-->
-		<!--script type="text/javascript" 
-		src="https://rawgit.com/andreasplesch/cobweb_dom/40851431a8a3c6dee830dca06083c2aec9c188ab/cobweb/cobweb_dom.js">
-		</script-->
 		<script type="text/javascript" 
-		src="https://rawgit.com/andreasplesch/cobweb_dom/master/release/cobweb_dom.0.3.js">
+			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.min.js">
 		</script>
-		
-<style id="jsbin-css">
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+
+<style >
 html, body {
 	margin: 0px;
 	padding: 0px;
@@ -57,8 +52,8 @@ X3D {
 	<button onclick='remove_last_box()'>remove box</button>
 	<button onclick='remove_last_material()'>remove material</button>
 	
-		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
-		<X3D id='dummy'>
+	<X3DCanvas>
+<X3D>
 	<Scene>
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
@@ -74,12 +69,13 @@ X3D {
 		<Transform id='shell'>
 		</Transform>
 	</Scene>
+</X3D>
 			<p class="fallback">
 				Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
 				because this is currently the choice of the choice. We will continuously keep you informed <br/>
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
-		</X3D>
+</X3DCanvas>
 </body>
 <script>
 console.log('START')
@@ -104,7 +100,7 @@ function add_box() {
 	var app = document.createElement('Appearance');
 	var mat = document.createElement('Material');
 	var box = document.createElement('Box');
-	var shell = document.querySelector('Scene');
+	var shell = document.querySelector('#shell');
 	app.appendChild(mat);
 	shape.appendChild(app);
 	shape.appendChild(box);
