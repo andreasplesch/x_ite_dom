@@ -9,23 +9,18 @@
 		<meta http-equiv="Pragma" content="no-cache"/>
 		<meta http-equiv="Expires" content="0"/>
 		<meta charset="utf-8"/>
-		<link rel="stylesheet" type="text/css"
-			href="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.css"/>
-		<!--link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css"/-->
-		<!--script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script-->
-		<!--should have contextmenu fixed -->
-		<!--script type="text/javascript" 
-			src="https://rawgit.com/andreasplesch/cobweb/xhtml/stable/1/1.28/APcobweb.js">
-		</script-->
 		<script type="text/javascript" 
-			src="https://rawgit.com/create3000/cobweb/master/stable/1/1.28/cobweb.js"></script>
-		<script type="text/javascript" src="../cobweb/cobweb_dom.js"></script>
-		<!--script type="text/javascript"
-			src="https://raw.githubusercontent.com/andreasplesch/cobweb_dom/1d15891ba2898d99b95e6fa3bad795c6d53859c9/cobweb/cobweb_dom.js">
-		</script-->
+			src="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.min.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.css"/>
+	
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		
-<style id="jsbin-css">
+<style>
 html, body {
 	margin: 0px;
 	padding: 0px;
@@ -40,7 +35,7 @@ body {
 	color: white;
 }
 
-X3D {
+X3DCanvas {
 	background: #414141;
 	width: 600px;
 	height: 400px;
@@ -59,8 +54,7 @@ X3D {
 	<button onclick='remove_last_box()'>remove box</button>
 	<button onclick='remove_last_material()'>remove material</button>
 	
-		<!--X3DCanvas url='"http://www.web3d.org/x3d-resources/content/examples/Basic/ChemicalMarkupLanguage/VitaminK.x3d"'-->
-		<X3D id='dummy'>
+<X3DCanvas>
 	<Scene>
 		<Viewpoint></Viewpoint>
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
@@ -82,7 +76,6 @@ X3D {
 		<Transform id='shell'>
 		</Transform>
 <!--http://www.web3d.org/x3d/content/examples/Basic/ScriptConformance/TouchSensorIsOverEventECMAScript.html-->
-
 <Group>
       <Shape>
             <Appearance>
@@ -92,6 +85,7 @@ X3D {
       </Shape>
       <TouchSensor DEF='TS'/>
 </Group>
+<!-- type='application/x-myscript' is requried to escape the web browser's direct execution -->
 <Script type='application/x-vrmlscript' DEF='SC'>
       <field name='isOver' type='SFBool' accessType='inputOnly'/>
       <field name='diffuseColor_changed' type='SFColor' accessType='outputOnly'/>
@@ -111,7 +105,7 @@ function isOver(val)
     }
 }
 
-]]>
+	]]>
 </Script>
 <ROUTE fromNode='TS' fromField='isOver' toNode='SC' toField='isOver'/>
 <ROUTE fromNode='SC' fromField='diffuseColor_changed' toNode='MAT' toField='set_diffuseColor'/> 
@@ -122,7 +116,7 @@ function isOver(val)
 				because this is currently the choice of the choice. We will continuously keep you informed <br/>
 				on technical developments and as soon as Cobweb is running in other browser too.
 			</p>
-		</X3D>
+</X3DCanvas>
 
 <div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
