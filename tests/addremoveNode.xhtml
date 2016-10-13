@@ -1,21 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
+<head>
 	<meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
     
 		<title>Simple WebGL example</title>
 		<style>
 		p.case { clear: both; border-top: 1px solid #888; }
-		X3D {
+		X3DCanvas {
 		width: 600px;
 		height: 400px;
 		}
 		</style>
-        <link rel="stylesheet" type="text/css" href="./cobweb/cobweb.css" />
-	<script type="text/javascript" src="./cobweb/APcobweb.1.26.js"></script>
-	<script type="text/javascript" src="./cobweb/cobweb_dom.js"></script>
-	</head>
+	        <script type="text/javascript" 
+			src="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.min.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.css"/>
+</head>
        
 <body>
 
@@ -24,7 +29,7 @@
 	simple example which shows how to add/remove nodes using a simple DOM appendChild()/removeChild() function
 	</p>
 	<p class="case"> 
-		<X3D id="boxes" >
+		<X3DCanvas id="boxes" >
 			<Scene>
 				<Viewpoint position='4.88104 4.59865 7.4181' orientation='-0.69017 0.723467 -0.0161809 0.735134' ></Viewpoint>
 				<Background DEF='bgnd' transparency='0' skyColor='1 1 1' ></Background>
@@ -35,7 +40,7 @@
 					</Shape>
 				</Transform> 
 			</Scene>
-		</X3D>
+		</X3DCanvas>
 	</p>
 	
 	
