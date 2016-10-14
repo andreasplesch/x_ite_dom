@@ -17,10 +17,10 @@ function processRemovedNode(removedEl){
 		//use more convenient browser.deleteRoute(), SAI onlyhas  deleteRoute(route)
 		//ideally just removedEl.x3dRoute.getScene().deleteRoute(removedEl.x3dRoute);
 		var
-			sourceNodeName      = element .getAttribute ("fromNode"),
-			sourceField         = element .getAttribute ("fromField"),
-			destinationNodeName = element .getAttribute ("toNode"),
-			destinationField    = element .getAttribute ("toField");
+			sourceNodeName      = removedEl .getAttribute ("fromNode"),
+			sourceField         = removedEl .getAttribute ("fromField"),
+			destinationNodeName = removedEl .getAttribute ("toNode"),
+			destinationField    = removedEl .getAttribute ("toField");
 		//only for Routes in the main scene, not inlines
 		// for inline routes, best to save route in el.x3droute property for easy later access
 		var
