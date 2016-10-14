@@ -2,12 +2,19 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-        <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+        	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<title>Multiple animations with a single TimeSensor and fanOut</title>
-        <link rel="stylesheet" type="text/css" href="x3dom.css" />
+		<script type="text/javascript" 
+			src="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.min.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/d7680aef7575a541d50a0267005ecb4fe15105e3/cobweb.js/cobweb.css"/>
 	</head>
-       
+
 <body>
 
     <h1>Multiple animations with a single TimeSensor and fanOut</h1>
@@ -15,7 +22,8 @@
 	<p class="case">
 	    <!-- Use the same "x", "y", "width" and "height" attributes as SVG.
              Optionally support the "viewBox" and "preserveAspectRatio" just like SVG -->
-		<X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" id="spheres" showLog='false' showStat="true" x="0px" y="0px" width="400px" height="400px">
+<X3DCanvas style="width: 400px; height: 400px">
+<X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" id="spheres" showLog='false' showStat="true" x="0px" y="0px" width="400px" height="400px">
  <Scene DEF='scene'>
 	<Viewpoint position='16.0328 13.056 34.2417' orientation='-0.624839 0.780206 0.0292506 0.543473' />
     <Background skyColor='1 1 1'/>
@@ -139,15 +147,10 @@
     <ROUTE fromNode='ROTOR_D' fromField='value_changed' toNode='XFORM1d' toField='rotation'/>
     <ROUTE fromNode='ROTOR_D' fromField='value_changed' toNode='XFORM2d' toField='rotation'/>
   </Scene>
-        </X3D>
+</X3D>
+</X3DCanvas>
+
 	</p>
 	
-
-	<p class="case"> &nbsp; </p>
-	
-	<script type="text/javascript" src="x3dom.js"></script>
-  
-
-
 </body>
 </html>
