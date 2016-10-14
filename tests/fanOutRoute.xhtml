@@ -20,7 +20,7 @@
     <h1>Multiple animations with a single TimeSensor and fanOut</h1>
 	
 	<p class="case">
-speed: <input id='speed' type='range' />
+duration: <input id='duration' type='range' />
 <X3DCanvas style="width: 400px; height: 400px">
 <X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" id="spheres" showLog='false' showStat="true" x="0px" y="0px" width="400px" height="400px">
  <Scene DEF='scene'>
@@ -151,9 +151,12 @@ speed: <input id='speed' type='range' />
 
 	</p>
 <script>
-	var speed = document.querySelector('#speed');
+	var period = document.querySelector('#duration');
 	var ts = document.querySelector("[DEF='TIMER']");
-	ts.setAttribute('cycleInterval', speed.value);
+	//ts.setAttribute('cycleInterval', period.value);
+	period.addEventListener('change', function(e) {
+		ts.setAttribute('cycleInterval', e.value);
+	});
 </script>
 	
 </body>
