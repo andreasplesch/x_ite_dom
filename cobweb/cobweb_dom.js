@@ -16,6 +16,8 @@ function processRemovedNode(removedEl){
 }
 
 function processAddedNode(addedEl, parser, mybrowser) {
+	//only process element nodes
+	if ( addedEl.nodeType !== Node.ELEMENT_NODE ) { return; }
 	
 	//first need to look for Inline doms to add to dom
 	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
