@@ -11,6 +11,26 @@ for (i = 0; i < el.length; ++i) {
 function relayDOM (el) {
 			
 function processRemovedNode(removedEl){	
+	
+	// remove ROUTE
+	if ( removedEl.nodeName == 'ROUTE' ) {
+		//use more convenient browser.deleteRoute(), SAI onlyhas  deleteRoute(route)
+		//ideally just removedEl.x3dRoute.getScene().deleteRoute(removedEl.x3dRoute);
+		var
+			sourceNodeName      = element .getAttribute ("fromNode"),
+			sourceField         = element .getAttribute ("fromField"),
+			destinationNodeName = element .getAttribute ("toNode"),
+			destinationField    = element .getAttribute ("toField");
+		//only for Routes in the main scene, not inlines
+		// for inline routes, best to save route in el.x3droute property for easy later access
+		var
+			sourceNode      =  mybrowser.currentScene.getLocalNode (sourceNodeName),
+			destinationNode =  mybrowser.currentScene.getLocalNode (destinationNodeName);
+
+		mybrowser.deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
+		return;
+	}
+		
 	removedEl.x3dnode.dispose(); // works also for root nodes since scene is effectively a MFNode in cobweb
 	// all done! cobweb has TODO for Routes and such
 }
