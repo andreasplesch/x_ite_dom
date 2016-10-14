@@ -159,6 +159,12 @@ duration: <input id='duration' type='range' />
 		//ts.setAttribute('cycleInterval', e.target.value);
 		//ts.setAttribute('enabled', 'true');
 	});
+	ts.addEventListener('x3dTimeSensor_enabled', function(e) {
+		if (e.detail.value === false) {
+			ts.setAttribute('cycleInterval', period.value);
+			ts.setAttribute('enabled', 'true');
+		}
+	});
 </script>
 	
 </body>
