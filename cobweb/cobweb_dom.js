@@ -1,41 +1,120 @@
 //cobweb-dom access
 //load after cobweb.js
 $(function(){ // make sure jquery is ready 
-	X3D(function(el){ // make sure X3D is ready
+	X3D(function(el){ // make sure X3D is ready, el has all x3d elements
 
-function processRemovedNode(removedEl){
-	
+//go through all passed x3dcanvas elements
+for (i = 0; i < el.length; ++i) {
+	relayDOM(el[i]);
+}
+
+function relayDOM (el) {
+			
+function processRemovedNode(removedEl){	
 	removedEl.x3dnode.dispose(); // works also for root nodes since scene is effectively a MFNode in cobweb
 	// all done! cobweb has TODO for Routes and such
 }
 
 function processAddedNode(addedEl, parser, mybrowser) {
-	//do not add to x3d if child of inline
-	//if (addedEl.closest('Inline') !== null) {return} // .closest experimental
-	//climb up to check if inline
-	//see https://github.com/jonathantneal/closest/blob/master/closest.js
-	if (findAncestor (addedEl, 'Inline')) { return; }
-	parser.statement(addedEl);
-	//parser only adds uninitialized x3d nodes to scene
-	//the setup function initializes only uninitialized nodes
-	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
-	//attach fieldcallbacks to new sensor nodes
-	if (addedEl.nodeName == 'Inline') {appendInlineDOM (addedEl);}
-}
-
-function findAncestor (element, name) {
-	element = element.parentNode;
-	while (element && element.nodeType == 1) { //probably bad for performance
-		if (element.nodeName == name) { return element; }
-		element = element.parentNode;
+	
+	//first need to look for Inline doms to add to dom
+	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
+	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
+	for ( var i = 0; i < inlines.length; i++ ) {
+		processInlineDOM(inlines[i]) ;
 	}
-	return null;
+	
+	//do not add to scene if already parsed as child of inline
+	//although Scene does not have .x3dnode so should never happen ?
+	if ( addedEl.xdnode || addedEl.nodeName == 'Scene' ) { 
+		if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); } //only add dom
+		return; 
+	}
+	
+	var parent = addedEl.parentNode;
+	if ( parent.x3dnode ) { 
+		var pnode = parent.x3dnode;
+		parser.pushParent( pnode );
+		parser.statement(addedEl);
+		//still need to set Value
+		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
+		if (fieldName === null) {
+			fieldName = addedEl.x3dnode.getContainerField ();
+		}
+		var field = parent.x3dnode.getField (fieldName);
+		
+		field.setValue(addedEl.x3dnode);
+		parser.popParent();
+	} // else leave parser.parents empty for root nodes
+	else {	
+		parser.statement(addedEl); 
+	}
+	//parser only adds uninitialized x3d nodes to scene
+	//the setup function initializes only uninitialized nodes, but only root nodes ?
+	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
+	
+	//then attach event dispatchers
+	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
+	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
+	var sensors = addedEl.querySelectorAll(sensorSelector);
+	for (var i=0; i < sensors.length; i++) {
+		var sensor = sensors[i];
+		addEventDispatchers(sensor);
+	}
+	
 }
 		
-function appendInlineDOM (element) {
+function processInlineDOM (element) {
+	// check for USE inline as it does not have dom
+	if (element.x3dnode === undefined) { return; }
+	// individual callback per inline
+	//var callback = appendInlineDOM.bind(this, element, wList.getValue().slice()) ;
+	var callback = appendInlineDOM.bind(this, element) ;
+	isLoadedField.addFieldCallback("loaded" + element.x3dnode.getId(), callback) ;
+	//just add to loadsensor watchlist; triggers isLoaded event after loading
+	wList.push(element.x3dnode);
+	
 	return;
 }
 		
+//function appendInlineDOM (element, wListValue, isLoadedValue) {
+function appendInlineDOM (element, isLoadedValue) {
+	//now loaded and in .dom
+	//Inline must have Scene
+	var node = element.x3dnode;
+	element.appendChild(node.dom.querySelector('Scene')) ; // or root nodes ?
+	//not needed any more, remove callback
+	isLoadedField.removeFieldCallback("loaded" + node.getId()) ;
+	//remove from watchlist
+	// restore passed, original watchlist
+	//wList.setValue(wListValue) ; // seems to work
+	// instead look for node and remove it
+	var wListUpdate = wList .getValue() .filter( 
+		function(val) { return val .getValue() !== node ; }
+		);
+	wList .setValue(wListUpdate);
+	//check if all inlines are appended and dispatch event; would be also dispatched later whenever
+	if (wListUpdate.length === wList0.length && element.querySelector('Inline') === null) { // also check loadCount ?
+		var evt = new Event("x3dload");
+		evt.element = mybrowser.getElement();
+		document.dispatchEvent(evt);
+		console.log(evt);
+	}
+	//    new Event("X3Dload")); // or so, add .browser = browser ?
+	//}
+	
+	//attach sensor callbacks
+	//create processSensor, and use initially and here
+	var sensors = element.querySelectorAll(sensorSelector);
+	for (var i=0; i < sensors.length; i++) {
+		var sensor = sensors[i];
+		addEventDispatchers(sensor);
+	}
+
+	//any inlines in appended dom are picked up when Scene is a addedNode for Mutations
+	return;
+}
+	
 function processAttributes(mutation, el, parser){
 	var name = mutation.attributeName; // TODO: check if mutation can have multiple changed attributes
 	var attribute = el.attributes.getNamedItem(name);
@@ -72,15 +151,15 @@ function processMutation(mutation, mybrowser) {
 		}
 	);
 }
-		
+	
 var mybrowser = X3D.getBrowser(el);
-//mybrowser.createScene();
-//var fullProfile = mybrowser.getProfile("Full");
-//mybrowser.currentScene.setProfile(fullProfile);
-var myx3d = document.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
-mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+var myx3d = el.querySelector('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+if (myx3d === null) { return; } // if src or url was used
+//mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
 //workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
-var importScene = mybrowser.currentScene;
+//update to spec. conforming, latest use
+var importScene = mybrowser.importDocument(myx3d); //now also attached x3dnode property to each node element
+//var importScene = mybrowser.currentScene;
 mybrowser.replaceWorld(importScene);
 
 // create an observer instance
@@ -91,68 +170,48 @@ var observer = new MutationObserver(function(mutations) {
 });
 		
 //add internal inline DOMs to document DOM before starting to observe mutations.
-//CHANGE: start immediately to observe but deal with adding DOMs in observer.
 		
-		
-//browser has attached LoadSensor
+//browser has attached LoadSensor; setup for use with inlines
 var loadsensor = mybrowser.getLoadSensor();
-//use isLoaded field to detect when all inlines are loaded
-//actually does not sense inlines by default; add inlines to LoadSensor
-//var inlines = document.querySelectorAll('Inline');
-var wList = loadsensor.getField('watchList');
-var isLoadedField = loadsensor.getField("isLoaded");
-isLoadedField.addFieldCallback("isLoaded", appendInternalDoms);
+var wList = loadsensor.getField('watchList'); // is used to detect when inline is loaded
+var wList0 = wList.getValue();
+var isLoadedField = loadsensor.getField("isLoaded"); // is used to add callbacks to
 
-function appendInternalDoms (isLoadedValue) {
-	//if (isLoadedValue) { //probably better to also try if isLoaded = false
-	var allAppended = true;
-	var inlines = document.querySelectorAll('Inline');
-	for (var i = 0; i < inlines.length; i++) {
-		var iEl = inlines[i];
-		//check if iEl already has child scene
-		if (iEl.querySelectorAll('Scene').length == 0) {
-			if (iEl.x3dnode) { ;// USE does not have x3dnode
-				//not yet loaded
-				//put on watchList	
-				wList.setValue(wList.getValue().push(iEl.x3dnode)); // will trigger isLoaded event for this inline
-				allAppended = false;
-				// check if dom available from previous isLoaded
-				if (iEl.x3dnode.dom) {
-					iEl.appendChild(iEl.x3dnode.dom.querySelector('Scene'));
-				}
-			}
-		}
-	}
-	if (allAppended) {
-		isLoadedField.removeFieldCallback("isLoaded");
-		// configuration of the observer:
-		var config = { attributes: true, childList: true, characterData: false, subtree: true };
-		// pass in the target node, as well as the observer options
-		var target = document.querySelector('Scene'); // reget target
-		observer.observe(target, config); //start observing only after DOM is fully populated
-		//TODO
-		//attach event callbacks here afer all is loaded
-		//so inlined sensor also get included
-	}
-}
+// configuration of the observer:
+var config = { attributes: true, childList: true, characterData: false, subtree: true };
+// pass in the target node, as well as the observer options
+var target = myx3d ; // document.querySelector('Scene'); // reget target
+observer.observe(target, config); //start observing only after DOM is fully populated
 
 //events
+
 //var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
 //use key in X3D.X3DConstants and match Sensor
 
 //construct selector
-var selector = "Anchor"; // other special names ?
+var sensorSelector = "Anchor"; // other special names ?
 for (var key in X3D.X3DConstants) {
-	if (key.endsWith('Sensor')) {selector += "," + key;}
+	if (key.endsWith('Sensor')) {sensorSelector += "," + key;}
 }
 
-var sensors = myx3d.querySelectorAll(selector); //TODO any kind of Sensor
+//add inline doms from initial scene
+var inlines = myx3d.querySelectorAll('Inline');
+for (var i = 0; i < inlines.length; i++) {
+	processInlineDOM(inlines[i]);
+}
+
+var sensors = myx3d.querySelectorAll(sensorSelector);
 for (var i=0; i < sensors.length; i++) {
 	var sensor = sensors[i];
-	//var x3dsensor = sensor.x3dnode ;
+	addEventDispatchers(sensor);
+}
+
+function addEventDispatchers (sensor) {
+	if (sensor.x3dnode === undefined) { return; } // check for USE sensors; they do not emit events
 	var fields = sensor.x3dnode.getFields();
 	for (var key in fields) {bindFieldCallback(fields[key], sensor)};
 }
+
 function bindFieldCallback (field, sensor) {
 	/*var ctx = {};
 	ctx. field = field;
@@ -180,31 +239,9 @@ function fieldcallback (field, sensor, value){
 	//evt.x3dnode = sensor.x3dnode; 
 	sensor.dispatchEvent(evt);
 }
+
+}
+
 });
 });
 
-
-//define callbacks for all fields in all sensor nodes
-//find all sensor nodes by looking for isActive field ?
-//or just match Sensor in name of elements ?
-//then go through all (relevant?) fields
-//getFields().forEach
-//and define callbacks
-//field.addCallback('callback'+fieldname, callbackfunction)
-//function callbackfunction(eventvalue) {
-	// now dispatch dom event with name fieldname
-	// and provide eventvalue
-	// plus useful other fieldvalues
-	// get parent of field: field.getParents()
-	// key in parents
-	// or x3dnode from sensor element if in scope
-	// return {value: eventvalue; fields: x3dnode.getFields()}
-	//first mak new event
-	//ev = new Event(fieldname)
-	//add properties
-	//ev.value = eventvalue
-	//ev.fields = x3dnode.getFields()
-	//ev.x3dnode = x3dnode
-	//then dispatch
-	//element.dispatch(Event)
-	// then it should be possible to use Eventlistener
