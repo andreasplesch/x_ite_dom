@@ -155,7 +155,7 @@ duration: <input id='duration' type='range' />
 	var ts = document.querySelector("[DEF='TIMER']");
 	//ts.setAttribute('cycleInterval', period.value);
 	period.addEventListener('change', function(e) {
-		ts.setAttribute('cycleInterval', e.value);
+		ts.setAttribute('cycleInterval', e.target.value);
 	});
 </script>
 	
