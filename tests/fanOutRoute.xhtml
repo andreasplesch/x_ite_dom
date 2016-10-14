@@ -149,8 +149,12 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
   </Scene>
 </X3D>
 </X3DCanvas>
-
 	</p>
+	<button id='freezeRotorA'>freeze X3D</button>
+	<button id='freezeRotorB'>freeze webgl</button>
+	<button id='freezeRotorC'>freeze w3c</button>
+	<button id='freezeRotorD'>freeze web3d</button>
+	
 <script>
 	var period = document.querySelector('#duration');
 	var ts = document.querySelector("[DEF='TIMER']");
@@ -166,6 +170,27 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
 			ts.setAttribute('enabled', 'true');
 		}
 	});
+	document.querySelector('#freezeRotorA').addEventListener('click', freezeA);
+	document.querySelector('#freezeRotorB').addEventListener('click', freezeB);
+	document.querySelector('#freezeRotorC').addEventListener('click', freezeC);
+	document.querySelector('#freezeRotorD').addEventListener('click', freezeD);
+	var freezeA = function (e) {
+		var el = document.querySelector('ROUTE[fromNode="TIMER"][toNode="ROTOR_A"]');
+		el.remove();
+	}
+	var freezeB = function (e) {
+		var el = document.querySelector('ROUTE[fromNode="TIMER"][toNode="ROTOR_B"]');
+		el.remove();
+	}
+	var freezeC = function (e) {
+		var el = document.querySelector('ROUTE[fromNode="TIMER"][toNode="ROTOR_C"]');
+		el.remove();
+	}
+	var freezeD = function (e) {
+		var el = document.querySelector('ROUTE[fromNode="TIMER"][toNode="ROTOR_D"]');
+		el.remove();
+	}
+	
 </script>
 	
 </body>
