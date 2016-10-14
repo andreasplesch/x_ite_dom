@@ -170,10 +170,10 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
 			ts.setAttribute('enabled', 'true');
 		}
 	});
-	document.querySelector('#freezeRotorA').addEventListener('click', freezeA);
-	document.querySelector('#freezeRotorB').addEventListener('click', freezeB);
-	document.querySelector('#freezeRotorC').addEventListener('click', freezeC);
-	document.querySelector('#freezeRotorD').addEventListener('click', freezeD);
+	document.querySelector('#freezeRotorA').addEventListener('onclick', freezeA);
+	document.querySelector('#freezeRotorB').addEventListener('onclick', freezeB);
+	document.querySelector('#freezeRotorC').addEventListener('onclick', freezeC);
+	document.querySelector('#freezeRotorD').addEventListener('onclick', freezeD);
 	var freezeA = function (e) {
 		var el = document.querySelector('ROUTE[fromNode="TIMER"][toNode="ROTOR_A"]');
 		el.remove();
