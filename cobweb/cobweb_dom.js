@@ -55,6 +55,15 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	
 	//create new parser in here to use the correct executioncontext in case of inline
 	//how does inline execution context get merged into main execution context ?
+	//like this: this = inline node
+	/* // eg. nothing needed for non root nodes; .rootNodes needs to be updated if root node added
+	this .scene .rootNodes .addInterest (this .group .children_, "setValue");
+	this .group .children_ = this .scene .rootNodes;
+
+	this .set_live__ ();
+
+	this .getBrowser () .addBrowserEvent ();
+	*/
 	var parent = addedEl.parentNode;
 	if ( parent.x3dnode ) { 
 		var pnode = parent.x3dnode;
