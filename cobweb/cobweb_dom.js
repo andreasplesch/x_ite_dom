@@ -53,6 +53,8 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		return; 
 	}
 	
+	//create new parser in here to use the correct executioncontext in case of inline
+	//how does inline execution context get merged into main execution context ?
 	var parent = addedEl.parentNode;
 	if ( parent.x3dnode ) { 
 		var pnode = parent.x3dnode;
