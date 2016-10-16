@@ -95,7 +95,9 @@ X3DCanvas {
 		var boxShape = document.createElement('Shape');
 		var box = document.createElement('Box');
 		boxShape.appendChild(box); // no material
-		InlineDeerScene.appendChild(boxShape);
+		InlineDeerScene.appendChild(boxShape); // as root node
+		var DeerTransform = document.querySelector("[DEF='Deer_Armature_TRANSFORM']");
+		DeerTransform.appendChild(boxShape.cloneNode());
 	}
 	
 	function rotateDeer() {
