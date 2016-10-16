@@ -76,7 +76,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		}
 		var field = parent.x3dnode.getField (fieldName);
 		
-		field.setValue(addedEl.x3dnode);
+		field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
 		parser.popParent();
 	} // else leave parser.parents empty for root nodes
 	else {	
