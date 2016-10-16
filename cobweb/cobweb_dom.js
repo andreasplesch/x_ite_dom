@@ -80,6 +80,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		parser.popParent();
 	} // else leave parser.parents empty for root nodes
 	else {	
+		//get correct executioncontext
 		parser.statement(addedEl); 
 	}
 	//parser only adds uninitialized x3d nodes to scene
