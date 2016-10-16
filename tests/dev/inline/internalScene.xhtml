@@ -50,6 +50,7 @@ X3DCanvas {
 	<button onclick='addDeer()'>Add one independant deer</button>
 	<button onclick='addUseDeer()'>Add one linked deer</button>
 	<button onclick='rotateUseDeer()'>rotate linked deer</button>
+	<button onclick='addInternalBox()'>add box inside deer inline</button>
 	
 	<X3DCanvas>
 		<Scene>
@@ -82,6 +83,14 @@ X3DCanvas {
 	var urot = 0;
 	var lrot = 0;
 	var range = 10;
+	
+	function addInternalBox() {
+		var InlineDeerScene = documeent.querySelector("[DEF='singleDeer'] Scene");
+		var boxShape = document.createElement('Shape');
+		var box = document.createElement('Box');
+		boxShape.appendChild(box); // no material
+		InlineDeerScene.appendChild(boxShape);
+	}
 	
 	function rotateDeer() {
 		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
