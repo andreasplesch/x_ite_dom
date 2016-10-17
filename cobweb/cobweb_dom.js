@@ -78,9 +78,14 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		
 		field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
 		parser.popParent();
-	} // else leave parser.parents empty for root nodes
-	else {	
+	} 
+	else {	// root node
 		//get correct executioncontext
+		if (parent.parentNode.nodeName == 'Inline') {
+			var inlineScene = parent.parentNode.x3dnode.getInternalScene();
+			parser.pushExecutionContext(inlineScene);
+			inlineScene.setup();
+		}
 		parser.statement(addedEl); 
 	}
 	//parser only adds uninitialized x3d nodes to scene
