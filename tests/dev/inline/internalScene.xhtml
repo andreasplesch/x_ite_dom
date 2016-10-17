@@ -100,6 +100,7 @@ X3DCanvas {
 		var DeerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		var coneShape = document.createElement('Shape');
 		var cone = document.createElement('Cone');
+		coneShape.appendChild(cone);
 		DeerTransform.appendChild(coneShape); // as children field value
 	}
 	
