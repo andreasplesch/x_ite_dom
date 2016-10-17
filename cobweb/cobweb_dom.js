@@ -80,20 +80,20 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		parser.popParent();
 	} 
 	else {	// root node
-		//get correct executioncontext
+		// get correct executioncontext
 		var nodeScene;
 		if (parent.parentNode.nodeName == 'Inline') {
 			nodeScene = parent.parentNode.x3dnode.getInternalScene();
 			parser.pushExecutionContext(nodeScene);
-			//inlineScene.setup();
+			parser.statement(addedEl);
+			nodeScene.setup();
+			parser.popExecutionContext(); // probably not necessary since no more parsing
 		}
-		else { nodeScene = mybrowser.currentScene; }
-		parser.statement(addedEl);
-		nodeScene.setup();
+		else { parser.statement(addedEl); }
 	}
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes, but only root nodes ?
-	//mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
+	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	
 	//then attach event dispatchers
 	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
