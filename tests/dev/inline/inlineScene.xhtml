@@ -45,12 +45,7 @@ X3DCanvas {
 </style>
 </head>
 <body>
-	<button onclick='rotateDeer()'>Rotate all doubled deer</button>
-	<button onclick='rotateDoubledDeer()'>Rotate linked doubled deer</button>
-	<button onclick='addDeer()'>Add one independant deer</button>
-	<button onclick='addUseDeer()'>Add one linked deer</button>
-	<button onclick='rotateUseDeer()'>rotate linked deer</button>
-	<button onclick='addInternalBox()'>add root and children boxes inside deer inline</button>
+	<button onclick='addInternalBox()'>add root and children shapes inside deer inline</button>
 	<button onclick='rotateSingleDeer()'>rotate children in inline</button>
 
 	<X3DCanvas>
@@ -62,11 +57,7 @@ X3DCanvas {
 			/>
 			<Viewpoint position='-2 1 -15' orientation='0 1 0 3.14' description='start'></Viewpoint>
 			<!--NavigationInfo type='"FLY", "ANY"'></NavigationInfo-->
-    			<Inline DEF="usedDeer" url='"../../inline_USE.x3d"' />
-    			<Transform translation="1 0 -3">
-			    <Inline USE="usedDeer" />
-		    	</Transform>
-			<Transform translation="2 0 2">
+    			<Transform translation="2 0 2">
 				<Inline DEF="singleDeer" url='"../../Deer.x3d"' />
 			</Transform>
 		</Scene>
@@ -94,6 +85,7 @@ X3DCanvas {
 		var InlineDeerScene = document.querySelector("[DEF='singleDeer'] Scene");
 		var boxShape = document.createElement('Shape');
 		var box = document.createElement('Box');
+		box.setAttribute('size', '0.2 0.3 0.4');
 		boxShape.appendChild(box); // no material
 		InlineDeerScene.appendChild(boxShape); // as root node
 		
@@ -103,51 +95,9 @@ X3DCanvas {
 		coneShape.appendChild(cone);
 		DeerTransform.appendChild(coneShape); // as children field value
 		
-		var firstTransform = document.querySelector("[USE='usedDeer']").parentNode;
+		var firstTransform = document.querySelector("[DEF='singleDeer']").parentNode;
 		firstTransform.appendChild(coneShape.cloneNode(true)); // as children field value
-		
-	}
 	
-	function rotateDeer() {
-		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
-		rot = rot + Math.PI/18;
-		deerTrafo.setAttribute("rotation","0 1 0 " + rot);
-	}
-	
-	function rotateDoubledDeer() {
-		var deerUTrafo = document.querySelector("[DEF='usedDeer'] Transform[translation='-5 0 0']");
-		urot = urot + Math.PI/18;
-		deerUTrafo.setAttribute("rotation","0 1 0 " + urot);
-	}
-	
-	function addDeer() {
-		var x = -2 + range * (Math.random() - 0.5);
-		var z = range * (Math.random() - 0.5);
-		var transform = document.createElement('Transform');
-		transform.setAttribute('translation', x + " " + 0 + " " + z);
-		var inline = document.createElement('Inline');
-		inline.setAttribute("url",'"../../Deer.x3d"');
-		var scene = document.querySelector('Scene');
-		transform.appendChild(inline);
-		scene.appendChild(transform);
-	}
-	
-	function addUseDeer() {
-		var x = 2 + range * (Math.random() - 0.5);
-		var z = range * (Math.random() - 0.5);
-		var transform = document.createElement('Transform');
-		transform.setAttribute('translation', x + " " + 0 + " " + z);
-		var inline = document.createElement('Inline');
-		inline.setAttribute("USE","singleDeer");
-		var scene = document.querySelector('Scene');
-		transform.appendChild(inline);
-		scene.appendChild(transform);
-	}
-	
-	function rotateUseDeer() {
-		var deerUTrafo = document.querySelector("[DEF='singleDeer'] Transform[DEF='Deer_Stag_ifs_TRANSFORM']");
-		lrot = lrot + Math.PI/18;
-		deerUTrafo.setAttribute("rotation","0 1 0 " + lrot);
 	}
 	
 </script>	
