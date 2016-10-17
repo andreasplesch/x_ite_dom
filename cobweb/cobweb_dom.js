@@ -66,52 +66,42 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	*/
 	var parent = addedEl.parentNode;
 	// first get correct execution context
+	var nodeScene = mybrowser.currentScene ; // assume main Scene
 	if (parent.parentNode.nodeName == 'Inline') {
-		var inlineScene = parent.parentNode.x3dnode.getInternalScene();
-		parser.pushExecutionContext(inlineScene);
-		// then check if root node
-		if ( parent.x3dnode ) { 
-			var pnode = parent.x3dnode;
-			parser.pushParent( pnode );
-			parser.statement(addedEl);
-			//still need to set Value
-			var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
-			if (fieldName === null) {
-				fieldName = addedEl.x3dnode.getContainerField ();
-			}
-			var field = parent.x3dnode.getField (fieldName);
-
-			field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
-			parser.popParent();
-		}
-		else { // inline root node
-			parser.statement(addedEl);
-		}
-		inlineScene.setup();
-		parser.popExecutionContext(); // probably not necessary since no more parsing
+		var nodeScene = parent.parentNode.x3dnode.getInternalScene();
 	}
-	else { // in main scene
-		if ( parent.x3dnode ) { 
-			var pnode = parent.x3dnode;
-			parser.pushParent( pnode );
-			parser.statement(addedEl);
-			//still need to set Value
-			var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
-			if (fieldName === null) {
-				fieldName = addedEl.x3dnode.getContainerField ();
-			}
-			var field = parent.x3dnode.getField (fieldName);
-
-			field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
-			parser.popParent();
-		} 
-		else {	// root node
-				parser.statement(addedEl);
-		}
+	else if ( parent.x3dnode ) { // use parent's scene if non-root, works for inline
+		var nodeScene = parent.x3dnode.getScene();
 	}
+	
+	parser.pushExecutionContext(nodeScene); // main Scene may be duplicated on stack bit should not be a problem
+	// then check if root node
+	if ( parent.x3dnode ) { 
+		var pnode = parent.x3dnode;
+		parser.pushParent( pnode );
+		parser.statement(addedEl);
+		//still need to set Value
+		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
+		if (fieldName === null) {
+			fieldName = addedEl.x3dnode.getContainerField ();
+		}
+		var field = parent.x3dnode.getField (fieldName);
+
+		field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
+		parser.popParent();
+	}
+	else { // inline or main root node
+		parser.statement(addedEl);
+	}
+	
+	nodeScene.setup();
+	
+	parser.popExecutionContext(); // probably not necessary since no more parsing
+	
 	//parser only adds uninitialized x3d nodes to scene
 	//the setup function initializes only uninitialized nodes, but only root nodes ?
-	//needed also after inline.setup()
+	//needed also after inline.setup(), should not hurt to redo if nodeScene = main Scene
+	
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	
 	//then attach event dispatchers
