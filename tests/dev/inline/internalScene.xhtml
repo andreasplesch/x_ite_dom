@@ -50,8 +50,8 @@ X3DCanvas {
 	<button onclick='addDeer()'>Add one independant deer</button>
 	<button onclick='addUseDeer()'>Add one linked deer</button>
 	<button onclick='rotateUseDeer()'>rotate linked deer</button>
-	<button onclick='addInternalBox()'>add box inside deer inline</button>
-	<button onclick='rotateSingleDeer()'>rotate deer inline</button>
+	<button onclick='addInternalBox()'>add root and children boxes inside deer inline</button>
+	<button onclick='rotateSingleDeer()'>rotate children in inline</button>
 
 	<X3DCanvas>
 		<Scene>
@@ -86,7 +86,7 @@ X3DCanvas {
 	var range = 10;
 
 	function rotateSingleDeer() {
-		var InlineDeerTrafo = document.querySelector("[DEF='singleDeer']").parentNode;
+		var InlineDeerTrafo = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		InlineDeerTrafo.setAttribute('rotation','0 1 0 ' + Math.random() * 6.28);
 	}
 	
@@ -96,7 +96,7 @@ X3DCanvas {
 		var box = document.createElement('Box');
 		boxShape.appendChild(box); // no material
 		InlineDeerScene.appendChild(boxShape); // as root node
-		var DeerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Armature_TRANSFORM']");
+		var DeerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		DeerTransform.appendChild(boxShape.cloneNode(true)); // as children field value
 	}
 	
