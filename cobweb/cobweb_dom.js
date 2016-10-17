@@ -84,7 +84,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		if (parent.parentNode.nodeName == 'Inline') {
 			var inlineScene = parent.parentNode.x3dnode.getInternalScene();
 			parser.pushExecutionContext(inlineScene);
-			inlineScene.setup();
+			//inlineScene.setup();
 		}
 		parser.statement(addedEl); 
 	}
