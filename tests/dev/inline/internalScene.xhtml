@@ -102,6 +102,10 @@ X3DCanvas {
 		var cone = document.createElement('Cone');
 		coneShape.appendChild(cone);
 		DeerTransform.appendChild(coneShape); // as children field value
+		
+		var firstTransform = document.querySelector("TRANSFORM");
+		firstTransform.appendChild(coneShape.cloneNode()); // as children field value
+		
 	}
 	
 	function rotateDeer() {
