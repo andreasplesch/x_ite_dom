@@ -103,7 +103,7 @@ X3DCanvas {
 		coneShape.appendChild(cone);
 		DeerTransform.appendChild(coneShape); // as children field value
 		
-		var firstTransform = document.querySelector("Transform");
+		var firstTransform = document.querySelector("[USE='usedDeer']").parentNode;
 		firstTransform.appendChild(coneShape.cloneNode()); // as children field value
 		
 	}
