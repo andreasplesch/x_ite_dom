@@ -59,6 +59,9 @@ X3DCanvas {
 			<!--NavigationInfo type='"FLY", "ANY"'></NavigationInfo-->
     			<Transform translation="2 0 2">
 				<Inline DEF="singleDeer" url='"../../Deer.x3d"' />
+				<Transform DEF='sphereTrafo' translation="-2 0 -2">
+					<Shape> <Sphere size="0.6"/> </Shape>
+				</Transform>
 			</Transform>
 		</Scene>
 		<p class="fallback">
@@ -94,10 +97,10 @@ X3DCanvas {
 		var cone = document.createElement('Cone');
 		coneShape.appendChild(cone);
 		DeerTransform.appendChild(coneShape); // as children field value
-		/*
-		var firstTransform = document.querySelector("[DEF='singleDeer']").parentNode;
+		
+		var firstTransform = document.querySelector("[DEF='sphereTrafo]");
 		firstTransform.appendChild(coneShape.cloneNode(true)); // as children field value
-		*/
+		
 	}
 	
 </script>	
