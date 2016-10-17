@@ -80,6 +80,8 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		var pnode = parent.x3dnode;
 		parser.pushParent( pnode );
 		parser.statement(addedEl);
+		parser.popParent();
+		nodeScene.setup();
 		//still need to set Value
 		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
 		if (fieldName === null) {
@@ -88,13 +90,12 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		var field = parent.x3dnode.getField (fieldName);
 
 		field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
-		parser.popParent();
+		
 	}
 	else { // inline or main root node
 		parser.statement(addedEl);
+		nodeScene.setup();
 	}
-	
-	nodeScene.setup();
 	
 	parser.popExecutionContext(); // probably not necessary since no more parsing
 	
