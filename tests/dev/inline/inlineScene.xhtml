@@ -102,9 +102,10 @@ X3DCanvas {
 		var app = document.createElement('Appearance');
 		var mat = document.createElement('Material');
 		mat.setAttribute('diffuseColor', color);
-		shape.appendChild(app.appendChild(mat));
+		app.appendChild(mat);
+		shape.appendChild(app);
 		var geo = document.createElement(geometry);
-		shape.appendChild(geo); // no material
+		shape.appendChild(geo);
 		return shape;
 	}
 	
