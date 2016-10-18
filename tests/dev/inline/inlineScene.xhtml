@@ -78,10 +78,34 @@ X3DCanvas {
 //inlines are added as child of inline element
 	
 	function addChildrenChildren() {
-		var firstTransform = document.querySelector("[DEF='sphereTrafo']");
-		firstTransform.appendChild(coneShape.cloneNode(true)); // as children field value
-		
+		var mainTrafoTrafo = document.querySelector("[DEF='sphereTrafo']");
+		mainTrafoTrafo.appendChild(makeShape("box","0 0 1")); // as children field value
+	}	
 	
+	function addRootInline() {
+		var inlineDeerScene = document.querySelector("[DEF='singleDeer'] Scene");
+		inlineDeerScene.appendChild(makeShape("sphere","0 1 0")); // as children field value
+	}	
+	
+	function addChildrenInline() {
+		var deerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Armature_TRANSFORM']");
+		deerTransform.appendChild(makeShape("cone","0 1 0")); // as children field value
+	}	
+	
+	function addChildrenChildrenInline() {
+		var deerTrafoTrafo = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_TRANSFORM']");
+		deerTrafoTrafo.appendChild(makeShape("box","1 0 0")); // as children field value
+	}	
+	
+	function makeShape(geometry, color) {
+		var shape = document.createElement('Shape');
+		var app = document.createElement('Appearance');
+		var mat = document.createElement('Material');
+		mat.setAttribute('diffuseColor', color);
+		shape.appendChild(app.appendChild(mat));
+		shape.appendChild(geo); // no material
+		return shape;
+	}
 	
 	function rotateSingleDeer() {
 		var InlineDeerTrafo = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
