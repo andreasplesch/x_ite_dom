@@ -82,6 +82,8 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		parser.statement(addedEl);
 		parser.popParent();
 		nodeScene.setup();
+		//nodeScene .rootNodes .addInterest (inlinenode .group .children_, "setValue");
+	
 		//still need to set Value
 		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
 		if (fieldName === null) {
