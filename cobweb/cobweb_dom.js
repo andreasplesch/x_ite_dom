@@ -92,7 +92,7 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
 		var nodeInline = findAncestor (parent, "Inline");
 		if (nodeInline !== null) {
-			nodeScene .rootNodes .addInterest (nodeInline .group .children_, "setValue");
+			nodeScene .rootNodes .addInterest (nodeInline .x3dnode .group .children_, "setValue");
 		}	
 		mybrowser .addBrowserEvent ();
 	}
