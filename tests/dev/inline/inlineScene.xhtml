@@ -45,9 +45,11 @@ X3DCanvas {
 </style>
 </head>
 <body>
-	<button onclick='addInternalBox()'>add root and children shapes inside deer inline</button>
-	<button onclick='rotateSingleDeer()'>rotate children in inline</button>
-
+	<button onclick='addChildren()'>add blue box as children children to main scene</button>
+	<button onclick='addRootInline()'>add sphere as root to inline</button>
+	<button onclick='addChildrenInline()'>add cone as child to inline</button>
+	<button onclick='addChildrenChildrenInline()'>add red box as children children to inline</button>
+	
 	<X3DCanvas>
 		<Scene>
 			<Background 
@@ -70,6 +72,7 @@ X3DCanvas {
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
 	</X3DCanvas>
+	
 </body>
 <script>
 //inlines are added as child of inline element
