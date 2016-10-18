@@ -82,10 +82,6 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		parser.statement(addedEl);
 		parser.popParent();
 		nodeScene.setup();
-		var nodeInline = findAncestor ( parent, "Inline");
-		if (nodeInline !== null) {
-			nodeScene .rootNodes .addInterest (nodeInline .group .children_, "setValue");
-		}	
 		//still need to set Value
 		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
 		if (fieldName === null) {
@@ -94,7 +90,11 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		var field = parent.x3dnode.getField (fieldName);
 
 		field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
-		
+		var nodeInline = findAncestor (parent, "Inline");
+		if (nodeInline !== null) {
+			nodeScene .rootNodes .addInterest (nodeInline .group .children_, "setValue");
+		}	
+		mybrowser .addBrowserEvent ();
 	}
 	else { // inline or main root node
 		parser.statement(addedEl);
