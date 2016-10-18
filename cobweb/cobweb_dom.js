@@ -65,40 +65,46 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	this .getBrowser () .addBrowserEvent ();
 	*/
 	var parent = addedEl.parentNode;
+	
 	// first get correct execution context
 	var nodeScene = mybrowser.currentScene ; // assume main Scene
-	if (parent.parentNode.nodeName == 'Inline') {
+	if (parent.parentNode.nodeName == 'Inline') { // if inlnie root, get from inline
 		var nodeScene = parent.parentNode.x3dnode.getInternalScene();
 	}
 	else if ( parent.x3dnode ) { // use parent's scene if non-root, works for inline
 		var nodeScene = parent.x3dnode.getScene();
 	}
 	
+	//tell parser;
 	parser.pushExecutionContext(nodeScene); // main Scene may be duplicated on stack bit should not be a problem
+	
 	// then check if root node
-	if ( parent.x3dnode ) { 
-		var pnode = parent.x3dnode;
-		parser.pushParent( pnode );
-		parser.statement(addedEl);
+	if ( parent.x3dnode ) {  
+		var pnode = parent.x3dnode; // not root
+		parser.pushParent( pnode ); // tell parser parent node
+		parser.statement(addedEl); // parse with correct parent and exec. context
 		parser.popParent();
-		nodeScene.setup();
+		nodeScene.setup(); // necessary for inline scene
 		//still need to set Value
 		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
 		if (fieldName === null) {
 			fieldName = addedEl.x3dnode.getContainerField ();
 		}
 		var field = parent.x3dnode.getField (fieldName);
-
-		field.setValue(addedEl.x3dnode); // seems to be ok to use differing executioncontexts
-		var nodeInline = findAncestor (parent, "Inline");
-		if (nodeInline !== null) {
-			nodeScene .rootNodes .addInterest (nodeInline .x3dnode .group .children_, "setValue");
-		}	
-		mybrowser .addBrowserEvent ();
+		// *************
+		// does not work in inline for children in children
+		// but works for main scene and first level of children
+		// *************
+		field.setValue(addedEl.x3dnode); 
+		//var nodeInline = findAncestor (parent, "Inline");
+		//if (nodeInline !== null) {
+		//	nodeScene .rootNodes .addInterest (nodeInline .x3dnode .group .children_, "setValue");
+		//}	
+		//mybrowser .addBrowserEvent ();
 	}
-	else { // inline or main root node
+	else { // inline root or main root node
 		parser.statement(addedEl);
-		nodeScene.setup();
+		nodeScene.setup(); // does not need setValue
 	}
 	
 	parser.popExecutionContext(); // probably not necessary since no more parsing
