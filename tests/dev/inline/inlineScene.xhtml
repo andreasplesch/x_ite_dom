@@ -79,22 +79,22 @@ X3DCanvas {
 	
 	function addChildrenChildren() {
 		var mainTrafoTrafo = document.querySelector("[DEF='sphereTrafo']");
-		mainTrafoTrafo.appendChild(makeShape("box","0 0 1")); // as children field value
+		mainTrafoTrafo.appendChild(makeShape("Box","0 0 1")); // as children field value
 	}	
 	
 	function addRootInline() {
 		var inlineDeerScene = document.querySelector("[DEF='singleDeer'] Scene");
-		inlineDeerScene.appendChild(makeShape("sphere","0 1 0")); // as children field value
+		inlineDeerScene.appendChild(makeShape("Sphere","0 1 0")); // as children field value
 	}	
 	
 	function addChildrenInline() {
 		var deerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Armature_TRANSFORM']");
-		deerTransform.appendChild(makeShape("cone","0 1 0")); // as children field value
+		deerTransform.appendChild(makeShape("Cone","0 1 0")); // as children field value
 	}	
 	
 	function addChildrenChildrenInline() {
 		var deerTrafoTrafo = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_TRANSFORM']");
-		deerTrafoTrafo.appendChild(makeShape("box","1 0 0")); // as children field value
+		deerTrafoTrafo.appendChild(makeShape("Box","1 0 0")); // as children field value
 	}	
 	
 	function makeShape(geometry, color) {
