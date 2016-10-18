@@ -82,8 +82,10 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		parser.statement(addedEl);
 		parser.popParent();
 		nodeScene.setup();
-		//nodeScene .rootNodes .addInterest (inlinenode .group .children_, "setValue");
-	
+		var nodeInline = findAncestor ( parent, "Inline");
+		if (nodeInline !== null) {
+			nodeScene .rootNodes .addInterest (nodeInline .group .children_, "setValue");
+		}	
 		//still need to set Value
 		var fieldName = addedEl.getAttribute("containerField"); // check for invalid names ?
 		if (fieldName === null) {
@@ -116,6 +118,15 @@ function processAddedNode(addedEl, parser, mybrowser) {
 		addEventDispatchers(sensor);
 	}
 	
+}
+	
+function findAncestor (element, name) {
+	element = element.parentNode;
+	while (element && element.nodeType == 1) { //probably bad for performance
+		if (element.nodeName == name) { return element; }
+		element = element.parentNode;
+	}
+	return null;
 }
 		
 function processInlineDOM (element) {
