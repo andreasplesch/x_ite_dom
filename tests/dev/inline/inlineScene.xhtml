@@ -45,7 +45,7 @@ X3DCanvas {
 </style>
 </head>
 <body>
-	<button onclick='addChildren()'>add blue box as children children to main scene</button>
+	<button onclick='addChildrenChildren()'>add blue box as children children to main scene</button>
 	<button onclick='addRootInline()'>add sphere as root to inline</button>
 	<button onclick='addChildrenInline()'>add cone as child to inline</button>
 	<button onclick='addChildrenChildrenInline()'>add red box as children children to inline</button>
@@ -77,11 +77,12 @@ X3DCanvas {
 <script>
 //inlines are added as child of inline element
 	
-	var rot = 0;
-	var urot = 0;
-	var lrot = 0;
-	var range = 10;
-
+	function addChildrenChildren() {
+		var firstTransform = document.querySelector("[DEF='sphereTrafo']");
+		firstTransform.appendChild(coneShape.cloneNode(true)); // as children field value
+		
+	
+	
 	function rotateSingleDeer() {
 		var InlineDeerTrafo = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		InlineDeerTrafo.setAttribute('rotation','0 1 0 ' + Math.random() * 6.28);
