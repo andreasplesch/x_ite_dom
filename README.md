@@ -24,7 +24,7 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 - Most attributes of X3D elements should be controllable. 
 - ProtoInstances currently cannot be modified, added or removed.
 - Most other X3D nodes can be added or removed.
-- Routes cannot be removed. It may be possible to add Routes.
+- Routes can be removed. It may be possible to add Routes.
 - Manipulation of USE and DEF attributes do not have the desired or any effect.
 - Inline: X3D nodes added to the scene graph via a inline node are appended to the inline element and can be manipulated there. internal attribute manipulations work, adding internal root nodes and one level child nodes work, but adding deeper level nodes does not.
 - Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes. 
@@ -72,5 +72,6 @@ To help with attaching listeners to sensors within inlines, a new 'x3dload' even
 
 ## Releases
 
-0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
-0.5 : major internal restructuring, requires cobweb > 10/19/16
+- 0.5 : major internal restructuring, route removal support, requires cobweb > 10/19/16
+- 0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
+
