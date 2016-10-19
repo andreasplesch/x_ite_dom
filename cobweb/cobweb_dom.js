@@ -27,10 +27,9 @@ X3D (function (X3DCanvases)
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 	
 				if (dom === null)
-					return; // Nothing to do.
+					return; // Nothing to do, hm, observer needs to be set up for empty broser as well ..
 	
 				//mybrowser.importDocument(dom); //now also attached x3d property to each node element
-				//workaround to bind bindable nodes such as Viewpoint after importDocument() and loading of all inlines
 				//update to spec. conforming, latest use
 	
 				var importedScene = this .browser .importDocument (dom); //now also attached x3d property to each node element
@@ -48,13 +47,20 @@ X3D (function (X3DCanvases)
 				}
 				.bind (this));
 				
-				// Start observing only after DOM is fully populated.
-				this .observer .observe (dom, { attributes: true, childList: true, characterData: false, subtree: true });
+				//start observing, also catches inlined inlines
+				this .observer .observe (dom, 
+				 	{ attributes: true, childList: true, characterData: false, subtree: true });
 	
-				// Add internal inline DOMs to document DOM before starting to observe mutations.	
-				// Browser has attached a LoadSensor; setup for use with Inline nodes.
+				// Add internal inline DOMs to document DOM	
+				// create LoadSensor for use with Inline nodes.
 
 				this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+				
+				// Add inline doms from initial scene.
+				var inlines = dom .querySelectorAll ('Inline');
+
+				for (var i = 0; i < inlines .length; ++ i)
+					this .processInlineDOM (inlines [i]);
 				
 				//events
 				
@@ -71,12 +77,6 @@ X3D (function (X3DCanvases)
 						this .sensorSelector += "," + key;
 				}
 
-				// Add inline doms from initial scene.
-				var inlines = dom .querySelectorAll ('Inline');
-
-				for (var i = 0; i < inlines .length; ++ i)
-					this .processInlineDOM (inlines [i]);
-				
 				var sensors = dom .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors .length; ++ i)
