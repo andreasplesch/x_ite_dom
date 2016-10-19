@@ -207,14 +207,8 @@ X3D (function (X3DCanvases)
 				this .browser .currentScene .setup (); // Consider a single setup() after all nodes are added.
 				
 				// now after creating nodes need to look again for Inline doms.
-				if (element .nodeName == 'Inline')
-					this .processInlineDOM (element);
+				this .processInlineDOMs (element);
 
-				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
-
-				for (var i = 0; i < inlines.length; ++ i)
-					this .processInlineDOM (inlines [i]);
-		
 				//then attach event dispatchers
 				//if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches() not well supported
 
