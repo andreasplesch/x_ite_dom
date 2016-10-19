@@ -2,7 +2,7 @@
 
 ## Summary
 
-cobweb_dom.js is intended to be used with the cobweb X3D browser cobweb.js (create3000/cobweb). cobweb_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
+cobweb_dom.js is intended to be used with the X3D browser cobweb.js (https://github.com/create3000/cobweb). cobweb_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
 Please be aware that X3D requires a well defined organisation of the scene. If modifying the DOM results in an invalid scene graph, errors result.
 
 ## Design
@@ -24,9 +24,10 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 - Most attributes of X3D elements should be controllable. 
 - ProtoInstances currently cannot be modified, added or removed.
 - Most other X3D nodes can be added or removed.
-- Routes can be removed. It may be possible to add Routes.
+- Routes can be added and removed.
+- Modifying Route attributes does not have the desired or any effect. Remove and add Routes instead.
 - Manipulation of USE and DEF attributes do not have the desired or any effect.
-- Inline: X3D nodes added to the scene graph via a inline node are appended to the inline element and can be manipulated there. internal attribute manipulations work, adding internal root nodes and one level child nodes work, but adding deeper level nodes does not.
+- Inline: X3D nodes added to the scene graph via a inline node are appended to the inline element and can be manipulated there. internal attribute manipulations work, adding internal root nodes and one level child nodes work, but adding deeper level nodes does not. Adding and removing routes inside Inlines may not work.
 - Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes. 
 - Muliple scenes on a web page can coexist and can be controlled.
 - Events: see below
