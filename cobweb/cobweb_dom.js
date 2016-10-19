@@ -141,14 +141,8 @@ X3D (function (X3DCanvases)
 					return;
 				
 				// First need to look for Inline doms to add to dom.
-				if (element .nodeName == 'Inline')
-					this .processInlineDOM (element);
-
-				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
-
-				for (var i = 0; i < inlines.length; ++ i)
-					this .processInlineDOM (inlines [i]);
-		
+				this .processInlineDOMs (element);
+				
 				// Do not add to scene if already parsed as child of inline,
 				// although Scene does not have .x3d so should never happen?
 				if (element .x3d)
@@ -232,6 +226,18 @@ X3D (function (X3DCanvases)
 				for (var i = 0; i < sensors.length; ++ i)
 					this .addEventDispatchers (sensors[i]);
 			},
+			
+			processInlineDOMs: function (element)
+			{
+				if (element .nodeName == 'Inline')
+					this .processInlineDOM (element);
+
+				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
+
+				for (var i = 0; i < inlines.length; ++ i)
+					this .processInlineDOM (inlines [i]);
+			},
+			
 			processInlineDOM: function (element)
 			{
 				// Check for USE inline as it does not have dom
