@@ -66,7 +66,7 @@ X3D (function (X3DCanvases)
 				
 				//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
 				//use key in X3D.X3DConstants and match Sensor
-				
+				// expand to all [inputoutput] and [outputOnly] fields in all nodes ?
 				// Construct selector
 
 				this .sensorSelector = "Anchor"; // Other special names? (ViewpointGroup has a proxy inside, consider?)
@@ -274,8 +274,9 @@ X3D (function (X3DCanvases)
 
 				watchList .setValue (wListUpdate);
 
-				//check if all inlines are appended and dispatch event; would be also dispatched later whenever
-				if (element .querySelector ('Inline') === null)
+				//check if all inlines are appended and dispatch event; 
+				//would be also dispatched later whenever a new inline was completely appended
+				if (element .querySelector ('Inline') === null) // no more internal inlines
 				{
 					// also check loadCount ?
 
@@ -290,14 +291,13 @@ X3D (function (X3DCanvases)
 				}
 				
 				// Attach sensor callbacks.
-				// Create processSensor, and use initially and here.
-
+				
 				var sensors = element .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors .length; ++ i)
 					this .addEventDispatchers (sensors [i]);
 
-				// Any inlines in appended dom are picked up when Scene is a addedNode for Mutations
+				// Any inlines in appended inline dom are picked up when Scene is a addedNode for Mutations
 			},
 			processAttributes: function (mutation, element, parser)
 			{
@@ -327,7 +327,7 @@ X3D (function (X3DCanvases)
 				{
 					case "attributes":
 					{
-						try
+						try // performance hit for animations ?
 						{
 							this .processAttributes (mutation, element, parser);
 						}
