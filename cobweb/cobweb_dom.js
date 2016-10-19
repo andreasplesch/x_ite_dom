@@ -181,13 +181,15 @@ X3D (function (X3DCanvases)
 
 				if (parentNode .parentNode .nodeName === 'Inline')
 				{
-					var nodeScene = parentNode .parentNode .x3d.getInternalScene();
+					var nodeScene = parentNode .parentNode .x3d.getInternalScene ();
 				}
 				else if (parentNode .x3d)
 				{
 					// Use parent's scene if non-root, works for inline.
-					var nodeScene = parentNode .x3d .getExecutionContext();
+					var nodeScene = parentNode .x3d .getExecutionContext ();
 				}
+				
+				parser .pushExecutionContext (nodeScene);
 				
 				// Then check if root node
 				if (parentNode .x3d)
@@ -201,6 +203,8 @@ X3D (function (X3DCanvases)
 					parser .statement (element);
 					nodeScene .setup ();
 				}
+				
+				parser .popExecutionContext ();
 				
 				//parser only adds uninitialized x3d nodes to scene
 				//the setup function initializes only uninitialized nodes, but only root nodes ?
@@ -343,12 +347,16 @@ X3D (function (X3DCanvases)
 			},
 		};
 
+		var integrations = [ ];
+
 		// Go through all passed x3dcanvas elements.
 		for (var i = 0; i < X3DCanvases .length; ++ i)
 		{
-			var dom = new DOMIntegration (X3DCanvases [i]);
+			var integration = new DOMIntegration (X3DCanvases [i]);
 
-			dom .setup ();
+			integration .setup ();
+			
+			integrations .push (integration);
 		}
 	});
 });
