@@ -26,7 +26,7 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 - Most other X3D nodes can be added or removed.
 - Routes cannot be removed. It may be possible to add Routes.
 - Manipulation of USE and DEF attributes do not have the desired or any effect.
-- Inline: X3D nodes added to the scene graph via a inline node are appended to the inline element and can be manipulated there.
+- Inline: X3D nodes added to the scene graph via a inline node are appended to the inline element and can be manipulated there. internal attribute manipulations work, adding internal root nodes and one level child nodes work, but adding deeper level nodes does not.
 - Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes. 
 - Muliple scenes on a web page can coexist and can be controlled.
 - Events: see below
@@ -55,6 +55,8 @@ The dispatched events do not bubble back up, eg. usually there should be no need
 
 Needs testing: [Event listeners attached to elements above the sensor element the hierarchy can receive the event. This means if there are multiple sensor (say TouchSensors) below a listener, the listener receives the events from all of the sensors of the type requested (TouchSensors). The detail.name property then can be used to identify which sensor emitted the event.]
 
+Considering shortening sensor names to just x3d + x3d event name and dispatching events for all x3d output events, not just sensors. 
+
 To help with attaching listeners to sensors within inlines, a new 'x3dload' event is dispatched on the document target to signal when all inlines per scene are appended to the document.
 
 ## TODO
@@ -66,8 +68,9 @@ To help with attaching listeners to sensors within inlines, a new 'x3dload' even
 - multiple scenes per page: done
 - perhaps add onevent properties to DOM nodes.
 - adapt more x3dom examples: done inline_reflection, addremoveNodes, jquery done
-- clean up and organise tests: updated all to v0.4
+- clean up and organise tests: updated all to v0.5
 
 ## Releases
 
 0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
+0.5 : major internal restructuring, requires cobweb > 10/19/16
