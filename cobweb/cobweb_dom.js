@@ -115,6 +115,13 @@ function processAddedNode(addedEl, parser, mybrowser) {
 	
 	mybrowser.currentScene.setup(); // consider a single setup() after all nodes are added
 	
+	//look again for Inline doms to add to dom now that nodes are added
+	if (addedEl.nodeName == 'Inline') { processInlineDOM (addedEl); }
+	var inlines = addedEl.querySelectorAll('Inline') ; // or recursive childnodes ?
+	for ( var i = 0; i < inlines.length; i++ ) {
+		processInlineDOM(inlines[i]) ;
+	}
+	
 	//then attach event dispatchers
 	//if (addedEl.matches(sensorSelector)){ addEventDispatchers(addedEl); } // matches() not well supported
 	if(sensorSelector.split(",").includes(addedEl.nodeName)){ addEventDispatchers(addedEl); }
