@@ -60,7 +60,7 @@ X3DCanvas {
 			<Viewpoint position='-2 1 -15' orientation='0 1 0 3.14' description='start'></Viewpoint>
 			<!--NavigationInfo type='"FLY", "ANY"'></NavigationInfo-->
     			<Transform translation="2 0 2">
-				<Inline DEF="singleDeer" url='"../../Deer.x3d"' />
+				<Inline DEF="purpleBox" url='".purpleBox.x3d"' />
 				<Transform DEF='sphereTrafo' translation="-2 0 -2">
 					<Shape> <Sphere size="0.6"/> </Shape>
 				</Transform>
@@ -83,18 +83,18 @@ X3DCanvas {
 	}	
 	
 	function addRootInline() {
-		var inlineDeerScene = document.querySelector("[DEF='singleDeer'] Scene");
-		inlineDeerScene.appendChild(makeShape("Sphere","0 1 0")); // as children field value
+		var inlineScene = document.querySelector("[DEF='purpleBox'] Scene");
+		inlineScene.appendChild(makeShape("Sphere","0 1 0")); // as inline root node
 	}	
 	
 	function addChildrenInline() {
-		var deerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Armature_TRANSFORM']");
-		deerTransform.appendChild(makeShape("Cone","0 1 0")); // as children field value
+		var inlineRootTransform = document.querySelector("[DEF='purpleBox'] [DEF='rootTransform']");
+		inlineRootTransform.appendChild(makeShape("Cone","0 1 0")); // as children field value
 	}	
 	
 	function addChildrenChildrenInline() {
-		var deerTrafoTrafo = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_TRANSFORM']");
-		deerTrafoTrafo.appendChild(makeShape("Box","1 0 0")); // as children field value
+		var inlineTrafoTrafo = document.querySelector("[DEF='purpleBox'] [DEF='childTransform']");
+		inlineTrafoTrafo.appendChild(makeShape("Box","1 0 0")); // as children field value
 	}	
 	
 	function makeShape(geometry, color) {
@@ -107,30 +107,6 @@ X3DCanvas {
 		var geo = document.createElement(geometry);
 		shape.appendChild(geo);
 		return shape;
-	}
-	
-	function rotateSingleDeer() {
-		var InlineDeerTrafo = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
-		InlineDeerTrafo.setAttribute('rotation','0 1 0 ' + Math.random() * 6.28);
-	}
-	
-	function addInternalBox() {
-		var InlineDeerScene = document.querySelector("[DEF='singleDeer'] Scene");
-		var boxShape = document.createElement('Shape');
-		var box = document.createElement('Box');
-		box.setAttribute('size', '1.2 0.3 0.4');
-		boxShape.appendChild(box); // no material
-		InlineDeerScene.appendChild(boxShape); // as root node
-		
-		var DeerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_TRANSFORM']");
-		var coneShape = document.createElement('Shape');
-		var cone = document.createElement('Cone');
-		coneShape.appendChild(cone);
-		DeerTransform.appendChild(coneShape); // as children field value
-		
-		var firstTransform = document.querySelector("[DEF='sphereTrafo']");
-		firstTransform.appendChild(coneShape.cloneNode(true)); // as children field value
-		
 	}
 	
 </script>	
