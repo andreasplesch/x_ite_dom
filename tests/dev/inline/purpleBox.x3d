@@ -21,7 +21,9 @@
       <Box size='0.2 0.3 0.4' />
     </Shape>
     <Transform DEF='rootTransform' translation='2 0 0'>
-      <Transform DEF='childTransform' translation='-6 0 0'/>
+      <Transform DEF='secondLevel'>
+        <Transform DEF='childTransform' translation='-6 0 0'/>
+      </Transform>
     </Transform>
   </Scene>
 </X3D>
