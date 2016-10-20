@@ -48,7 +48,7 @@
 	var origRoute;
 	function toggleInlineRoute (evt) {
 		var scene = document.querySelector("[DEF='animate'] Scene");
-		var route = scene.querySelector("Route[fromNode='Clicker']");
+		var route = scene.querySelector("ROUTE [fromNode='Clicker']");
 		if (route !== null) {
 			origRoute = route;
 			route.remove();
