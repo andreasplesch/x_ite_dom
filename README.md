@@ -73,6 +73,6 @@ To help with attaching listeners to sensors within inlines, a new 'x3dload' even
 
 ## Releases
 
-- 0.5 : major internal restructuring, route removal support, requires cobweb > 10/19/16
+- 0.5 : major internal restructuring, route removal support, requires cobweb >= v2.2
 - 0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
 
