@@ -99,11 +99,9 @@ X3DCanvas {
 		
 		var DeerTransform = document.querySelector("[DEF='singleDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
 		var coneShape = document.createElement('Shape');
-		var cone = document.createElement('Cone');
+		var cone = document.createElement('Sphere');
+		cone.setAttribute('radius', 100); // !Deer is large
 		coneShape.appendChild(cone);
-		var mat =  document.createElement('Material');
-		mat.setAttribute('diffuseColor', '1 0 0');
-		coneShape.appendChild(mat);
 		DeerTransform.appendChild(coneShape); // as children field value
 		
 		/*
