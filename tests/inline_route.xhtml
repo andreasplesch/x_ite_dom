@@ -19,18 +19,6 @@
 			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
 	
   <style>
-  html, body {
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  body {
-    background: black;
-    color: white;
-  }
   X3DCanvas {
     background: #414141;
     width: 600px;
@@ -46,7 +34,7 @@
 <body>
 	<X3DCanvas>
 		<Scene>
-      <Inline DEF='animate' url='"ClickToAnimate.x3d"' />
+			<Inline DEF='animate' url='"ClickToAnimate.x3d"' />
 		</Scene>
 		<p class="fallback">
 			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
@@ -54,5 +42,17 @@
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
 	</X3DCanvas>
+	<input type='checkbox' onclick='toggleInlineRoute()' /> Toogle sensor
 </body>
+<script>
+	var origRoute;
+	function toggleInlineRoute (evt) {
+		var scene = document.querySelector("[DEF='animate'] Scene");
+		var route = scene.querySelector("Route[fromNode='Clicker']");
+		if (route !== null) {
+			origRoute = route;
+			route.remove();
+		}
+		else { scene.appendChild(origRoute); }
+	}
 </html>
