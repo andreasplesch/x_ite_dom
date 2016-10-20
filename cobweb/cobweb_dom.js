@@ -156,18 +156,7 @@ X3D (function (X3DCanvases)
 					return;
 				
 				//create new parser in here to use the correct executioncontext in case of inline
-				//how does inline execution context get merged into main execution context ?
-				//like this: this = inline node
-				/* // eg. nothing needed for non root nodes; .rootNodes needs to be updated if root node added
-				this .scene .rootNodes .addInterest (this .group .children_, "setValue");
-				this .group .children_ = this .scene .rootNodes;
-			
-				this .getBrowser () .addBrowserEvent ();
-
-
-					this .scene .rootNodes .addFieldInterest (this .group .children_); ???
-				*/
-
+				
 				var parentNode = element .parentNode;
 
 				// first get correct execution context
@@ -259,7 +248,6 @@ X3D (function (X3DCanvases)
 					watchList = this .loadSensor .getField ("watchList"),
 					isLoaded  = this .loadSensor .getField ("isLoaded");
 
-				// XXX: node .dom .querySelector ('Scene') is always null, probably node .getInternalScene () .dom?
 				element .appendChild (node .dom .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
 
 				//not needed any more, remove callback
