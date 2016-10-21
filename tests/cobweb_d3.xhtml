@@ -91,6 +91,7 @@ X3DCanvas {
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
 <div class='report'>key pressed: <span id='keypressed'></span></div>
 <div class='report'>Time fraction changed: <span id='time'></span></div>
+<div class='report'>Viewpoint position: <span id='position'></span></div>
 </body>
 <script>
 console.log('START')
@@ -129,6 +130,8 @@ var ps = document.querySelector('ProximitySensor');
 var pp = document.querySelector('#proxim');
 var tms = document.querySelector('TimeSensor');
 var tmp = document.querySelector('#time');
+var vp = document.querySelector('Viewpoint');
+var vpp = document.querySelector('#position');
 
 ///*
 ts.addEventListener('x3dTouchSensor_isOver', function(evt) {
@@ -156,6 +159,13 @@ tms.addEventListener('x3dTimeSensor_fraction_changed', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		tmp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+tms.addEventListener('x3dViewpoint_position_changed', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		vpp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
