@@ -93,18 +93,18 @@ X3D (function (X3DCanvases)
 					this. addEventDispatchers (elements [i]);
 			},
 			
-			addEventDispatchers: function  (sensor)
+			addEventDispatchers: function (element)
 			{
-				// check for USE sensors; they do not emit events
-				if (sensor .x3d === undefined)
+				// check for USE nodes; they do not emit events
+				if (element .x3d === undefined)
 					return;
 	
-				var fields = sensor .x3d .getFields ();
+				var fields = element .x3d .getFields (); // check for ROUTE ?
 	
 				for (var key in fields) 
-					this .bindFieldCallback (fields [key], sensor);
+					this .bindFieldCallback (fields [key], element);
 			},
-			bindFieldCallback: function  (field, sensor)
+			bindFieldCallback: function  (field, element)
 			{
 				/*var ctx = {};
 				ctx. field = field;
@@ -112,16 +112,16 @@ X3D (function (X3DCanvases)
 				//only attach callbacks for output fields
 				if (field. isOutput()) // both inputOutput and outputOnly
 					field .addFieldCallback (field .getName (),
-						this .fieldCallback .bind (null, field, sensor));
+						this .fieldCallback .bind (null, field, element));
 			},
-			fieldCallback: function  (field, sensor, value)
+			fieldCallback: function  (field, element, value)
 			{
 				//var evt = new Event (field.getName()); // better to use official custom event
 	
-				var node      = sensor .x3d;
+				var node      = element .x3d;
 				var prefix    = "x3d";
-				var eventType = prefix + sensor.nodeName + "_" + field .getName ();
-	
+				var eventType = prefix + element.nodeName + "_" + field .getName ();
+
 				var event = new CustomEvent (eventType, { 
 					detail: {
 						value: value,
@@ -130,11 +130,11 @@ X3D (function (X3DCanvases)
 						x3d: node
 					} 
 				});
-	
+
 				//event.value = value;
 				//event.fields = sensor.x3d.getFields(); // copy ?
 				//event.x3d = sensor.x3d; 
-				sensor .dispatchEvent (event);
+				element .dispatchEvent (event);
 			},
 			processRemovedNode: function (element)
 			{	
@@ -213,14 +213,19 @@ X3D (function (X3DCanvases)
 
 				//then attach event dispatchers
 				//if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches() not well supported
-
+				
+				this. addEventDispatchers (element);
+				this. addEventDispatchersAll (element); // also for childnodes
+				
+				/*	
 				if (this .sensorSelector .split (",") .includes (element .nodeName))
-					this .addEventDispatchers (elements);
+					this .addEventDispatchers (element);
 
 				var sensors = element .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors.length; ++ i)
 					this .addEventDispatchers (sensors[i]);
+				*/
 			},
 			
 			processInlineDOMs: function (element)
