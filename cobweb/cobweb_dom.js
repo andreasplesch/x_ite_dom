@@ -110,8 +110,8 @@ X3D (function (X3DCanvases)
 				/*var ctx = {};
 				ctx. field = field;
 				ctx. sensor = sensor;*/
-				//only attach callbacks for outputfields
-				if (field. accessType & X3DConstants .outputOnly)
+				//only attach callbacks for output fields
+				if (field. isOutput()) // both inputOutput and outputOnly
 					field .addFieldCallback (field .getName (),
 						this .fieldCallback .bind (null, field, sensor));
 			},
