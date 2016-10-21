@@ -64,7 +64,7 @@ X3D (function (X3DCanvases)
 				
 				//events
 				
-				// this .addEventDispatchersAll (dom)
+				this .addEventDispatchersAll (dom);
 				
 				//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
 				//use key in X3D.X3DConstants and match Sensor
@@ -78,21 +78,20 @@ X3D (function (X3DCanvases)
 					if (key .endsWith ('Sensor'))
 						this .sensorSelector += "," + key;
 				}
-
+				/*
 				var sensors = dom .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors .length; ++ i)
 					this .addEventDispatchers (sensors [i]);
+				*/
 			},
 			
-			/* 
 			addEventDispatchersAll: function (element)
 			{
-				var elements = element.querySelectorAll(*);
+				var elements = element.querySelectorAll('*');
 				for (var i = 0; i < elements .length; ++i)
 					this. addEventDispatchers (elements [i]);
 			},
-			*/
 			
 			addEventDispatchers: function  (sensor)
 			{
