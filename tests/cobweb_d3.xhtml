@@ -64,7 +64,8 @@ X3DCanvas {
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
 		<KeySensor DEF='ks1'></KeySensor>
 		<TimeSensor DEF='tms1' loop='true' cycleInterval='10'></TimeSensor>
-		
+		<ScalarInterpolator DEF='SI' key='0 0.5 1' keyValue='0 2 10' />
+		<ROUTE fromNode='tms1' fromField='fraction_changed' toNode='SI' toField='set_fraction' />
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
 			<ProximitySensor DEF='ps1' size='3'></ProximitySensor> 
@@ -92,6 +93,7 @@ X3DCanvas {
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
 <div class='report'>key pressed: <span id='keypressed'></span></div>
 <div class='report'>Time fraction changed: <span id='time'></span></div>
+<div class='report'>interpolated value changed: <span id='inter'></span></div>
 <div class='report'>Viewpoint position: <span id='position'></span></div>
 </body>
 <script>
@@ -131,6 +133,8 @@ var ps = document.querySelector('ProximitySensor');
 var pp = document.querySelector('#proxim');
 var tms = document.querySelector('TimeSensor');
 var tmp = document.querySelector('#time');
+var si = document.querySelector('[DEF="SI"]');
+var sip = document.querySelector('#inter');
 var vp1 = document.querySelector('Viewpoint');
 var vp2 = document.querySelector('Viewpoint[description="offset"]');
 var vpp = document.querySelector('#position');
@@ -161,6 +165,13 @@ tms.addEventListener('x3dTimeSensor_fraction_changed', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		tmp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+si.addEventListener('x3dScalarInterpolator_value_changed', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		sip.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
