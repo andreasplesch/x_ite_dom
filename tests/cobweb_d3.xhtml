@@ -59,7 +59,8 @@ X3DCanvas {
 		<X3DCanvas id='dummy'>
 <X3D>
 	<Scene>
-		<Viewpoint></Viewpoint>
+		<Viewpoint description='start'></Viewpoint>
+		<Viewpoint description='offset' position='10 0 10'></Viewpoint>
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
 		<KeySensor DEF='ks1'></KeySensor>
 		<TimeSensor DEF='tms1' loop='true' cycleInterval='10'></TimeSensor>
@@ -130,7 +131,8 @@ var ps = document.querySelector('ProximitySensor');
 var pp = document.querySelector('#proxim');
 var tms = document.querySelector('TimeSensor');
 var tmp = document.querySelector('#time');
-var vp = document.querySelector('Viewpoint');
+var vp1 = document.querySelector('Viewpoint');
+var vp2 = document.querySelector('Viewpoint['description="offset"]');
 var vpp = document.querySelector('#position');
 
 ///*
@@ -162,7 +164,14 @@ tms.addEventListener('x3dTimeSensor_fraction_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
-vp.addEventListener('x3dViewpoint_position', function(evt) {
+vp1.addEventListener('x3dViewpoint_position', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		vpp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+vp2.addEventListener('x3dViewpoint_position', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		vpp.textContent = " " + e.value;
