@@ -162,7 +162,7 @@ tms.addEventListener('x3dTimeSensor_fraction_changed', function(evt) {
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
-vp.addEventListener('x3dViewpoint_position_changed', function(evt) {
+vp.addEventListener('x3dViewpoint_position', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		vpp.textContent = " " + e.value;
