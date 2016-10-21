@@ -6,7 +6,7 @@
 // Make sure X3D is ready, X3DCanvases has all X3DCanvas elements
 X3D (function (X3DCanvases)
 {
-	"use strict"; // Allways use strict!
+	"use strict"; // Always use strict!
 
 	X3D .require ([ // perhaps switch to importDocument() to avoid require; but creates new scenes
 		"cobweb/Parser/XMLParser"
@@ -64,6 +64,8 @@ X3D (function (X3DCanvases)
 				
 				//events
 				
+				// this .addEventDispatchersAll (dom)
+				
 				//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
 				//use key in X3D.X3DConstants and match Sensor
 				// expand to all [inputoutput] and [outputOnly] fields in all nodes ?
@@ -82,6 +84,16 @@ X3D (function (X3DCanvases)
 				for (var i = 0; i < sensors .length; ++ i)
 					this .addEventDispatchers (sensors [i]);
 			},
+			
+			/* 
+			addEventDispatchersAll: function (element)
+			{
+				var elements = element.querySelectorAll(*);
+				for (var i = 0; i < elements .length; ++i)
+					this. addEventDispatchers (elements [i]);
+			},
+			*/
+			
 			addEventDispatchers: function  (sensor)
 			{
 				// check for USE sensors; they do not emit events
@@ -98,8 +110,10 @@ X3D (function (X3DCanvases)
 				/*var ctx = {};
 				ctx. field = field;
 				ctx. sensor = sensor;*/
-				field .addFieldCallback (field .getName (),
-					                      this .fieldCallback .bind (null, field, sensor));
+				//only attach callbacks for outputfields
+				if (field. accessType & X3DConstants .outputOnly)
+					field .addFieldCallback (field .getName (),
+						this .fieldCallback .bind (null, field, sensor));
 			},
 			fieldCallback: function  (field, sensor, value)
 			{
@@ -217,7 +231,7 @@ X3D (function (X3DCanvases)
 
 				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
 
-				for (var i = 0; i < inlines.length; ++ i)
+				for (var i = 0; i < inlines .length; ++ i)
 					this .processInlineDOM (inlines [i]);
 			},
 			
@@ -330,7 +344,7 @@ X3D (function (X3DCanvases)
 					{					
 						var addedNodes = mutation.addedNodes;
 	
-						for (var i = 0; i < addedNodes.length; ++ i)
+						for (var i = 0; i < addedNodes .length; ++ i)
 							this .processAddedNode (addedNodes[i], parser);
 		
 						var removedNodes = mutation .removedNodes;
