@@ -266,10 +266,12 @@ X3DCanvas {
             applyRotationGizmoTransformations();
         }
 	}
-	function processRotationGizmoEvent(event)
+	function processRotationGizmoActiveEvent(event)
 	{
 		
 		//if (event.fieldName === 'isActive' && event.value === false)
+		if (event.detail.value === false)
+		
 		{
 		    //incorporate the current rotation offset, interpreted globally, into the stored rotation value
 		    currentGizmoRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
