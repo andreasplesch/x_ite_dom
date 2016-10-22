@@ -111,7 +111,7 @@ Calculated Y-Position (set directly to blue ball): <span id="posSnaped"></span>
         </Transform>
 
         <TimeSensor DEF="time" cycleInterval="4" loop="true"></TimeSensor>
-        <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="-2 -2.5 0  -2 2.5 0  -2 -2.5 0" onoutputchange="snapBall(event)"></PositionInterpolator>
+        <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="-2 -2.5 0  -2 2.5 0  -2 -2.5 0"></PositionInterpolator>
         
         <ROUTE fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></ROUTE>
         <ROUTE fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></ROUTE>
