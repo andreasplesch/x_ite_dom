@@ -32,7 +32,7 @@ body {
 }
 
 X3DCanvas {
-	background: #414141;
+	background: white;
 	width: 500px;
 	height: 400px;
 }
@@ -44,36 +44,6 @@ X3DCanvas {
 }
 </style>
 
-<script>
-	var mover = document.querySelector('[DEF="move"]');
-	mover.addEventListener('x3dPositionInterpolator_value_changed', snapBall);
-	/**
-	 * Uses the values of a PositionInterpolator to move another ball,
-	 * but instead of just routing the values, round the y component.
-	 * Thus the second ball moves like he is snapping to an invisible raster
-	 */
-	function snapBall(eventObject)
-	{
-		//Check if type and output of the eventObject are correct
-		//There may be multiple eventObjects but only one of them contains the value we need
-		//if(eventObject.type != "outputchange" || eventObject.fieldName != "value_changed")
-		//	return;
-		
-		//Get the value...
-		var value = eventObject.detail.value;
-		//...and create a copy with the manipulated coordinates
-		//var newPos = new x3dom.fields.SFVec3f(2, Math.round(value.y), 0);
-		var newY = Math.round(value.y);
-		var newPos = "2 " + newY + " 0";
-	
-		//Set the newly created array as new position for the second ball
-		document.getElementById("ball2").setAttribute('translation', newPos.toString());
-		
-		//Show debug information (of course the data can be used to control non x3dom-objects, too)
-		document.getElementById("posInterp").innerHTML = Math.round(value.y*100)/100;
-		document.getElementById("posSnaped").innerHTML = newY;
-	}
-</script>
 
 </head>
 <body>
@@ -118,4 +88,35 @@ Calculated Y-Position (set directly to blue ball): <span id="posSnaped"></span>
 </X3DCanvas>
 
 </body>
+<script>
+	var mover = document.querySelector('[DEF="move"]'); // scripts needs to be at end to find element
+	mover.addEventListener('x3dPositionInterpolator_value_changed', snapBall);
+	/**
+	 * Uses the values of a PositionInterpolator to move another ball,
+	 * but instead of just routing the values, round the y component.
+	 * Thus the second ball moves like he is snapping to an invisible raster
+	 */
+	function snapBall(eventObject)
+	{
+		//Check if type and output of the eventObject are correct
+		//There may be multiple eventObjects but only one of them contains the value we need
+		//if(eventObject.type != "outputchange" || eventObject.fieldName != "value_changed")
+		//	return;
+		
+		//Get the value...
+		var value = eventObject.detail.value;
+		//...and create a copy with the manipulated coordinates
+		//var newPos = new x3dom.fields.SFVec3f(2, Math.round(value.y), 0);
+		var newY = Math.round(value.y);
+		var newPos = "2 " + newY + " 0";
+	
+		//Set the newly created array as new position for the second ball
+		document.getElementById("ball2").setAttribute('translation', newPos.toString());
+		
+		//Show debug information (of course the data can be used to control non x3dom-objects, too)
+		document.getElementById("posInterp").innerHTML = Math.round(value.y*100)/100;
+		document.getElementById("posSnaped").innerHTML = newY;
+	}
+</script>
+
 </html>
