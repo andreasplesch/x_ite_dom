@@ -257,7 +257,7 @@ X3DCanvas {
             //convert the sensor's output from sensor coordinates to world coordinates (i.e., include its 'axisRotation')
             //sensorToWorldMatrix = x3dom.fields.SFMatrix4f.parseRotation(event.target.getAttribute("axisRotation"));			
 			//rotationMatrixWorld = sensorToWorldMatrix.mult(event.value.toMatrix());
-		var sensorRotation = event.detail.value();	
+		var sensorRotation = event.detail.value;	
 			//create an offset that applies the current rotation in world coordinates,
 			//but doesn't change the orientation of the coordinate system
             //currentGizmoRotationOffset = rotationMatrixWorld.mult(sensorToWorldMatrix.inverse());			
