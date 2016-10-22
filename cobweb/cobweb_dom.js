@@ -144,7 +144,7 @@ X3D (function (X3DCanvases)
 				if (element .x3d)	
 				{
 					element .x3d .dispose ();
-					delete element .x3d;
+					//delete element .x3d;
 				}
 			},
 			processAddedNode: function (element, parser)
