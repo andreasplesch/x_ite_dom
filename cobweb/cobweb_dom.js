@@ -144,7 +144,8 @@ X3D (function (X3DCanvases)
 				if (element .x3d)	
 				{
 					element .x3d .dispose ();
-					//delete element .x3d;
+					if (element .nodeName === 'ROUTE') // dispatcher still needs .x3d when dispose processes events  
+					    delete element .x3d;
 				}
 			},
 			processAddedNode: function (element, parser)
