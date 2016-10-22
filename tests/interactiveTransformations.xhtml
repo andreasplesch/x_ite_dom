@@ -196,10 +196,11 @@ X3DCanvas {
 
         </Scene>
     </X3D>
-</X3DCanvas>
+</X3DCanvas> 
   </body>
   
-<script>
+<script> <![CDATA[
+	
     var currentGizmoRotation       = new x3dom.fields.SFMatrix4f();
     var currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
     
@@ -271,6 +272,7 @@ X3DCanvas {
         //set matrix value in column major format, as required by the MatrixTransform node
         teapotRotationNode.setFieldValue("matrix", transformMatrix.transpose());
     }
+]]>
   </script>
     
 </html>
