@@ -261,7 +261,7 @@ X3DCanvas {
 			//create an offset that applies the current rotation in world coordinates,
 			//but doesn't change the orientation of the coordinate system
             //currentGizmoRotationOffset = rotationMatrixWorld.mult(sensorToWorldMatrix.inverse());			
-		currentGizmoRotationOffset = sensorRotation;
+		currentGizmoRotationOffset = sensorRotation.inverse();
 		
             applyRotationGizmoTransformations();
         }
