@@ -203,21 +203,26 @@ X3DCanvas {
   </body>
   
 <script> <![CDATA[
-	
-    var currentGizmoRotation       ;
-    var currentGizmoRotationOffset ;
 	var planeSensor = document.querySelector("PlaneSensor");
 	planeSensor.addEventListener("x3dPlaneSensor_translation_changed", processTranslationGizmoEvent);
     	var cylSensorX = document.querySelector("CylinderSensor[DEF='aroundX']");
 	cylSensorX.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
+	cylSensorX.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
 	var cylSensorY = document.querySelector("CylinderSensor[DEF='aroundY']");
 	cylSensorY.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
+	cylSensorY.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
 	var cylSensorZ = document.querySelector("CylinderSensor[DEF='aroundZ']");
 	cylSensorZ.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
+	cylSensorZ.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
+	
+	//var currentGizmoRotation       = new x3dom.fields.SFMatrix4f();
+    	//var currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
+	    var currentGizmoRotation = new X3D.SFRotation() ;
+	    var currentGizmoRotationOffset = new X3D.SFRotation() ;
 	
 	/*
-     * Callback function, invoked on translation gizmo output.
-     */
+     	* Callback function, invoked on translation gizmo output.
+     	*/
     function processTranslationGizmoEvent(event)
     {
 		var sensorToWorldMatrix, translationValue;
@@ -244,9 +249,9 @@ X3DCanvas {
      * Callback function, invoked on rotation gizmo output.
      */
     function processRotationGizmoEvent(event)
-    {		
+    	{		
         var sensorToWorldMatrix, rotationMatrixWorld;
-   
+   	var sensorRotation;
         //if (event.fieldName === 'rotation_changed')
         {
             //convert the sensor's output from sensor coordinates to world coordinates (i.e., include its 'axisRotation')
@@ -255,22 +260,27 @@ X3DCanvas {
 		var sensorRotation = event.detail.value();	
 			//create an offset that applies the current rotation in world coordinates,
 			//but doesn't change the orientation of the coordinate system
-            currentGizmoRotationOffset = rotationMatrixWorld.mult(sensorToWorldMatrix.inverse());			
-			
+            //currentGizmoRotationOffset = rotationMatrixWorld.mult(sensorToWorldMatrix.inverse());			
+		currentGizmoRotationOffset = sensorRotation;
+		
             applyRotationGizmoTransformations();
         }
+	}
+	function processRotationGizmoEvent(event)
+	{
+		
+		//if (event.fieldName === 'isActive' && event.value === false)
+		{
+		    //incorporate the current rotation offset, interpreted globally, into the stored rotation value
+		    currentGizmoRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
 
-        if (event.fieldName === 'isActive' && event.value === false)
-        {
-            //incorporate the current rotation offset, interpreted globally, into the stored rotation value
-            currentGizmoRotation = currentGizmoRotationOffset.mult(currentGizmoRotation);
-			
-			//reset current rotation offset to zero rotation
-            currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
+				//reset current rotation offset to zero rotation
+		    //currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
+			currentGizmoRotationOffset = new X3D.SFRotation();
 
-            applyRotationGizmoTransformations();
-        }
-    }
+		    applyRotationGizmoTransformations();
+		}
+    	}
 	    
     /*
      * Applies the current transformations, computed from the rotation gizmo output, to the scene
@@ -280,10 +290,12 @@ X3DCanvas {
         var teapotRotationNode = document.getElementById('teapotRotation');
         
 		//incorporate the current rotation offset, interpreted globally, into the stored rotation value
-        var transformMatrix = currentGizmoRotationOffset.mult(currentGizmoRotation);
+        //var transformMatrix = currentGizmoRotationOffset.mult(currentGizmoRotation);
+        var transformRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
         
         //set matrix value in column major format, as required by the MatrixTransform node
-        teapotRotationNode.setFieldValue("matrix", transformMatrix.transpose());
+        //teapotRotationNode.setFieldValue("matrix", transformMatrix.transpose());
+	teapotRotationNode.setAttribute("rotation", transformRotation.toString());
     }
 ]]>
   </script>
