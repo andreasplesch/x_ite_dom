@@ -203,8 +203,10 @@ X3DCanvas {
   
 <script> <![CDATA[
 	
-    var currentGizmoRotation       = new x3dom.fields.SFMatrix4f();
-    var currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
+    //var currentGizmoRotation       = new x3dom.fields.SFMatrix4f();
+    //var currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
+	var planeSensor = document.querySelector("PlaneSensor");
+		planeSensor.addEventListener("x3dPlaneSensor_translation_changed", processTranslationGizmoEvent);
     
 	/*
      * Callback function, invoked on translation gizmo output.
@@ -213,19 +215,22 @@ X3DCanvas {
     {
 		var sensorToWorldMatrix, translationValue;
 		
-		if (event.fieldName === 'translation_changed')
+		//if (event.fieldName === 'translation_changed')
         {
 			//convert the sensor's output from sensor coordinates to world coordinates (i.e., include its 'axisRotation')
-            sensorToWorldMatrix = x3dom.fields.SFMatrix4f.parseRotation(event.target.getAttribute("axisRotation"));	
+            //sensorToWorldMatrix = x3dom.fields.SFMatrix4f.parseRotation(event.target.getAttribute("axisRotation"));	
 			
-			translationValue = sensorToWorldMatrix.multMatrixVec(event.value);
-			
+			//translationValue = sensorToWorldMatrix.multMatrixVec(event.value);
+			translationValue = event.detail.value.toString();
 			//transform the affected sensor geometry
-			document.getElementById('translationHandleTransform').setFieldValue('translation', translationValue);
-			document.getElementById('rotationHandleTransform').setFieldValue('translation', translationValue);
+			//document.getElementById('translationHandleTransform').setFieldValue('translation', translationValue);
+			document.getElementById('translationHandleTransform').setAttribute('translation', translationValue);
+			//document.getElementById('rotationHandleTransform').setFieldValue('translation', translationValue);
+			document.getElementById('rotationHandleTransform').setAttribute('translation', translationValue);
 			
 			//transform the affected element
-			document.getElementById('teapotTranslation').setFieldValue('translation', translationValue);			
+			//document.getElementById('teapotTranslation').setFieldValue('translation', translationValue);			
+			document.getElementById('teapotTranslation').setAttribute('translation', translationValue);			
 		}
 	}	
 	
@@ -239,8 +244,8 @@ X3DCanvas {
         if (event.fieldName === 'rotation_changed')
         {
             //convert the sensor's output from sensor coordinates to world coordinates (i.e., include its 'axisRotation')
-            sensorToWorldMatrix = x3dom.fields.SFMatrix4f.parseRotation(event.target.getAttribute("axisRotation"));			
-			rotationMatrixWorld = sensorToWorldMatrix.mult(event.value.toMatrix());
+            //sensorToWorldMatrix = x3dom.fields.SFMatrix4f.parseRotation(event.target.getAttribute("axisRotation"));			
+		//	rotationMatrixWorld = sensorToWorldMatrix.mult(event.value.toMatrix());
 			
 			//create an offset that applies the current rotation in world coordinates,
 			//but doesn't change the orientation of the coordinate system
