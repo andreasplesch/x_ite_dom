@@ -10,10 +10,10 @@
 		<meta http-equiv="Expires" content="0"/>
 		<meta charset="utf-8"/>
 		<script type="text/javascript" 
-			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.min.js">
+			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.uncompressed.js">
 		</script>
 		<script type="text/javascript" 
-			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+			src="../cobweb/cobweb_dom.js">
 		</script>
 		<link rel="stylesheet" type="text/css"
 			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
@@ -50,8 +50,8 @@ X3DCanvas {
 		            		groundColor="0.8 0.8 0.8"
 		            		skyColor="0.1 0.1 0.8"
 			/>
-			<!--Viewpoint></Viewpoint-->
-			<!--NavigationInfo type='"FLY", "ANY"'></NavigationInfo-->
+			<Viewpoint position='-2.5 0 -10'></Viewpoint>
+			<!--NavigationInfo type='"FLY", "ANY"'> </NavigationInfo-->
       <Inline DEF='cubes' url='"nestedProtos.x3d"' />
 			<Transform translation='-5 0 0'>
 				<Inline USE='cubes' />
