@@ -6,7 +6,7 @@
 // Make sure X3D is ready, X3DCanvases has all X3DCanvas elements
 X3D (function (X3DCanvases)
 {
-	"use strict"; // Allways use strict!
+	"use strict"; // Always use strict!
 
 	X3D .require ([ // perhaps switch to importDocument() to avoid require; but creates new scenes
 		"cobweb/Parser/XMLParser"
@@ -64,11 +64,13 @@ X3D (function (X3DCanvases)
 				
 				//events
 				
+				this .addEventDispatchersAll (dom);
+				
 				//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
 				//use key in X3D.X3DConstants and match Sensor
 				// expand to all [inputoutput] and [outputOnly] fields in all nodes ?
 				// Construct selector
-
+				/* obsolete
 				this .sensorSelector = "Anchor"; // Other special names? (ViewpointGroup has a proxy inside, consider?)
 
 				for (var key in X3D .X3DConstants)
@@ -76,39 +78,51 @@ X3D (function (X3DCanvases)
 					if (key .endsWith ('Sensor'))
 						this .sensorSelector += "," + key;
 				}
-
+				
 				var sensors = dom .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors .length; ++ i)
 					this .addEventDispatchers (sensors [i]);
+				*/
 			},
-			addEventDispatchers: function  (sensor)
+			
+			addEventDispatchersAll: function (element)
 			{
-				// check for USE sensors; they do not emit events
-				if (sensor .x3d === undefined)
+				var elements = element.querySelectorAll('*');
+				for (var i = 0; i < elements .length; ++i)
+					this. addEventDispatchers (elements [i]);
+			},
+			
+			addEventDispatchers: function (element)
+			{
+				// check for USE nodes; they do not emit events
+				if (element .x3d === undefined)
 					return;
 	
-				var fields = sensor .x3d .getFields ();
+				var fields = element .x3d .getFields (); // check for ROUTE ?
 	
 				for (var key in fields) 
-					this .bindFieldCallback (fields [key], sensor);
+					this .bindFieldCallback (fields [key], element);
 			},
-			bindFieldCallback: function  (field, sensor)
+			bindFieldCallback: function  (field, element)
 			{
 				/*var ctx = {};
 				ctx. field = field;
 				ctx. sensor = sensor;*/
-				field .addFieldCallback (field .getName (),
-					                      this .fieldCallback .bind (null, field, sensor));
+				//only attach callbacks for output fields
+				if (field. isOutput()) // both inputOutput and outputOnly
+					field .addFieldCallback (field .getName (),
+						this .fieldCallback .bind (null, field, element));
 			},
-			fieldCallback: function  (field, sensor, value)
+			fieldCallback: function  (field, element, value)
 			{
 				//var evt = new Event (field.getName()); // better to use official custom event
 	
-				var node      = sensor .x3d;
+				var node      = element .x3d;
 				var prefix    = "x3d";
-				var eventType = prefix + sensor.nodeName + "_" + field .getName ();
-	
+				//var eventType = prefix + element.nodeName + "_" + field .getName ();
+				var eventType = prefix + "_" + field .getName ();
+
 				var event = new CustomEvent (eventType, { 
 					detail: {
 						value: value,
@@ -117,11 +131,11 @@ X3D (function (X3DCanvases)
 						x3d: node
 					} 
 				});
-	
+
 				//event.value = value;
 				//event.fields = sensor.x3d.getFields(); // copy ?
 				//event.x3d = sensor.x3d; 
-				sensor .dispatchEvent (event);
+				element .dispatchEvent (event);
 			},
 			processRemovedNode: function (element)
 			{	
@@ -131,7 +145,8 @@ X3D (function (X3DCanvases)
 				if (element .x3d)	
 				{
 					element .x3d .dispose ();
-					delete element .x3d;
+					if (element .nodeName === 'ROUTE') // dispatcher still needs .x3d when dispose processes events  
+					    delete element .x3d;
 				}
 			},
 			processAddedNode: function (element, parser)
@@ -200,14 +215,19 @@ X3D (function (X3DCanvases)
 
 				//then attach event dispatchers
 				//if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches() not well supported
-
+				
+				this. addEventDispatchers (element);
+				this. addEventDispatchersAll (element); // also for childnodes
+				
+				/* obsolete	
 				if (this .sensorSelector .split (",") .includes (element .nodeName))
-					this .addEventDispatchers (elements);
+					this .addEventDispatchers (element);
 
 				var sensors = element .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors.length; ++ i)
 					this .addEventDispatchers (sensors[i]);
+				*/
 			},
 			
 			processInlineDOMs: function (element)
@@ -217,7 +237,7 @@ X3D (function (X3DCanvases)
 
 				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
 
-				for (var i = 0; i < inlines.length; ++ i)
+				for (var i = 0; i < inlines .length; ++ i)
 					this .processInlineDOM (inlines [i]);
 			},
 			
@@ -231,7 +251,6 @@ X3D (function (X3DCanvases)
 
 				// Individual callback per inline
 
-				//var callback = this .appendInlineDOM .bind (this, element, watchList .getValue () .slice());
 				var callback = this .appendInlineDOM .bind (this, element);
 
 				this .loadSensor .getField ("isLoaded") .addFieldCallback ("loaded" + element .x3d .getId (), callback);
@@ -254,8 +273,7 @@ X3D (function (X3DCanvases)
 				isLoaded .removeFieldCallback ("loaded" + node .getId ());
 
 				// Remove from watchlist
-				// Restore passed, original watchlist
-
+				
 				var wListUpdate = watchList .getValue () .filter ( 
 					function (value) { return value .getValue () !== node; }
 				);
@@ -275,16 +293,17 @@ X3D (function (X3DCanvases)
 
 					document .dispatchEvent (event);
 
-					console .log (event);
+					//console .log (event);
 				}
 				
-				// Attach sensor callbacks.
-				
+				// Attach dom event callbacks.
+				this. addEventDispatchersAll (element); 
+				/*
 				var sensors = element .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors .length; ++ i)
 					this .addEventDispatchers (sensors [i]);
-
+				*/
 				// Any inlines in appended inline dom are picked up when Scene is a addedNode for Mutations
 			},
 			processAttributes: function (mutation, element, parser)
@@ -330,7 +349,7 @@ X3D (function (X3DCanvases)
 					{					
 						var addedNodes = mutation.addedNodes;
 	
-						for (var i = 0; i < addedNodes.length; ++ i)
+						for (var i = 0; i < addedNodes .length; ++ i)
 							this .processAddedNode (addedNodes[i], parser);
 		
 						var removedNodes = mutation .removedNodes;

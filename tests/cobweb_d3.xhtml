@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>d3, sensors and adding field nodes</title>
+		<title>d3, sensors, other events and adding field nodes</title>
 
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 		<meta http-equiv="Pragma" content="no-cache"/>
@@ -14,7 +14,7 @@
 			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.min.js">
 		</script>
 		<script type="text/javascript" 
-			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+			src="../cobweb/cobweb_dom.js">
 		</script>
 		<link rel="stylesheet" type="text/css"
 			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
@@ -59,11 +59,13 @@ X3DCanvas {
 		<X3DCanvas id='dummy'>
 <X3D>
 	<Scene>
-		<Viewpoint></Viewpoint>
+		<Viewpoint description='start'></Viewpoint>
+		<Viewpoint description='offset' position='10 0 10'></Viewpoint>
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
 		<KeySensor DEF='ks1'></KeySensor>
 		<TimeSensor DEF='tms1' loop='true' cycleInterval='10'></TimeSensor>
-		
+		<ScalarInterpolator DEF='SI' key='0 0.5 1' keyValue='0 2 10' />
+		<ROUTE fromNode='tms1' fromField='fraction_changed' toNode='SI' toField='set_fraction' />
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
 			<ProximitySensor DEF='ps1' size='3'></ProximitySensor> 
@@ -91,6 +93,8 @@ X3DCanvas {
 <div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
 <div class='report'>key pressed: <span id='keypressed'></span></div>
 <div class='report'>Time fraction changed: <span id='time'></span></div>
+<div class='report'>interpolated value changed: <span id='inter'></span></div>
+<div class='report'>Viewpoint position: <span id='position'></span></div>
 </body>
 <script>
 console.log('START')
@@ -129,33 +133,59 @@ var ps = document.querySelector('ProximitySensor');
 var pp = document.querySelector('#proxim');
 var tms = document.querySelector('TimeSensor');
 var tmp = document.querySelector('#time');
+var si = document.querySelector('[DEF="SI"]');
+var sip = document.querySelector('#inter');
+var vp1 = document.querySelector('Viewpoint');
+var vp2 = document.querySelector('Viewpoint[description="offset"]');
+var vpp = document.querySelector('#position');
 
 ///*
-ts.addEventListener('x3dTouchSensor_isOver', function(evt) {
+ts.addEventListener('x3d_isOver', function(evt) {
 	var e = evt.detail;
 	if (e.value) {
 		coords.textContent = " " + e.fields.hitPoint_changed;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ts.addEventListener('x3dTouchSensor_hitPoint_changed', function(evt) {
+ts.addEventListener('x3d_hitPoint_changed', function(evt) {
 	var e = evt.detail;
 	if (e.value) {
 		hitpt.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	}
 	});
-ks.addEventListener('x3dKeySensor_keyPress', function(evt) {
+ks.addEventListener('x3d_keyPress', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		kp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
-tms.addEventListener('x3dTimeSensor_fraction_changed', function(evt) {
+tms.addEventListener('x3d_fraction_changed', function(evt) {
 	var e = evt.detail;
 	//if (evt.value) {
 		tmp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+si.addEventListener('x3d_value_changed', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		sip.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+vp1.addEventListener('x3d_position', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		vpp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+vp2.addEventListener('x3d_position', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		vpp.textContent = " " + e.value;
 		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
 	//}
 	});
@@ -198,7 +228,7 @@ function toggle_boxSensor() {
 	var last_trafo = trafos[trafos.length - 1];
 	var ts = last_trafo.querySelector('TouchSensor');
 	if (ts !== null) {
-		ts.removeEventListener('x3dTouchSensor_isOver', toRed);
+		ts.removeEventListener('x3d_isOver', toRed);
 		ts.remove();
 		//remove listeners?
 		return;
@@ -207,7 +237,7 @@ function toggle_boxSensor() {
 	ts.setAttribute('DEF', 'ts_' + last_trafo.getAttribute('DEF'));
 	last_trafo.appendChild(ts); //x3dnode now correctly added
 	//now also react to events
-	ts.addEventListener('x3dTouchSensor_isOver', toRed);
+	ts.addEventListener('x3d_isOver', toRed);
 	//add back material if removed
 	var mat = last_trafo.querySelector("Material");
 	if (mat === null) { // add Material node if previously removed
