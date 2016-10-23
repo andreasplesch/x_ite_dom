@@ -48,7 +48,7 @@ The onevent attributes are not available. Use el.addEventListener() instead.
 
 The evt parameter provided to the callback function has these properties:
 - detail.value: the value of the x3d field
-- detail.name: The DEF name of the sensor node; empty if there is no DEF name.
+- detail.name: The DEF name of the dispatching node; empty if there is no DEF name.
 - detail.fields: an array of al fields of the x3d node with current values
 - detail.x3dnode: the x3d node object which originated the event (for advanced use)
 
