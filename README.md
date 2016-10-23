@@ -34,15 +34,15 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 
 ## Events
 
-Event handling currently covers most(all?) sensor events.
+Event handling currently covers all inputOutput and outputOnly fields, whichh includes all sensor and interpolator events.
 
-Events originate from x3d sensor nodes. This means that the x3d scene has to have such a sensor node (TouchSensor) for any mouse events to be dispatched.
+Mouse events originate from x3d sensor nodes. This means that the x3d scene has to have such a sensor node (TouchSensor) for any mouse events to be dispatched.
 
-See tests/cobweb_d3.js for an example.
+See tests/cobweb_d3.js and tests/interactiveTransformations.xhtml for examples.
 
-Event type names parallel x3d field names for sensors. The name construction is "x3d" + sensor_type + "_" + x3d event name.
+Event type names parallel x3d field names. The name construction is "x3d" + "_" + x3d event name.
 
-This means the usual events such as 'click' or 'mouseover' are not available. However, there are similar events for x3d sensors albeit with other names (for example x3dTouchSensor_isOver).
+This means the usual events such as 'click' or 'mouseover' are not available. However, there are similar events for x3d sensors albeit with other names (for example x3d_isOver).
 
 The onevent attributes are not available. Use el.addEventListener() instead.
 
@@ -52,11 +52,7 @@ The evt parameter provided to the callback function has these properties:
 - detail.fields: an array of al fields of the x3d node with current values
 - detail.x3dnode: the x3d node object which originated the event (for advanced use)
 
-The dispatched events do not bubble back up, eg. usually there should be no need to stop propagation. The event listeners should be attached to the Sensor DOM elements.
-
-Needs testing: [Event listeners attached to elements above the sensor element the hierarchy can receive the event. This means if there are multiple sensor (say TouchSensors) below a listener, the listener receives the events from all of the sensors of the type requested (TouchSensors). The detail.name property then can be used to identify which sensor emitted the event.]
-
-Considering shortening sensor names to just x3d + x3d event name and dispatching events for all x3d output events, not just sensors. 
+The dispatched events do not bubble back up, eg. usually there should be no need to stop propagation. The event listeners should be attached to the specific DOM elements which dispatches the event.
 
 To help with attaching listeners to sensors within inlines, a new 'x3dload' event is dispatched on the document target to signal when all inlines per scene are appended to the document.
 
@@ -68,11 +64,12 @@ To help with attaching listeners to sensors within inlines, a new 'x3dload' even
 - allow mutated attributes to be parsed objects, eg. skip parsing; useful if X3D math function are used on native types
 - multiple scenes per page: done
 - perhaps add onevent properties to DOM nodes.
-- adapt more x3dom examples: done inline_reflection, addremoveNodes, jquery done
-- clean up and organise tests: updated all to v0.5
+- adapt more x3dom examples: done interactiveTransformations, inline_reflection, addremoveNodes, jquery done
+- clean up and organise tests: updated all to v0.6
 
 ## Releases
 
+- 0.6 : many more events, eg. all output fields, shortened event names to x3d_fieldname
 - 0.5 : major internal restructuring, route removal support, requires cobweb >= v2.2
 - 0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
 
