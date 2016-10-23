@@ -90,7 +90,7 @@ Calculated Y-Position (set directly to blue ball): <span id="posSnaped"></span>
 </body>
 <script>
 	var mover = document.querySelector('[DEF="move"]'); // scripts needs to be at end to find element
-	mover.addEventListener('x3dPositionInterpolator_value_changed', snapBall);
+	mover.addEventListener('x3d_value_changed', snapBall);
 	/**
 	 * Uses the values of a PositionInterpolator to move another ball,
 	 * but instead of just routing the values, round the y component.
