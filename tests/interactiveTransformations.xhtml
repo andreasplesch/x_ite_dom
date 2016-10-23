@@ -262,7 +262,7 @@ X3DCanvas {
 			//but doesn't change the orientation of the coordinate system
             //currentGizmoRotationOffset = rotationMatrixWorld.mult(sensorToWorldMatrix.inverse());			
 		currentGizmoRotationOffset = sensorRotation;
-		console.log(sensorRotation.getValue().toString());
+		//console.log(sensorRotation.getValue().toString());
 		
             applyRotationGizmoTransformations();
         }
@@ -276,7 +276,7 @@ X3DCanvas {
 		{
 		    //incorporate the current rotation offset, interpreted globally, into the stored rotation value
 		    //currentGizmoRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
-			currentGizmoRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
+			currentGizmoRotation = currentGizmoRotation.multiply(currentGizmoRotationOffset);
 
 				//reset current rotation offset to zero rotation
 		    //currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
@@ -295,7 +295,7 @@ X3DCanvas {
         
 		//incorporate the current rotation offset, interpreted globally, into the stored rotation value
         //var transformMatrix = currentGizmoRotationOffset.mult(currentGizmoRotation);
-        var transformRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
+        var transformRotation = currentGizmoRotation.multiply(currentGizmoRotationOffset);
         
         //set matrix value in column major format, as required by the MatrixTransform node
         //teapotRotationNode.setFieldValue("matrix", transformMatrix.transpose());
