@@ -262,6 +262,7 @@ X3DCanvas {
 			//but doesn't change the orientation of the coordinate system
             //currentGizmoRotationOffset = rotationMatrixWorld.mult(sensorToWorldMatrix.inverse());			
 		currentGizmoRotationOffset = sensorRotation;
+		console.log(sensorRotation);
 		
             applyRotationGizmoTransformations();
         }
