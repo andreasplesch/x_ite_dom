@@ -136,7 +136,7 @@ X3DCanvas {
 					
                     <!-- Rotation Handle X -->					
                     <Group>
-                        <CylinderSensor DEF='aroundX' autoOffset='true' axisRotation='0 0 1 -1.57' inoutputchange='processRotationGizmoEvent(event);'>
+                        <CylinderSensor DEF='aroundX' autoOffset='false' axisRotation='0 0 1 -1.57' inoutputchange='processRotationGizmoEvent(event);'>
                         </CylinderSensor>
 
                         <Transform>
@@ -275,7 +275,7 @@ X3DCanvas {
 		{
 		    //incorporate the current rotation offset, interpreted globally, into the stored rotation value
 		    //currentGizmoRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
-			currentGizmoRotation = currentGizmoRotation.multiply(currentGizmoRotationOffset);
+			currentGizmoRotation = currentGizmoRotationOffset.multiply(currentGizmoRotation);
 
 				//reset current rotation offset to zero rotation
 		    //currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
