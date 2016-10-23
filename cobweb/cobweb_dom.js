@@ -70,7 +70,7 @@ X3D (function (X3DCanvases)
 				//use key in X3D.X3DConstants and match Sensor
 				// expand to all [inputoutput] and [outputOnly] fields in all nodes ?
 				// Construct selector
-
+				/* obsolete
 				this .sensorSelector = "Anchor"; // Other special names? (ViewpointGroup has a proxy inside, consider?)
 
 				for (var key in X3D .X3DConstants)
@@ -78,7 +78,7 @@ X3D (function (X3DCanvases)
 					if (key .endsWith ('Sensor'))
 						this .sensorSelector += "," + key;
 				}
-				/*
+				
 				var sensors = dom .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors .length; ++ i)
@@ -219,7 +219,7 @@ X3D (function (X3DCanvases)
 				this. addEventDispatchers (element);
 				this. addEventDispatchersAll (element); // also for childnodes
 				
-				/*	
+				/* obsolete	
 				if (this .sensorSelector .split (",") .includes (element .nodeName))
 					this .addEventDispatchers (element);
 
@@ -251,7 +251,6 @@ X3D (function (X3DCanvases)
 
 				// Individual callback per inline
 
-				//var callback = this .appendInlineDOM .bind (this, element, watchList .getValue () .slice());
 				var callback = this .appendInlineDOM .bind (this, element);
 
 				this .loadSensor .getField ("isLoaded") .addFieldCallback ("loaded" + element .x3d .getId (), callback);
@@ -274,8 +273,7 @@ X3D (function (X3DCanvases)
 				isLoaded .removeFieldCallback ("loaded" + node .getId ());
 
 				// Remove from watchlist
-				// Restore passed, original watchlist
-
+				
 				var wListUpdate = watchList .getValue () .filter ( 
 					function (value) { return value .getValue () !== node; }
 				);
@@ -295,16 +293,17 @@ X3D (function (X3DCanvases)
 
 					document .dispatchEvent (event);
 
-					console .log (event);
+					//console .log (event);
 				}
 				
-				// Attach sensor callbacks.
-				
+				// Attach dom event callbacks.
+				this. addEventDispatchersAll (element); 
+				/*
 				var sensors = element .querySelectorAll (this .sensorSelector);
 
 				for (var i = 0; i < sensors .length; ++ i)
 					this .addEventDispatchers (sensors [i]);
-
+				*/
 				// Any inlines in appended inline dom are picked up when Scene is a addedNode for Mutations
 			},
 			processAttributes: function (mutation, element, parser)
