@@ -120,7 +120,8 @@ X3D (function (X3DCanvases)
 	
 				var node      = element .x3d;
 				var prefix    = "x3d";
-				var eventType = prefix + element.nodeName + "_" + field .getName ();
+				//var eventType = prefix + element.nodeName + "_" + field .getName ();
+				var eventType = prefix + "_" + field .getName ();
 
 				var event = new CustomEvent (eventType, { 
 					detail: {
