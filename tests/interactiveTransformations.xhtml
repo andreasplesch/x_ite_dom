@@ -204,16 +204,23 @@ X3DCanvas {
   
 <script> <![CDATA[
 	var planeSensor = document.querySelector("PlaneSensor");
-	planeSensor.addEventListener("x3dPlaneSensor_translation_changed", processTranslationGizmoEvent);
+	//planeSensor.addEventListener("x3dPlaneSensor_translation_changed", processTranslationGizmoEvent);
+    	planeSensor.addEventListener("x3d_translation_changed", processTranslationGizmoEvent);
     	var cylSensorX = document.querySelector("CylinderSensor[DEF='aroundX']");
-	cylSensorX.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
-	cylSensorX.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
+	//cylSensorX.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
+	//cylSensorX.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
+	cylSensorX.addEventListener("x3d_rotation_changed", processRotationGizmoEvent);
+	cylSensorX.addEventListener("x3d_isActive", processRotationGizmoActiveEvent);
 	var cylSensorY = document.querySelector("CylinderSensor[DEF='aroundY']");
-	cylSensorY.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
-	cylSensorY.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
+	//cylSensorY.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
+	//cylSensorY.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
+	cylSensorY.addEventListener("x3d_rotation_changed", processRotationGizmoEvent);
+	cylSensorY.addEventListener("x3d_isActive", processRotationGizmoActiveEvent);
 	var cylSensorZ = document.querySelector("CylinderSensor[DEF='aroundZ']");
-	cylSensorZ.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
-	cylSensorZ.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
+	//cylSensorZ.addEventListener("x3dCylinderSensor_rotation_changed", processRotationGizmoEvent);
+	//cylSensorZ.addEventListener("x3dCylinderSensor_isActive", processRotationGizmoActiveEvent);
+	cylSensorZ.addEventListener("x3d_rotation_changed", processRotationGizmoEvent);
+	cylSensorZ.addEventListener("x3d_isActive", processRotationGizmoActiveEvent);
 	
 	//var currentGizmoRotation       = new x3dom.fields.SFMatrix4f();
     	//var currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
