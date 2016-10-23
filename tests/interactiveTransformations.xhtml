@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>x3d script vs. dom script</title>
+		<title>interactive trafo</title>
 
 		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 		<meta http-equiv="Pragma" content="no-cache"/>
@@ -262,7 +262,7 @@ X3DCanvas {
 			//but doesn't change the orientation of the coordinate system
             //currentGizmoRotationOffset = rotationMatrixWorld.mult(sensorToWorldMatrix.inverse());			
 		currentGizmoRotationOffset = sensorRotation;
-		console.log(sensorRotation);
+		console.log(sensorRotation.getValue().toString());
 		
             applyRotationGizmoTransformations();
         }
