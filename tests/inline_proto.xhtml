@@ -50,9 +50,11 @@ X3DCanvas {
 		            		groundColor="0.8 0.8 0.8"
 		            		skyColor="0.1 0.1 0.8"
 			/>
-			<Viewpoint description='start' position='-2.5 0 -10'></Viewpoint>
+			<Viewpoint description='start' position='0 0 -10'></Viewpoint>
 			<!--NavigationInfo type='"FLY", "ANY"'> </NavigationInfo-->
-      <Inline DEF='cubes' url='"nestedProtos.x3d"' />
+      			<Transform translation='5 0 0'>
+				<Inline DEF='cubes' url='"nestedProtos.x3d"' />
+			</Transform>
 			<Transform translation='-5 0 0'>
 				<Inline USE='cubes' />
 			</Transform>
@@ -67,6 +69,11 @@ X3DCanvas {
 </body>
 <script>
 	function addProtoInstance() {
+		var protoScene = document.querySelector('[DEF="cubes"] Scene');
+		var protoInstance = document.createElement('ProtoInstance');
+		protoInstance.setAttribute('name', 'cubes');
+		protoInstance.setAttribute('rotation', '0 0 1 0.8');
+		protoScene.appendChild(protoInstance);
 	}
 </script>
 </html>
