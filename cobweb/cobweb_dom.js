@@ -179,7 +179,7 @@ X3D (function (X3DCanvases)
 
 				if (parentNode .parentNode .nodeName === 'Inline')
 				{
-					var nodeScene = parentNode .parentNode .x3d.getInternalScene ();
+					var nodeScene = parentNode .parentNode .x3d .getInternalScene ();
 				}
 				else if (parentNode .x3d)
 				{
@@ -315,14 +315,31 @@ X3D (function (X3DCanvases)
 			processAttribute: function (attributeName, element, parser)
 			{
 				var attribute = element .attributes .getNamedItem (attributeName);
+				
+				if (element .x3d)
+				{ // is a field
+					parser .attribute (attribute, element .x3d); //almost there
 
-				parser .attribute (attribute, element .x3d); //almost there
+					//only underscore gets update
+					var field = element .x3d .getField (attributeName);
 
-				//only underscore gets update
-				var field = element .x3d .getField (attributeName);
-
-				field .addEvent (); // set_field event, updates real property
-				//may not work for Routes, check
+					field .addEvent (); // set_field event, updates real property
+					//does not work for Routes
+				}
+				else
+				{ // is an attribute of non-node child
+					var parentNode = element .parentNode; //should always be a node (?)
+					var node = parentNode .x3d; // need to attach .x3d to ProtoInstance
+					parser .pushExecutionContext (node .getExecutionContext ());
+					parser .pushParent (node);
+					
+					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
+					
+					parser. child (element, isProtoInstance);
+					
+					parser .popParent ();
+					parser .popExecutionContext ();
+							
 			},
 			processMutation: function (mutation)
 			{
