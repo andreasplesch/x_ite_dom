@@ -67,6 +67,7 @@ X3DCanvas {
 	</X3DCanvas>
 	<button onclick='addProtoInstance()'> add cubes </button>
 	<button onclick='removeProtoInstance()'> remove cubes </button>
+	rotation [0 to 180]: <input id='zRotation' min='0' max='3.14' type='range' value='0.76' onchange='rotateCubes(event)' />
 	
 </body>
 <script>
@@ -91,6 +92,13 @@ X3DCanvas {
 		var lastCubes  = newCubes[newCubes.length - 1];
 		lastCubes.remove();
 		counter = counter - step;
+	}
+	function rotateCubes(event) {
+		var newCubes = document.querySelectorAll('[DEF="cubes"] > Scene > Transform');
+		if (newCubes === null) {return;}
+		var lastCubes  = newCubes[newCubes.length - 1];
+		var rotationField = lastCubes.querySelector('fieldValue[rotation]');
+		rotationField.setAttribute('value', '0 0 1 ' + event.target.value);
 	}
 		
 </script>
