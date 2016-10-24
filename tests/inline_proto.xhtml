@@ -78,7 +78,7 @@ X3DCanvas {
 		protoFieldValue.setAttribute('value', '0 0 1 ' + Math.PI/4);
 		protoInstance.appendChild(protoFieldValue);
 		var trafo = document.createElement('Transform');
-		trafo.setAttribute('translation', counter + ' ' + counter + '0');
+		trafo.setAttribute('translation', counter + ' ' + counter + ' 0');
 		counter = counter + 1.5;
 		trafo.appendChild(protoInstance);
 		protoScene.appendChild(trafo);
