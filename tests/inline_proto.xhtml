@@ -66,9 +66,11 @@ X3DCanvas {
 		</p>
 	</X3DCanvas>
 	<button onclick='addProtoInstance()'> add cubes </button>
+	<button onclick='removeProtoInstance()'> remove cubes </button>
+	
 </body>
 <script>
-	var counter = 0;
+	var counter = 0, step = 1.5;
 	function addProtoInstance() {
 		var protoScene = document.querySelector('[DEF="cubes"] Scene');
 		var protoInstance = document.createElement('ProtoInstance');
@@ -79,9 +81,17 @@ X3DCanvas {
 		protoInstance.appendChild(protoFieldValue);
 		var trafo = document.createElement('Transform');
 		trafo.setAttribute('translation', counter + ' ' + counter + ' 0');
-		counter = counter + 1.5;
+		counter = counter + step;
 		trafo.appendChild(protoInstance);
 		protoScene.appendChild(trafo);
 	}
+	function removeProtoInstance() {
+		var newCubes = document.querySelectorAll('[DEF="cubes"] > Scene > Transform');
+		if (newCubes === null) {return;}
+		var lastCubes  = newCubes[newCubes.length - 1];
+		lastCubes.remove();
+		counter = counter - step;
+	}
+		
 </script>
 </html>
