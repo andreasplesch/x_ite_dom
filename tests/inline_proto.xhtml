@@ -68,6 +68,7 @@ X3DCanvas {
 	<button onclick='addProtoInstance()'> add cubes </button>
 </body>
 <script>
+	var counter = 0;
 	function addProtoInstance() {
 		var protoScene = document.querySelector('[DEF="cubes"] Scene');
 		var protoInstance = document.createElement('ProtoInstance');
@@ -76,7 +77,11 @@ X3DCanvas {
 		protoFieldValue.setAttribute('name', 'rotation');
 		protoFieldValue.setAttribute('value', '0 0 1 ' + Math.PI/4);
 		protoInstance.appendChild(protoFieldValue);
-		protoScene.appendChild(protoInstance);
+		var trafo = document.createElement('Transform');
+		trafo.setAttribute('translation', counter + ' ' + counter + '0');
+		counter = counter + 1.5;
+		trafo.appendChild(protoInstance);
+		protoScene.appendChild(trafo);
 	}
 </script>
 </html>
