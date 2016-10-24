@@ -97,7 +97,7 @@ X3DCanvas {
 		var newCubes = document.querySelectorAll('[DEF="cubes"] > Scene > Transform');
 		if (newCubes === null) {return;}
 		var lastCubes  = newCubes[newCubes.length - 1];
-		var rotationField = lastCubes.querySelector('fieldValue[rotation]');
+		var rotationField = lastCubes.querySelector('ProtoInstance > fieldValue[name="rotation"]');
 		rotationField.setAttribute('value', '0 0 1 ' + event.target.value);
 	}
 		
