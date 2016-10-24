@@ -72,7 +72,10 @@ X3DCanvas {
 		var protoScene = document.querySelector('[DEF="cubes"] Scene');
 		var protoInstance = document.createElement('ProtoInstance');
 		protoInstance.setAttribute('name', 'Cubes');
-		protoInstance.setAttribute('rotation', '0 0 1 0.4');
+		var protoFieldValue = document.createElement('fieldValue');
+		protoFieldValue.setAttribute('name', 'rotation');
+		protoFieldValue.setAttribute('value', '0 0 1 0.4');
+		protoInstance.appendChild(protoFieldValue);
 		protoScene.appendChild(protoInstance);
 	}
 </script>
