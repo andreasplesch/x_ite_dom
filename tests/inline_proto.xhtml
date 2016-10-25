@@ -58,6 +58,13 @@ X3DCanvas {
 			<Transform translation='-5 0 0'>
 				<Inline USE='cubes' />
 			</Transform>
+			<!-- test protos as root -->
+			<ExternProtoDeclare name="externCubes" url='"nestedProtos.x3d#Cubes"'>
+				<field accessType='inputOutput' type='SFRotation' name='rotation'/>
+			</ExternProtoDeclare>
+			<ProtoInstance name="externCubes">
+				<fieldValue name='rotation' value='0.4' />
+			</ProtoInstance>
 		</Scene>
 		<p class="fallback">
 			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
