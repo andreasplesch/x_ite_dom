@@ -342,10 +342,9 @@ X3D (function (X3DCanvases)
 					parser .popExecutionContext ();
 					if (isProtoInstance)
 					{
-						var field = node. getField (element. getAttribute ("name");
+						var field = node. getField (element. getAttribute ("name"));
 					    	field. addEvent ();
 					}
-					
 				}
 			},
 			processMutation: function (mutation)
