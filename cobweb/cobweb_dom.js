@@ -111,7 +111,8 @@ X3D (function (X3DCanvases)
 				ctx. sensor = sensor;*/
 				//only attach callbacks for output fields
 				if (field. isOutput()) // both inputOutput and outputOnly
-					field .addFieldCallback (field .getName (),
+					field .addFieldCallback (
+						"DomIntegration." + field .getName (),
 						this .fieldCallback .bind (null, field, element));
 			},
 			fieldCallback: function  (field, element, value)
