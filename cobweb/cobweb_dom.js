@@ -335,7 +335,7 @@ X3D (function (X3DCanvases)
 					parser .pushParent (node);
 					
 					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
-					
+					// may need to try..catch in case "name" field does not exist
 					parser. child (element, isProtoInstance);
 					
 					parser .popParent ();
