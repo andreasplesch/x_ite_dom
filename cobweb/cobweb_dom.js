@@ -327,9 +327,10 @@ X3D (function (X3DCanvases)
 					//does not work for Routes
 				}
 				else
-				{ // is an attribute of non-node child
+				{ // is an attribute of non-node child such as fieldValue
 					var parentNode = element .parentNode; //should always be a node (?)
 					var node = parentNode .x3d; // need to attach .x3d to ProtoInstance
+					var nodeScene = node .getExecutionContext ();
 					parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
 					
@@ -339,7 +340,8 @@ X3D (function (X3DCanvases)
 					
 					parser .popParent ();
 					parser .popExecutionContext ();
-				}			
+					nodeScene .setup();
+				}
 			},
 			processMutation: function (mutation)
 			{
