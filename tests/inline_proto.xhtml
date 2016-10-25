@@ -63,7 +63,7 @@ X3DCanvas {
 				<field accessType='inputOutput' type='SFRotation' name='rotation'/>
 			</ExternProtoDeclare>
 			<ProtoInstance name="externCubes">
-				<fieldValue name='rotation' value='0.4' />
+				<fieldValue name='rotation' value='0 1 0 0.1' />
 			</ProtoInstance>
 		</Scene>
 		<p class="fallback">
@@ -72,21 +72,27 @@ X3DCanvas {
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
 	</X3DCanvas>
-	<button onclick='addProtoInstance()'> add cubes </button>
-	<button onclick='removeProtoInstance()'> remove cubes </button>
+	<button onclick='addProtoInstance()'> add cubes in inline </button>
+	<button onclick='removeProtoInstance()'> remove cubes in inline</button>
 	rotate added [0 to 90]: <input id='zRotation' min='0' max='1.57' step='0.01' type='range' value='0.76' oninput='rotateCubes(event)' />
-	
+	<br />
+	<button onclick='addRootProtoInstance()'> add cubes </button>
+	<button onclick='removeRootProtoInstance()'> remove cubes </button>
 </body>
 <script>
-	var counter = 0, step = 1.5;
-	function addProtoInstance() {
-		var protoScene = document.querySelector('[DEF="cubes"] Scene');
+	var counter = 0, step = 1.5, rstep = 2, rcounter = 0;
+	function makeProtoInstance(name, rotation) {
 		var protoInstance = document.createElement('ProtoInstance');
-		protoInstance.setAttribute('name', 'Cubes');
+		protoInstance.setAttribute('name', name);
 		var protoFieldValue = document.createElement('fieldValue');
 		protoFieldValue.setAttribute('name', 'rotation');
-		protoFieldValue.setAttribute('value', '0 0 1 ' + Math.PI/4);
+		protoFieldValue.setAttribute('value', rotation);
 		protoInstance.appendChild(protoFieldValue);
+		return protoInstance;
+	}
+	function addProtoInstance() {
+		var protoScene = document.querySelector('[DEF="cubes"] Scene');
+		var protoInstance = makeProtoInstance('Cubes', '0 0 1 ' + Math.PI/4);
 		var trafo = document.createElement('Transform');
 		trafo.setAttribute('translation', counter + ' ' + counter + ' 0');
 		counter = counter + step;
@@ -106,6 +112,22 @@ X3DCanvas {
 		var lastCubes  = newCubes[newCubes.length - 1];
 		var rotationField = lastCubes.querySelector('ProtoInstance > fieldValue[name="rotation"]');
 		rotationField.setAttribute('value', '0 0 1 ' + event.target.value);
+	}
+	function addRootProtoInstance() {
+		var protoScene = document.querySelector('Scene');
+		var protoInstance = makeProtoInstance('externCubes', '0 1 0 ' + Math.PI/4);
+		var trafo = document.createElement('Transform');
+		trafo.setAttribute('translation', '0 ' + '0 ' + rcounter);
+		rcounter = rcounter + rstep;
+		trafo.appendChild(protoInstance);
+		protoScene.appendChild(trafo);
+	}
+	function removeRootProtoInstance() {
+		var newCubes = document.querySelectorAll('Scene > Transform');
+		if (newCubes === null) {return;}
+		var lastCubes  = newCubes[newCubes.length - 1];
+		lastCubes.remove();
+		rcounter = rcounter - rstep;
 	}
 		
 </script>
