@@ -339,7 +339,7 @@ X3D (function (X3DCanvases)
 					
 					parser .popParent ();
 					parser .popExecutionContext ();
-							
+				}			
 			},
 			processMutation: function (mutation)
 			{
