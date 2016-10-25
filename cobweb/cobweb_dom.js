@@ -59,7 +59,7 @@ X3D (function (X3DCanvases)
 				// Add inline doms from initial scene.
 				var inlines = dom .querySelectorAll ('Inline');
 
-				for (var i = 0; i < inlines .length; ++ i)
+				for (var i = 0, length = inlines. length; i < length; ++i)
 					this .processInlineDOM (inlines [i]);
 				
 				//events
@@ -89,7 +89,7 @@ X3D (function (X3DCanvases)
 			addEventDispatchersAll: function (element)
 			{
 				var elements = element.querySelectorAll('*');
-				for (var i = 0; i < elements .length; ++i)
+				for (var i = 0, length = elements .length; i < length; ++i)
 					this. addEventDispatchers (elements [i]);
 			},
 			
@@ -238,7 +238,7 @@ X3D (function (X3DCanvases)
 
 				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
 
-				for (var i = 0; i < inlines .length; ++ i)
+				for (var i = 0, length = inlines .length; i < length; ++ i)
 					this .processInlineDOM (inlines [i]);
 			},
 			
@@ -390,7 +390,7 @@ X3D (function (X3DCanvases)
 		var integrations = [ ];
 
 		// Go through all passed x3dcanvas elements.
-		for (var i = 0; i < X3DCanvases .length; ++ i)
+		for (var i = 0, length = X3DCanvases .length; i < length; ++ i)
 		{
 			var integration = new DOMIntegration (X3DCanvases [i]);
 
