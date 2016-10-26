@@ -77,7 +77,25 @@ X3DCanvas {
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
 	</X3DCanvas>
-	
+	outer radius [1 to 5]:
+	<input id='outerRadius' min='1' max='5' step='0.01' type='range' value='2' oninput='update_oRad(event)' />
+	<br />
 </body>
+<script>
+	var gear = document.querySelector("ProtoInstance[name='Gear']");
+	function update_oRad(e) {
+		var r = event.target.value;
+		var oRadField = gear.querySelector('fieldValue[name="outerRadius"]');
+		if (oRadField === null) {
+			oRadField = document.createElement('fieldValue');
+			oRadField.setAttribute('name','outerRadius');
+			oRadField.setAttribute('value', r);
+			gear.appendChild(oRadField);
+			return;
+	   	}
+		oRadField.setAttribute('value', r);
+	}	
 	
+	
+</script>
 </html>
