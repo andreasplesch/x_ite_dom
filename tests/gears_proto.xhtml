@@ -47,27 +47,36 @@ X3DCanvas {
 
 <body>
 	<X3DCanvas>
-    <X3D>
-		  <Scene>
+		<X3D>
+			<Scene>
 
-      <ExternProtoDeclare name='Gear'>
-        <field accessType='inputOutput' type='SFFloat' name='teeth' value='10'/>
-        <field accessType='inputOutput' type='SFFloat' name='toothDepth' value='2'/>
-        <field accessType='inputOutput' type='SFFloat' name='innerRadius' value='1'/>
-        <field accessType='inputOutput' type='SFFloat' name='outerRadius' value='4'/>
-        <field accessType='inputOutput' type='SFFloat' name='width' value='1'/>
-        <field accessType='initializeOnly' type='SFFloat' name='creaseAngle'/>
-      </ExternProtoDeclare>
-      
-      <ProtoInstance name='Gear'>
-      </ProtoInstance>
-      </Scene>
-      </X3D>
+			<ExternProtoDeclare name='Gear' url='"https://raw.githubusercontent.com/andreasplesch/Library/master/Examples/Gears/gears.x3d#Gear"'>
+				<field accessType='inputOutput' type='SFFloat' name='teeth' value='10'/>
+				<field accessType='inputOutput' type='SFFloat' name='toothDepth' value='2'/>
+				<field accessType='inputOutput' type='SFFloat' name='innerRadius' value='1'/>
+				<field accessType='inputOutput' type='SFFloat' name='outerRadius' value='4'/>
+				<field accessType='inputOutput' type='SFFloat' name='width' value='1'/>
+				<field accessType='initializeOnly' type='SFFloat' name='creaseAngle'/>
+			</ExternProtoDeclare>
+			<Transform DEF='Gear_1'>
+				<Shape>
+					<Appearance>
+						<Material diffuseColor='0.8 0.1 0'/>
+					</Appearance>
+					<ProtoInstance name='Gear' containerField='geometry'>
+						<fieldValue name='teeth' value='20'/>
+						<fieldValue name='toothDepth' value='0.7'/>
+						<fieldValue name='creaseAngle' value='0.6'/>
+					</ProtoInstance>
+				</Shape>
+			</Transform>
+			</Scene>
+		</X3D>
 		<p class="fallback">
 			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
 			because this is currently the choice of the choice. We will continuously keep you informed <br/>
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
 	</X3DCanvas>
-  </body>
+</body>
 </html>
