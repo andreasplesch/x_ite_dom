@@ -83,7 +83,7 @@ X3DCanvas {
 </body>
 <script>
 	var gear = document.querySelector("ProtoInstance[name='Gear']");
-	function update_oRad(e) {
+	function update_oRad(event) {
 		var r = event.target.value;
 		var oRadField = gear.querySelector('fieldValue[name="outerRadius"]');
 		if (oRadField === null) {
