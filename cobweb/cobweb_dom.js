@@ -172,7 +172,6 @@ X3D (function (X3DCanvases)
 					return;
 				
 				var parentNode = element .parentNode;
-				var node = parentNode .x3d;
 
 				// first get correct execution context
 				var nodeScene = this .browser .currentScene ; // assume main Scene
@@ -193,25 +192,26 @@ X3D (function (X3DCanvases)
 				if (parentNode .x3d)
 				{
 					//parser .parseIntoNode (parentNode .x3d, element);
-					parser .pushExecutionContext (node .getExecutionContext ());
+					var node = parentNode .x3d ;
+					//parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
 					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
 					
 					parser .child (element, isProtoInstance);
 
 					parser .popParent ();
-					parser .popExecutionContext ();
-					nodeScene .setup ();
+					//parser .popExecutionContext ();
+					//nodeScene .setup ();
 				}
 				else
 				{
 					// Inline or main root node.
 					parser .statement (element);
-					nodeScene .setup ();
+					//nodeScene .setup ();
 				}
 				
 				parser .popExecutionContext ();
-				
+				nodeScene .setup ();
 				//parser only adds uninitialized x3d nodes to scene
 				//the setup function initializes only uninitialized nodes, but only root nodes ?
 				//needed also after inline.setup(), should not hurt to redo if nodeScene = main Scene
