@@ -80,12 +80,17 @@ X3DCanvas {
 	</X3DCanvas>
 	outer radius:
 	<input id='outerRadius' min='.5' max='5' step='0.01' type='range' value='4' oninput='update_oRad(event)' />
-	<span id='oRadText'></span>
+	<span id='oRadText'>4.00</span>
+	<br />
+	number of teeth:
+	<input id='teeth' min='3' max='40' step='1' type='range' value='20' oninput='update_teeth(event)' />
+	<span id='teethText'>20</span>
 	<br />
 </body>
 <script>
 	var gear = document.querySelector("ProtoInstance[name='Gear']");
 	var oRadText = document.querySelector('#oRadText');
+	var teethText = document.querySelector('#teethText');
 	function update_oRad(event) {
 		var r = event.target.value;
 		oRadText.textContent = r;
@@ -94,11 +99,18 @@ X3DCanvas {
 			oRadField = document.createElement('fieldValue');
 			oRadField.setAttribute('name','outerRadius');
 			oRadField.setAttribute('value', r);
-			gear.appendChild(oRadField);
+			gear.appendChild(oRadField); //triggers error
 			return;
 	   	}
 		oRadField.setAttribute('value', r);
-	}	
+	}
+	function update_teeth(event) {
+		var n = event.target.value;
+		teethText.textContent = n;
+		var teethField = gear.querySelector('fieldValue[name="teeth"]');
+
+		teethField.setAttribute('value', n);
+	}
 	
 	
 </script>
