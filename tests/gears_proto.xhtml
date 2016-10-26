@@ -52,11 +52,11 @@ X3DCanvas {
 
 			<ExternProtoDeclare name='Gear' url='"https://raw.githubusercontent.com/andreasplesch/Library/master/Examples/Gears/gears.x3d#Gear"'>
 				<field accessType='inputOutput' type='SFFloat' name='teeth' value='10'/>
-				<field accessType='inputOutput' type='SFFloat' name='toothDepth' value='2'/>
-				<field accessType='inputOutput' type='SFFloat' name='innerRadius' value='1'/>
-				<field accessType='inputOutput' type='SFFloat' name='outerRadius' value='4'/>
+				<field accessType='inputOutput' type='SFFloat' name='toothDepth' value='0.5'/>
+				<field accessType='inputOutput' type='SFFloat' name='innerRadius' value='0.5'/>
+				<field accessType='inputOutput' type='SFFloat' name='outerRadius' value='2'/>
 				<field accessType='inputOutput' type='SFFloat' name='width' value='1'/>
-				<field accessType='initializeOnly' type='SFFloat' name='creaseAngle'/>
+				<field accessType='initializeOnly' type='SFFloat' name='creaseAngle' value='0.6'/>
 			</ExternProtoDeclare>
 			<Transform DEF='Gear_1'>
 				<Shape>
@@ -66,7 +66,6 @@ X3DCanvas {
 					<ProtoInstance name='Gear' containerField='geometry'>
 						<fieldValue name='teeth' value='20'/>
 						<fieldValue name='toothDepth' value='0.7'/>
-						<fieldValue name='creaseAngle' value='0.6'/>
 					</ProtoInstance>
 				</Shape>
 			</Transform>
@@ -78,5 +77,7 @@ X3DCanvas {
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
 	</X3DCanvas>
+	
 </body>
+	
 </html>
