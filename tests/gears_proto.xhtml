@@ -52,11 +52,11 @@ X3DCanvas {
 
 			<ExternProtoDeclare name='Gear' url='"https://raw.githubusercontent.com/andreasplesch/Library/master/Examples/Gears/gears.x3d#Gear"'>
 				<field accessType='inputOutput' type='SFFloat' name='teeth' value='10'/>
-				<field accessType='inputOutput' type='SFFloat' name='toothDepth' value='0.5'/>
-				<field accessType='inputOutput' type='SFFloat' name='innerRadius' value='0.5'/>
-				<field accessType='inputOutput' type='SFFloat' name='outerRadius' value='2'/>
+				<field accessType='inputOutput' type='SFFloat' name='toothDepth' value='2'/>
+				<field accessType='inputOutput' type='SFFloat' name='innerRadius' value='1'/>
+				<field accessType='inputOutput' type='SFFloat' name='outerRadius' value='4'/>
 				<field accessType='inputOutput' type='SFFloat' name='width' value='1'/>
-				<field accessType='initializeOnly' type='SFFloat' name='creaseAngle' value='0.6'/>
+				<field accessType='initializeOnly' type='SFFloat' name='creaseAngle' />
 			</ExternProtoDeclare>
 			<Transform DEF='Gear_1'>
 				<Shape>
@@ -77,8 +77,8 @@ X3DCanvas {
 			on technical developments and as soon as Cobweb is running in other browser too.
 		</p>
 	</X3DCanvas>
-	outer radius [1 to 5]:
-	<input id='outerRadius' min='1' max='5' step='0.01' type='range' value='2' oninput='update_oRad(event)' />
+	outer radius:
+	<input id='outerRadius' min='.5' max='5' step='0.01' type='range' value='4' oninput='update_oRad(event)' />
 	<br />
 </body>
 <script>
