@@ -171,9 +171,8 @@ X3D (function (X3DCanvases)
 				else if (element .nodeName === 'Scene')
 					return;
 				
-				//create new parser in here to use the correct executioncontext in case of inline
-				
 				var parentNode = element .parentNode;
+				var node = parentNode .x3d;
 
 				// first get correct execution context
 				var nodeScene = this .browser .currentScene ; // assume main Scene
@@ -190,10 +189,18 @@ X3D (function (X3DCanvases)
 				
 				parser .pushExecutionContext (nodeScene);
 				
-				// Then check if root node
+				// then check if root node
 				if (parentNode .x3d)
 				{
-					parser .parseIntoNode (parentNode .x3d, element);
+					//parser .parseIntoNode (parentNode .x3d, element);
+					parser .pushExecutionContext (node .getExecutionContext ());
+					parser .pushParent (node);
+					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
+					
+					parser .child (element, isProtoInstance);
+
+					parser .popParent ();
+					parser .popExecutionContext ();
 					nodeScene .setup ();
 				}
 				else
