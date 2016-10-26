@@ -80,12 +80,15 @@ X3DCanvas {
 	</X3DCanvas>
 	outer radius:
 	<input id='outerRadius' min='.5' max='5' step='0.01' type='range' value='4' oninput='update_oRad(event)' />
+	<span id='oRadText'></span>
 	<br />
 </body>
 <script>
 	var gear = document.querySelector("ProtoInstance[name='Gear']");
+	var oRadText = document.querySelector('#oRadText');
 	function update_oRad(event) {
 		var r = event.target.value;
+		oRadText.text = r;
 		var oRadField = gear.querySelector('fieldValue[name="outerRadius"]');
 		if (oRadField === null) {
 			oRadField = document.createElement('fieldValue');
