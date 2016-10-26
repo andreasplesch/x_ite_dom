@@ -88,7 +88,7 @@ X3DCanvas {
 	var oRadText = document.querySelector('#oRadText');
 	function update_oRad(event) {
 		var r = event.target.value;
-		oRadText.text = r;
+		oRadText.textContent = r;
 		var oRadField = gear.querySelector('fieldValue[name="outerRadius"]');
 		if (oRadField === null) {
 			oRadField = document.createElement('fieldValue');
