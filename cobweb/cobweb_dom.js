@@ -322,13 +322,12 @@ X3D (function (X3DCanvases)
 					parser .attribute (attribute, element .x3d); //almost there
 
 					//only underscore gets update
-					var field = element .x3d .getField (attributeName);
+					var field = element .x3d .getField (attributeName); //containerField is not a field, check for it?
 
 					field .addEvent (); // set_field event, updates real property
-					//does not work for Routes
 				}
 				else
-				{ // is an attribute of non-node child such as fieldValue
+				{ // is an attribute of non-node child such as fieldValue (or ROUTE)
 					var parentNode = element .parentNode; //should always be a node (?)
 					var node = parentNode .x3d; // need to attach .x3d to ProtoInstance
 					var nodeScene = node .getExecutionContext ();
