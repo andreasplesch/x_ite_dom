@@ -178,6 +178,7 @@ X3DCanvas {
   </body>
   
 <script> <![CDATA[
+
 	var planeSensor = document.querySelector("PlaneSensor");
 	//planeSensor.addEventListener("x3dPlaneSensor_translation_changed", processTranslationGizmoEvent);
     	planeSensor.addEventListener("x3d_translation_changed", processTranslationGizmoEvent);
@@ -199,7 +200,7 @@ X3DCanvas {
 	
 	//var currentGizmoRotation       = new x3dom.fields.SFMatrix4f();
     	//var currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
-	    var currentGizmoRotation = new X3D.SFRotation() ;
+	    var currentGizmoRotation = new X3D.SFRotation() ; // chrome complains because it executes this before cobweb is available, for some reason
 	    var currentGizmoRotationOffset = new X3D.SFRotation() ;
 	
 	/*
