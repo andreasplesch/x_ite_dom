@@ -44,7 +44,7 @@ X3DCanvas {
 </style>
 </head>
 
-  <body >
+  <body onx3dload='init()'>
 <X3DCanvas >	  
     <X3D >
         <Scene DEF='scene'>
@@ -178,7 +178,7 @@ X3DCanvas {
   </body>
   
 <script> <![CDATA[
-
+function init() {
 	var planeSensor = document.querySelector("PlaneSensor");
 	//planeSensor.addEventListener("x3dPlaneSensor_translation_changed", processTranslationGizmoEvent);
     	planeSensor.addEventListener("x3d_translation_changed", processTranslationGizmoEvent);
@@ -206,6 +206,7 @@ X3DCanvas {
 	/*
      	* Callback function, invoked on translation gizmo output.
      	*/
+
     function processTranslationGizmoEvent(event)
     {
 		var sensorToWorldMatrix, translationValue;
@@ -284,6 +285,7 @@ X3DCanvas {
         //teapotRotationNode.setFieldValue("matrix", transformMatrix.transpose());
 	teapotRotationNode.setAttribute("rotation", transformRotation.toString());
     }
+}
 ]]>
   </script>
     
