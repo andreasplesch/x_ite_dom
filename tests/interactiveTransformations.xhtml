@@ -177,9 +177,9 @@ X3DCanvas {
             <!-- END OF ROTATION GIZMO -->
 	    <!-- fade gizmo in and out -->
 	    <TimeSensor DEF='timer' cycleInterval='2' enabled='true' />
-	    <TimeTrigger DEF='startTime' />
-	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='startTime' toField='set_boolean' />
-	    <ROUTE fromNode='startTime' fromField='triggerTime' toNode='timer' toField='startTime' />
+	    <TimeTrigger DEF='getTime' />
+	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='getTime' toField='set_boolean' />
+	    <ROUTE fromNode='getTime' fromField='triggerTime' toNode='timer' toField='startTime' />
 	    <ScalarInterpolator DEF='fadeOut' key='0, 1' keyValue='0, 0.5' />
 	    <ROUTE fromNode='timer' fromField='fraction_changed' toNode='fadeOut' toField='set_fraction' />
 	    <ROUTE fromNode='fadeOut' fromField='value_changed' toNode='RED_APP_Mat' toField='transparency' />
