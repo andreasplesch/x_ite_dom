@@ -187,8 +187,8 @@ X3DCanvas {
 	    <ROUTE fromNode='splitBool' fromField='inputFalse' toNode='getTimeOut' toField='set_boolean' />
 	    <ROUTE fromNode='getTimeIn' fromField='triggerTime' toNode='timerIn' toField='startTime' />
 	    <ROUTE fromNode='getTimeOut' fromField='triggerTime' toNode='timerOut' toField='startTime' />
-	    <ScalarInterpolator DEF='fadeIn' key='0 0.5 1' keyValue='0.5 0.25 0' />
-	    <ScalarInterpolator DEF='fadeOut' key='0 0.5 1' keyValue='0 0.25 0.5' />
+	    <ScalarInterpolator DEF='fadeIn' key='0 0.5 1' keyValue='0.9 0.25 0' />
+	    <ScalarInterpolator DEF='fadeOut' key='0 0.5 1' keyValue='0 0.25 0.9' />
 	    <ROUTE fromNode='timerIn' fromField='fraction_changed' toNode='fadeIn' toField='set_fraction' />
 	    <ROUTE fromNode='timerOut' fromField='fraction_changed' toNode='fadeOut' toField='set_fraction' />
 	    <ROUTE fromNode='fadeIn' fromField='value_changed' toNode='RED_APP_Mat' toField='transparency' />
