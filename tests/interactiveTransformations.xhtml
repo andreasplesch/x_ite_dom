@@ -181,10 +181,10 @@ X3DCanvas {
 	    <TimeSensor DEF='timerOut' cycleInterval='4' enabled='true' />
 	    <TimeTrigger DEF='getTimeIn' />
 	    <TimeTrigger DEF='getTimeOut' />
-	    <BooleanFilter DEF='split' />
-	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='filterTrue' toField='set_boolean' />
-	    <ROUTE fromNode='split' fromField='inputTrue' toNode='getTimeIn' toField='set_boolean' />
-	    <ROUTE fromNode='split' fromField='inputFalse' toNode='getTimeOut' toField='set_boolean' />
+	    <BooleanFilter DEF='splitBool' />
+	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='splitBool' toField='set_boolean' />
+	    <ROUTE fromNode='splitBool' fromField='inputTrue' toNode='getTimeIn' toField='set_boolean' />
+	    <ROUTE fromNode='splitBool' fromField='inputFalse' toNode='getTimeOut' toField='set_boolean' />
 	    <ROUTE fromNode='getTimeIn' fromField='triggerTime' toNode='timerIn' toField='startTime' />
 	    <ROUTE fromNode='getTimeOut' fromField='triggerTime' toNode='timerOut' toField='startTime' />
 	    <ScalarInterpolator DEF='fadeIn' key='0 0.5 1' keyValue='0.5 0.25 0' />
@@ -206,7 +206,7 @@ X3DCanvas {
 	    }
 	    ]]>
 	    </Script>
-	    <ROUTE fromNode='getTime' fromField='triggerTime' toNode='logger' toField='startTime' />
+	    <ROUTE fromNode='getTimeIn' fromField='triggerTime' toNode='logger' toField='startTime' />
 	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='logger' toField='set_boolean' />
 
         </Scene>
