@@ -175,6 +175,12 @@ X3DCanvas {
 
             </Transform>
             <!-- END OF ROTATION GIZMO -->
+	    <TimeSensor DEF='timer' cycleInterval='2' enabled='true' />
+	    <TimeTrigger DEF='startTime' />
+	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='startTime' toField='set_boolean' />
+	    <ROUTE fromNode='startTime' fromField='triggerTime' toNode='timer' toField='startTime' />
+	    
+	    
 
         </Scene>
     </X3D>
