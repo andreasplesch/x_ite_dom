@@ -177,12 +177,21 @@ X3DCanvas {
             </Transform>
             <!-- END OF ROTATION GIZMO -->
 	    <!-- fade gizmo in and out -->
-	    <TimeSensor DEF='timer' cycleInterval='2' enabled='true' />
-	    <TimeTrigger DEF='getTime' />
-	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='getTime' toField='set_boolean' />
-	    <ROUTE fromNode='getTime' fromField='triggerTime' toNode='timer' toField='startTime' />
+	    <TimeSensor DEF='timerIn' cycleInterval='4' enabled='true' />
+	    <TimeSensor DEF='timerOut' cycleInterval='4' enabled='true' />
+	    <TimeTrigger DEF='getTimeIn' />
+	    <TimeTrigger DEF='getTimeOut' />
+	    <BooleanFilter DEF='split' />
+	    <ROUTE fromNode='bandsSensor' fromField='isOver' toNode='filterTrue' toField='set_boolean' />
+	    <ROUTE fromNode='split' fromField='inputTrue' toNode='getTimeIn' toField='set_boolean' />
+	    <ROUTE fromNode='split' fromField='inputFalse' toNode='getTimeOut' toField='set_boolean' />
+	    <ROUTE fromNode='getTimeIn' fromField='triggerTime' toNode='timerIn' toField='startTime' />
+	    <ROUTE fromNode='getTimeOut' fromField='triggerTime' toNode='timerOut' toField='startTime' />
+	    <ScalarInterpolator DEF='fadeIn' key='0 0.5 1' keyValue='0.5 0.25 0' />
 	    <ScalarInterpolator DEF='fadeOut' key='0 0.5 1' keyValue='0 0.25 0.5' />
-	    <ROUTE fromNode='timer' fromField='fraction_changed' toNode='fadeOut' toField='set_fraction' />
+	    <ROUTE fromNode='timerIn' fromField='fraction_changed' toNode='fadeIn' toField='set_fraction' />
+	    <ROUTE fromNode='timerOut' fromField='fraction_changed' toNode='fadeOut' toField='set_fraction' />
+	    <ROUTE fromNode='fadeIn' fromField='value_changed' toNode='RED_APP_Mat' toField='transparency' />
 	    <ROUTE fromNode='fadeOut' fromField='value_changed' toNode='RED_APP_Mat' toField='transparency' />
 	    <Script DEF='logger' type='xml'> 
 	    <field name='startTime' type='SFTime' accessType='inputOnly'/> 
