@@ -53,6 +53,7 @@ X3DCanvas {
 
             <!-- EXAMPLE TEAPOT SHAPE -->
 		<Transform id="teapotTranslation">
+			<TouchSensor DEF='bandsSensor' />
 			<Transform id="teapotRotation">
 				<Transform translation='0 -2 0' scale='0.4 0.4 0.4'>
 				<Shape>
@@ -108,7 +109,7 @@ X3DCanvas {
 
             <!-- BEGIN OF ROTATION GIZMO (CONTAINING CYLINDER SENSORS AND SENSOR GEOMETRY) -->
 		<Transform id='rotationHandleTransform'>
-			<TouchSensor DEF='bandsSensor' />			
+						
                     <!-- Rotation Handle X -->					
                     <Group>
                         <CylinderSensor DEF='aroundX' autoOffset='false' axisRotation='0 0 1 -1.57' inoutputchange='processRotationGizmoEvent(event);'>
