@@ -184,14 +184,15 @@ X3DCanvas {
 	    <ScalarInterpolator DEF='fadeOut' key='0 0.5 1' keyValue='0 0.25 0.5' />
 	    <ROUTE fromNode='timer' fromField='fraction_changed' toNode='fadeOut' toField='set_fraction' />
 	    <ROUTE fromNode='fadeOut' fromField='value_changed' toNode='RED_APP_Mat' toField='transparency' />
-	    <script DEF='logger' type='xml'> 
+	    <Script DEF='logger' type='xml'> 
 	    <field name='startTime' type='SFTime' accessType='inputOnly'/> 
 	    <![CDATA[
 	    ecmascript:
 	    function startTime(value, timestamp) {
-	    Browser.print(timestamp + ": startTime script field: " + value);
+	    	Browser.print(timestamp + ": startTime script field: " + value);
 	    }
-	    </script>
+	    ]]>
+	    </Script>
 	    
 	    
 
