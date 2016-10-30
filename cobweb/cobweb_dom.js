@@ -22,10 +22,9 @@ X3D (function (X3DCanvases)
 	
 		DOMIntegration .prototype =
 		{
-			trace: this .browser .getElement () [0] .attributes .getNamedItem('trace'),
-
 			setup: function ()
 			{				
+				this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
