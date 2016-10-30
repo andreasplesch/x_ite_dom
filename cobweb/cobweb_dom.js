@@ -24,7 +24,7 @@ X3D (function (X3DCanvases)
 		DOMIntegration .prototype =
 		{
 			setup: function ()
-				
+			{
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
