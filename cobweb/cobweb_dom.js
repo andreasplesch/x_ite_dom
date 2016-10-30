@@ -18,13 +18,14 @@ X3D (function (X3DCanvases)
 		function DOMIntegration (X3DCanvas)
 		{
 			this .browser = X3D .getBrowser (X3DCanvas);
+			this .browser .trace = X3DCanvas .attributes .getNamedItem('trace');
 		}
 	
 		DOMIntegration .prototype =
 		{
 			setup: function ()
 			{				
-				this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
+				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
@@ -139,7 +140,7 @@ X3D (function (X3DCanvases)
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
 				//trace to console
-				if (this .trace)
+				if (node .getBrowser() .trace)
 				{
 					console .log ( event.timeStamp + 
 						       ": " + node .getTypeName() + 
