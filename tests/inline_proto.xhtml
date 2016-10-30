@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>dom inline proto access</title>
+
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta charset="utf-8"/>
+		<script type="text/javascript" 
+			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.uncompressed.js">
+		</script>
+		<script type="text/javascript" 
+			src="../cobweb/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+	
+<style>
+html, body {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	background: black;
+	color: white;
+}
+X3DCanvas {
+	background: #414141;
+	width: 600px;
+	height: 400px;
+}
+.fallback {
+	display: block;
+	margin: 300px 0 0 0;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<X3DCanvas trace='trace'>
+		<Scene>
+			<Background DEF="WO_World"
+		            		groundColor="0.8 0.8 0.8"
+		            		skyColor="0.1 0.1 0.8"
+			/>
+			<!--Viewpoint description='start' position='0 0 -10'></Viewpoint-->
+			<!--NavigationInfo type='"FLY", "ANY"'> </NavigationInfo-->
+      			<Transform translation='5 0 0'>
+				<Inline DEF='cubes' url='"nestedProtos.x3d"' />
+			</Transform>
+			<Transform translation='-5 0 0'>
+				<Inline USE='cubes' />
+			</Transform>
+			<!-- test protos as root -->
+			<ExternProtoDeclare name="externCubes" url='"nestedProtos.x3d#Cubes"'>
+				<field accessType='inputOutput' type='SFRotation' name='rotation'/>
+			</ExternProtoDeclare>
+			<ProtoInstance name="externCubes">
+				<fieldValue name='rotation' value='0 1 0 0.1' />
+			</ProtoInstance>
+		</Scene>
+		<p class="fallback">
+			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
+			because this is currently the choice of the choice. We will continuously keep you informed <br/>
+			on technical developments and as soon as Cobweb is running in other browser too.
+		</p>
+	</X3DCanvas>
+	<button onclick='addProtoInstance()'> add cubes in inline </button>
+	<button onclick='removeProtoInstance()'> remove cubes in inline</button>
+	rotate added [0 to 90]: <input id='zRotation' min='0' max='1.57' step='0.01' type='range' value='0.76' oninput='rotateCubes(event)' />
+	<br />
+	<button onclick='addRootProtoInstance()'> add cubes </button>
+	<button onclick='removeRootProtoInstance()'> remove cubes </button>
+</body>
+<script>
+	var counter = 0, step = 1.5, rstep = 2, rcounter = 0;
+	function makeProtoInstance(name, rotation) {
+		var protoInstance = document.createElement('ProtoInstance');
+		protoInstance.setAttribute('name', name);
+		var protoFieldValue = document.createElement('fieldValue');
+		protoFieldValue.setAttribute('name', 'rotation');
+		protoFieldValue.setAttribute('value', rotation);
+		protoInstance.appendChild(protoFieldValue);
+		return protoInstance;
+	}
+	function addProtoInstance() {
+		var protoScene = document.querySelector('[DEF="cubes"] Scene');
+		var protoInstance = makeProtoInstance('Cubes', '0 0 1 ' + Math.PI/4);
+		var trafo = document.createElement('Transform');
+		trafo.setAttribute('translation', counter + ' ' + counter + ' 0');
+		counter = counter + step;
+		trafo.appendChild(protoInstance);
+		protoScene.appendChild(trafo);
+	}
+	function removeProtoInstance() {
+		var newCubes = document.querySelectorAll('[DEF="cubes"] > Scene > Transform');
+		if (newCubes === null) {return;}
+		var lastCubes  = newCubes[newCubes.length - 1];
+		lastCubes.remove();
+		counter = counter - step;
+	}
+	function rotateCubes(event) {
+		var newCubes = document.querySelectorAll('[DEF="cubes"] > Scene > Transform');
+		if (newCubes === null) {return;}
+		var lastCubes  = newCubes[newCubes.length - 1];
+		var rotationField = lastCubes.querySelector('ProtoInstance > fieldValue[name="rotation"]');
+		rotationField.setAttribute('value', '0 0 1 ' + event.target.value);
+	}
+	function addRootProtoInstance() {
+		var protoScene = document.querySelector('Scene');
+		var protoInstance = makeProtoInstance('externCubes', '0 1 0 ' + Math.PI/4);
+		var trafo = document.createElement('Transform');
+		trafo.setAttribute('translation', '0 ' + '0 ' + rcounter);
+		rcounter = rcounter + rstep;
+		trafo.appendChild(protoInstance);
+		protoScene.appendChild(trafo);
+	}
+	function removeRootProtoInstance() {
+		var newCubes = document.querySelectorAll('Scene > Transform');
+		if (newCubes === null) {return;}
+		var lastCubes  = newCubes[newCubes.length - 1];
+		lastCubes.remove();
+		rcounter = rcounter - rstep;
+	}
+		
+</script>
+</html>
