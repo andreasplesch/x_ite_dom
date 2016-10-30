@@ -18,14 +18,16 @@ X3D (function (X3DCanvases)
 		function DOMIntegration (X3DCanvas)
 		{
 			this .browser = X3D .getBrowser (X3DCanvas);
+			this .browser .trace = X3DCanvas .attributes .getNamedItem('trace');
 		}
 	
 		DOMIntegration .prototype =
 		{
 			setup: function ()
-			{
+			{				
+				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
-	
+				
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty broser as well ..
 	
@@ -59,7 +61,7 @@ X3D (function (X3DCanvases)
 				// Add inline doms from initial scene.
 				var inlines = dom .querySelectorAll ('Inline');
 
-				for (var i = 0; i < inlines .length; ++ i)
+				for (var i = 0, length = inlines. length; i < length; ++i)
 					this .processInlineDOM (inlines [i]);
 				
 				//events
@@ -89,7 +91,7 @@ X3D (function (X3DCanvases)
 			addEventDispatchersAll: function (element)
 			{
 				var elements = element.querySelectorAll('*');
-				for (var i = 0; i < elements .length; ++i)
+				for (var i = 0, length = elements .length; i < length; ++i)
 					this. addEventDispatchers (elements [i]);
 			},
 			
@@ -111,7 +113,8 @@ X3D (function (X3DCanvases)
 				ctx. sensor = sensor;*/
 				//only attach callbacks for output fields
 				if (field. isOutput()) // both inputOutput and outputOnly
-					field .addFieldCallback (field .getName (),
+					field .addFieldCallback (
+						"DomIntegration." + field .getName (),
 						this .fieldCallback .bind (null, field, element));
 			},
 			fieldCallback: function  (field, element, value)
@@ -136,6 +139,15 @@ X3D (function (X3DCanvases)
 				//event.fields = sensor.x3d.getFields(); // copy ?
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
+				//trace to console
+				if (node .getBrowser() .trace)
+				{
+					console .log ( event.timeStamp + 
+						       ": " + node .getTypeName() + 
+						       " " + node .getName() +
+						       " " + eventType +
+						       ": " + value );
+				}
 			},
 			processRemovedNode: function (element)
 			{	
@@ -170,8 +182,6 @@ X3D (function (X3DCanvases)
 				else if (element .nodeName === 'Scene')
 					return;
 				
-				//create new parser in here to use the correct executioncontext in case of inline
-				
 				var parentNode = element .parentNode;
 
 				// first get correct execution context
@@ -179,7 +189,7 @@ X3D (function (X3DCanvases)
 
 				if (parentNode .parentNode .nodeName === 'Inline')
 				{
-					var nodeScene = parentNode .parentNode .x3d.getInternalScene ();
+					var nodeScene = parentNode .parentNode .x3d .getInternalScene ();
 				}
 				else if (parentNode .x3d)
 				{
@@ -189,21 +199,30 @@ X3D (function (X3DCanvases)
 				
 				parser .pushExecutionContext (nodeScene);
 				
-				// Then check if root node
+				// then check if root node
 				if (parentNode .x3d)
 				{
-					parser .parseIntoNode (parentNode .x3d, element);
-					nodeScene .setup ();
+					//parser .parseIntoNode (parentNode .x3d, element);
+					var node = parentNode .x3d ;
+					//parser .pushExecutionContext (node .getExecutionContext ());
+					parser .pushParent (node);
+					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
+					
+					parser .child (element, isProtoInstance);
+
+					parser .popParent ();
+					//parser .popExecutionContext ();
+					//nodeScene .setup ();
 				}
 				else
 				{
 					// Inline or main root node.
 					parser .statement (element);
-					nodeScene .setup ();
+					//nodeScene .setup ();
 				}
 				
 				parser .popExecutionContext ();
-				
+				nodeScene .setup ();
 				//parser only adds uninitialized x3d nodes to scene
 				//the setup function initializes only uninitialized nodes, but only root nodes ?
 				//needed also after inline.setup(), should not hurt to redo if nodeScene = main Scene
@@ -237,7 +256,7 @@ X3D (function (X3DCanvases)
 
 				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
 
-				for (var i = 0; i < inlines .length; ++ i)
+				for (var i = 0, length = inlines .length; i < length; ++ i)
 					this .processInlineDOM (inlines [i]);
 			},
 			
@@ -315,14 +334,36 @@ X3D (function (X3DCanvases)
 			processAttribute: function (attributeName, element, parser)
 			{
 				var attribute = element .attributes .getNamedItem (attributeName);
+				
+				if (element .x3d)
+				{ // is a field
+					parser .attribute (attribute, element .x3d); //almost there
 
-				parser .attribute (attribute, element .x3d); //almost there
+					//only underscore gets update
+					var field = element .x3d .getField (attributeName); //containerField is not a field, check for it?
 
-				//only underscore gets update
-				var field = element .x3d .getField (attributeName);
-
-				field .addEvent (); // set_field event, updates real property
-				//may not work for Routes, check
+					field .addEvent (); // set_field event, updates real property
+				}
+				else
+				{ // is an attribute of non-node child such as fieldValue (or ROUTE)
+					var parentNode = element .parentNode; //should always be a node (?)
+					var node = parentNode .x3d; // need to attach .x3d to ProtoInstance
+					var nodeScene = node .getExecutionContext ();
+					parser .pushExecutionContext (node .getExecutionContext ());
+					parser .pushParent (node);
+					
+					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
+					// may need to try..catch in case "name" field does not exist
+					parser. child (element, isProtoInstance);
+					
+					parser .popParent ();
+					parser .popExecutionContext ();
+					if (isProtoInstance)
+					{
+						var field = node. getField (element. getAttribute ("name"));
+					    	field. addEvent ();
+					}
+				}
 			},
 			processMutation: function (mutation)
 			{
@@ -366,7 +407,7 @@ X3D (function (X3DCanvases)
 		var integrations = [ ];
 
 		// Go through all passed x3dcanvas elements.
-		for (var i = 0; i < X3DCanvases .length; ++ i)
+		for (var i = 0, length = X3DCanvases .length; i < length; ++ i)
 		{
 			var integration = new DOMIntegration (X3DCanvases [i]);
 
