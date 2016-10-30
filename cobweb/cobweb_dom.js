@@ -23,9 +23,11 @@ X3D (function (X3DCanvases)
 		DOMIntegration .prototype =
 		{
 			setup: function ()
-			{
+			
+				this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
+				
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
-	
+				
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty broser as well ..
 	
@@ -137,6 +139,15 @@ X3D (function (X3DCanvases)
 				//event.fields = sensor.x3d.getFields(); // copy ?
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
+				//trace to console
+				if (this .trace)
+				{
+					console .log ( event.timeStamp + 
+						       ": " + node .getTypeName() + 
+						       " " + node .getName() +
+						       " " + eventType +
+						       ": " + value );
+				}
 			},
 			processRemovedNode: function (element)
 			{	
