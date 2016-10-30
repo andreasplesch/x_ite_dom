@@ -22,8 +22,8 @@ See index.xhtml and the examples in tests/ for usage of the code.
 Since X3D uses an XML encoding, xhtml encoded web pages are required.
 
 - Most attributes of X3D elements should be controllable. 
-- ProtoInstances currently cannot be modified, added or removed.
-- Most other X3D nodes can be added or removed.
+- ProtoDeclarations cannot be modified, added or removed.
+- Most other X3D nodes can be modified, added or removed, including ProtoInstances.
 - Routes can be added and removed.
 - Modifying Route attributes does not have the desired or any effect. Remove and add Routes instead.
 - Manipulation of USE and DEF attributes do not have the desired or any effect.
@@ -49,12 +49,14 @@ The onevent attributes are not available. Use el.addEventListener() instead.
 The evt parameter provided to the callback function has these properties:
 - detail.value: the value of the x3d field
 - detail.name: The DEF name of the dispatching node; empty if there is no DEF name.
-- detail.fields: an array of al fields of the x3d node with current values
+- detail.fields: an array of all fields of the x3d node with current values
 - detail.x3dnode: the x3d node object which originated the event (for advanced use)
 
 The dispatched events do not bubble back up, eg. usually there should be no need to stop propagation. The event listeners should be attached to the specific DOM elements which dispatches the event.
 
 To help with attaching listeners to sensors within inlines, a new 'x3dload' event is dispatched on the document target to signal when all inlines per scene are appended to the document.
+
+To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas element enables detailed logging of output events to the console. This is particularly helpful for ROUTE, Interpolator and event utility debugging.
 
 ## TODO
 
@@ -65,10 +67,11 @@ To help with attaching listeners to sensors within inlines, a new 'x3dload' even
 - multiple scenes per page: done
 - perhaps add onevent properties to DOM nodes.
 - adapt more x3dom examples: done interactiveTransformations, inline_reflection, addremoveNodes, jquery done
-- clean up and organise tests: updated all to v0.6
+- clean up and organise tests: updated all to v0.7, added proto tests
 
 ## Releases
 
+- 0.7 : modification and addition of ProtoInstances, basic event trace functionality
 - 0.6 : many more events, eg. all output fields, shortened event names to x3d_fieldname
 - 0.5 : major internal restructuring, route removal support, requires cobweb >= v2.2
 - 0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
