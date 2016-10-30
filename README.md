@@ -34,7 +34,7 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 
 ## Events
 
-Event handling currently covers all inputOutput and outputOnly fields, whichh includes all sensor and interpolator events.
+Event handling currently covers all inputOutput and outputOnly fields, which includes all sensor and interpolator events.
 
 Mouse events originate from x3d sensor nodes. This means that the x3d scene has to have such a sensor node (TouchSensor) for any mouse events to be dispatched.
 
@@ -44,19 +44,19 @@ Event type names parallel x3d field names. The name construction is "x3d" + "_" 
 
 This means the usual events such as 'click' or 'mouseover' are not available. However, there are similar events for x3d sensors albeit with other names (for example x3d_isOver).
 
-The onevent attributes are not available. Use el.addEventListener() instead.
+The onevent attributes or properties are not available. Use element.addEventListener() instead.
 
-The evt parameter provided to the callback function has these properties:
+The event parameter provided to the callback function has these properties:
 - detail.value: the value of the x3d field
 - detail.name: The DEF name of the dispatching node; empty if there is no DEF name.
 - detail.fields: an array of all fields of the x3d node with current values
 - detail.x3dnode: the x3d node object which originated the event (for advanced use)
 
-The dispatched events do not bubble back up, eg. usually there should be no need to stop propagation. The event listeners should be attached to the specific DOM elements which dispatches the event.
+The dispatched events do not bubble back up, eg. usually there should be no need to stop propagation. The event listeners should be attached to the specific DOM elements which is the dispatch target of the event.
 
 To help with attaching listeners to sensors within inlines, a new 'x3dload' event is dispatched on the document target to signal when all inlines per scene are appended to the document.
 
-To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas element enables detailed logging of output events to the console. This is particularly helpful for ROUTE, Interpolator and event utility debugging.
+To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas element enables detailed logging of output events to the console. This is particularly helpful for ROUTE, Interpolator and event utility debugging. Since all output events are logged, tracing impacts performance. Remove the trace attribute to switch off.
 
 ## TODO
 
