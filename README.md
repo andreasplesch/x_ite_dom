@@ -61,7 +61,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 ## TODO
 
 - working on access to Inline scenes: done
-- Prototype handling
+- Prototype handling: ProtoInstances work, ProtoDeclarations undecided
 - allow hook into render loop ?
 - allow mutated attributes to be parsed objects, eg. skip parsing; useful if X3D math function are used on native types
 - multiple scenes per page: done
@@ -71,7 +71,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## Releases
 
-- 0.7 : modification and addition of ProtoInstances, basic event trace functionality
+- 0.7 : modification and addition of ProtoInstances, basic event trace functionality, requires cobweb > v2.3
 - 0.6 : many more events, eg. all output fields, shortened event names to x3d_fieldname
 - 0.5 : major internal restructuring, route removal support, requires cobweb >= v2.2
 - 0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
