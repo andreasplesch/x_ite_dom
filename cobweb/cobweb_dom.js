@@ -143,8 +143,9 @@ X3D (function (X3DCanvases)
 				if (node .getBrowser() .trace)
 				{
 					console .log ( event.timeStamp + 
-						       ": " + node .getTypeName() + 
-						       " " + node .getName() +
+						       ": at " + node .getBrowser() .getCurrentTime() +  
+						       " " + node .getTypeName() + 
+						       " '" + node .getName() + "'" +
 						       " " + eventType +
 						       ": " + value );
 				}
