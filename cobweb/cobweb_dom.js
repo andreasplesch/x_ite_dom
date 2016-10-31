@@ -143,10 +143,10 @@ X3D (function (X3DCanvases)
 				if (node .getBrowser() .trace)
 				{
 					console .log ( event.timeStamp + 
-						       ": at " + node .getBrowser() .getCurrentTime() +  
-						       " " + node .getTypeName() + 
-						       " '" + node .getName() + "'" +
-						       " " + eventType +
+						       ": at " + node .getBrowser () .getCurrentTime () +  
+						       " " + node .getTypeName () + 
+						       " '" + node .getName () + "'" +
+						       " " + field .getName () +
 						       ": " + value );
 				}
 			},
