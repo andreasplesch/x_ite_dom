@@ -120,7 +120,7 @@ X3D (function (X3DCanvases)
 					if (element. x3d .getBrowser() .trace)
 						field .addFieldCallback (
 							"DomIntegrationTracer." + field .getName (),
-							this .fieldTraceCallback .bind (null, field, element));
+							this .fieldTraceCallback .bind (null, field, element .x3d));
 				}		
 			},
 			fieldCallback: function  (field, element, value)
@@ -145,20 +145,9 @@ X3D (function (X3DCanvases)
 				//event.fields = sensor.x3d.getFields(); // copy ?
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
-				//trace to console
-// 				if (node .getBrowser() .trace)
-// 				{
-// 					console .log ( event.timeStamp + 
-// 						       ": at " + node .getBrowser () .getCurrentTime () +  
-// 						       " " + node .getTypeName () + 
-// 						       " '" + node .getName () + "'" +
-// 						       " " + field .getName () +
-// 						       ": " + value );
-// 				}
 			},
-			fieldTraceCallback: function  (field, element, value)
+			fieldTraceCallback: function  (field, node, value)
 			{
-				var node = element .x3d;
 				console .log ( performance.timing.navigationStart + performance.now() + 
 					       ": at " + node .getBrowser () .getCurrentTime () +  
 					       " " + node .getTypeName () + 
