@@ -113,9 +113,15 @@ X3D (function (X3DCanvases)
 				ctx. sensor = sensor;*/
 				//only attach callbacks for output fields
 				if (field. isOutput()) // both inputOutput and outputOnly
+				{
 					field .addFieldCallback (
 						"DomIntegration." + field .getName (),
 						this .fieldCallback .bind (null, field, element));
+					if (element. x3d .getBrowser() .trace)
+						field .addFieldCallback (
+							"DomIntegrationTracer." + field .getName (),
+							this .fieldTraceCallback .bind (null, field, element .x3d));
+				}		
 			},
 			fieldCallback: function  (field, element, value)
 			{
@@ -139,16 +145,15 @@ X3D (function (X3DCanvases)
 				//event.fields = sensor.x3d.getFields(); // copy ?
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
-				//trace to console
-				if (node .getBrowser() .trace)
-				{
-					console .log ( event.timeStamp + 
-						       ": at " + node .getBrowser () .getCurrentTime () +  
-						       " " + node .getTypeName () + 
-						       " '" + node .getName () + "'" +
-						       " " + field .getName () +
-						       ": " + value );
-				}
+			},
+			fieldTraceCallback: function  (field, node, value)
+			{
+				console .log ( performance.timing.navigationStart + performance.now() + 
+					       ": at " + node .getBrowser () .getCurrentTime () +  
+					       " " + node .getTypeName () + 
+					       " '" + node .getName () + "'" +
+					       " " + field .getName () +
+					       ": " + value );
 			},
 			processRemovedNode: function (element)
 			{	
