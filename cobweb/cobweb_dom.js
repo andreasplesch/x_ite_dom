@@ -158,7 +158,7 @@ X3D (function (X3DCanvases)
 			},
 			fieldTraceCallback: function  (field, element, value)
 			{
-				console .log ( event.timeStamp + 
+				console .log ( performance.timing.navigationStart + performance.now() + 
 					       ": at " + node .getBrowser () .getCurrentTime () +  
 					       " " + node .getTypeName () + 
 					       " '" + node .getName () + "'" +
