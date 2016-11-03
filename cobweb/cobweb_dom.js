@@ -148,12 +148,16 @@ X3D (function (X3DCanvases)
 			},
 			fieldTraceCallback: function  (field, node, value)
 			{
-				console .log ( performance.timing.navigationStart + performance.now() + 
-					       ": at " + node .getBrowser () .getCurrentTime () +  
-					       " " + node .getTypeName () + 
-					       " '" + node .getName () + "'" +
-					       " " + field .getName () +
-					       ": " + value );
+				var now = performance.timing.navigationStart + performance.now();
+				var timeStamp = node .getBrowser () .getCurrentTime ();
+				var dt = now - timeStamp * 1000;
+				console .log ( now + ": " + 
+					       "at " + node .getBrowser () .getCurrentTime () + " " +
+					       " dt of " + dt + "ms " +
+					       node .getTypeName () + 
+					       " '" + node .getName () + "' " +
+					       field .getName () + ": " + 
+					       value );
 			},
 			processRemovedNode: function (element)
 			{	
