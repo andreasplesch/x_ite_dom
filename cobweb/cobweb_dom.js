@@ -152,8 +152,8 @@ X3D (function (X3DCanvases)
 				var timeStamp = node .getBrowser () .getCurrentTime ();
 				var dt = now - timeStamp * 1000;
 				console .log ( now + ": " + 
-					       "at " + node .getBrowser () .getCurrentTime () + " " +
-					       " dt of " + dt + "ms " +
+					       "at " + node .getBrowser () .getCurrentTime () +
+					       " dt of " + dt.toFoxed(3) + " ms " +
 					       node .getTypeName () + 
 					       " '" + node .getName () + "' " +
 					       field .getName () + ": " + 
