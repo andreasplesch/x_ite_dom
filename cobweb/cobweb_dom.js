@@ -115,11 +115,11 @@ X3D (function (X3DCanvases)
 				if (field. isOutput()) // both inputOutput and outputOnly
 				{
 					field .addFieldCallback (
-						"DomIntegration." + field .getName (),
+						"DomIntegration." + field .getId (),
 						this .fieldCallback .bind (null, field, element));
 					if (element. x3d .getBrowser() .trace)
 						field .addFieldCallback (
-							"DomIntegrationTracer." + field .getName (),
+							"DomIntegrationTracer." + field .getId (),
 							this .fieldTraceCallback .bind (null, field, element .x3d));
 				}		
 			},
