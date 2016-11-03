@@ -115,11 +115,11 @@ X3D (function (X3DCanvases)
 				if (field. isOutput()) // both inputOutput and outputOnly
 				{
 					field .addFieldCallback (
-						"DomIntegration." + field .getName (),
+						"DomIntegration." + field .getId (),
 						this .fieldCallback .bind (null, field, element));
 					if (element. x3d .getBrowser() .trace)
 						field .addFieldCallback (
-							"DomIntegrationTracer." + field .getName (),
+							"DomIntegrationTracer." + field .getId (),
 							this .fieldTraceCallback .bind (null, field, element .x3d));
 				}		
 			},
@@ -148,12 +148,13 @@ X3D (function (X3DCanvases)
 			},
 			fieldTraceCallback: function  (field, node, value)
 			{
-				console .log ( performance.timing.navigationStart + performance.now() + 
-					       ": at " + node .getBrowser () .getCurrentTime () +  
-					       " " + node .getTypeName () + 
-					       " '" + node .getName () + "'" +
-					       " " + field .getName () +
-					       ": " + value );
+				var now = performance.timing.navigationStart + performance.now();
+				var timeStamp = node .getBrowser () .getCurrentTime ();
+				var dt = now - timeStamp * 1000;
+				console .log ( "%f: at %f dt of %s ms %s '%s' %s: %s", 
+					      now, timeStamp, dt.toFixed(3), 
+					      node .getTypeName (), node .getName(),
+					      field .getName(), value );
 			},
 			processRemovedNode: function (element)
 			{	
