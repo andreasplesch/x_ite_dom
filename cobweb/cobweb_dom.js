@@ -158,8 +158,8 @@ X3D (function (X3DCanvases)
 // 					       " '" + node .getName () + "' " +
 // 					       field .getName () + ": " + 
 // 					       value );
-				console .log ( "%f:at %f dt of %.3f ms %s '%s' %s: %s", 
-					      now, timeStamp, dt, 
+				console .log ( "%f: at %f dt of %s ms %s '%s' %s: %s", 
+					      now, timeStamp, dt.toFixed(3), 
 					      node .getTypeName (), node .getName(),
 					      field .getName(), value );
 			},
