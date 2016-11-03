@@ -151,13 +151,17 @@ X3D (function (X3DCanvases)
 				var now = performance.timing.navigationStart + performance.now();
 				var timeStamp = node .getBrowser () .getCurrentTime ();
 				var dt = now - timeStamp * 1000;
-				console .log ( now + ": " + 
-					       "at " + node .getBrowser () .getCurrentTime () +
-					       " dt of " + dt.toFixed(3) + " ms " +
-					       node .getTypeName () + 
-					       " '" + node .getName () + "' " +
-					       field .getName () + ": " + 
-					       value );
+// 				console .log ( now + ": " + 
+// 					       "at " + node .getBrowser () .getCurrentTime () +
+// 					       " dt of " + dt.toFixed(3) + " ms " +
+// 					       node .getTypeName () + 
+// 					       " '" + node .getName () + "' " +
+// 					       field .getName () + ": " + 
+// 					       value );
+				console .log ( "%f:at %f dt of %.3 ms %s '%s' %s: %s", 
+					      now, timeStamp, dt, 
+					      node .getTypeName (), node .getName(),
+					      field .getName(), value );
 			},
 			processRemovedNode: function (element)
 			{	
