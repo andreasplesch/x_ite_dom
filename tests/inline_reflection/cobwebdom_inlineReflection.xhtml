@@ -9,7 +9,7 @@
 			src="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.uncompressed.js">
 		</script>
 		<script type="text/javascript" 
-			src="https://rawgit.com/andreasplesch/cobweb_dom/master/cobweb/cobweb_dom.js">
+			src="../../cobweb/cobweb_dom.js">
 		</script>
 		<link rel="stylesheet" type="text/css"
 			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
@@ -77,7 +77,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '0 1 0');
 		}
         };
-	document.querySelector("[DEF='box1TS']").addEventListener('x3dTouchSensor_isOver', test1);
+	document.querySelector("[DEF='box1TS']").addEventListener('x3d_isOver', test1);
 
 	var test2 = function (event) {		
 		//document.getElementById('test1__color1').setAttribute('diffuseColor', '1 1 0');
@@ -85,7 +85,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test1"] #color1').setAttribute('diffuseColor', '1 1 0');
 		}
         };
-	document.querySelector("[DEF='box1TS']").addEventListener('x3dTouchSensor_isOver', test2);
+	document.querySelector("[DEF='box1TS']").addEventListener('x3d_isOver', test2);
 
 	var test3 = function (event) {		
 		//document.getElementById('test2__color2').setAttribute('diffuseColor', '0 0 1');
@@ -93,7 +93,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '0 0 1');
 		}
         };
-	document.querySelector("[DEF='box2TS']").addEventListener('x3dTouchSensor_isOver', test3);
+	document.querySelector("[DEF='box2TS']").addEventListener('x3d_isOver', test3);
 		
 	var test4 = function (event) {		
 		//document.getElementById('test2__color2').setAttribute('diffuseColor', '1 0 0');
@@ -101,7 +101,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test2"] #color2').setAttribute('diffuseColor', '1 0 0');
 		}
         };
-	document.querySelector("[DEF='box2TS']").addEventListener('x3dTouchSensor_isOver', test4);
+	document.querySelector("[DEF='box2TS']").addEventListener('x3d_isOver', test4);
 
 	var test5 = function (event) {		
 		//document.getElementById('test3__color1').setAttribute('diffuseColor', '0 1 1');
@@ -109,7 +109,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '0 1 1');
 		}
 	};
-	document.querySelector("[DEF='box3c1TS']").addEventListener('x3dTouchSensor_isOver', test5);
+	document.querySelector("[DEF='box3c1TS']").addEventListener('x3d_isOver', test5);
 		
 	var test6 = function (event) {		
 		//document.getElementById('test3__color1').setAttribute('diffuseColor', '1 1 0');
@@ -117,7 +117,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test3"] #color1').setAttribute('diffuseColor', '1 1 0');
 		}
 	};
-	document.querySelector("[DEF='box3c1TS']").addEventListener('x3dTouchSensor_isOver', test6);
+	document.querySelector("[DEF='box3c1TS']").addEventListener('x3d_isOver', test6);
 		
 	var test7 = function (event) {		
 		//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 1');
@@ -125,7 +125,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 1');
 		}
 	};
-	document.querySelector("[DEF='box3c2TS']").addEventListener('x3dTouchSensor_isOver', test7);
+	document.querySelector("[DEF='box3c2TS']").addEventListener('x3d_isOver', test7);
 		
 	var test8 = function (event) {		
 		//document.getElementById('test3__color2').setAttribute('diffuseColor', '1 0 0');
@@ -133,7 +133,7 @@ function sceneLoaded (evt) {
 		document.querySelector('[nameSpaceName="test3"] #color2').setAttribute('diffuseColor', '1 0 0');
 		}
         };
-	document.querySelector("[DEF='box3c2TS']").addEventListener('x3dTouchSensor_isOver', test8);
+	document.querySelector("[DEF='box3c2TS']").addEventListener('x3d_isOver', test8);
 }
 	]]>
 </script>
