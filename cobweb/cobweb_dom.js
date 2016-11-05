@@ -376,10 +376,8 @@ X3D (function (X3DCanvases)
 			},
 			processMutation: function (mutation, parser)
 			{
-				var
-					element = mutation .target;
-					//parser  = new XMLParser (this .browser .currentScene);
-				
+				var element = mutation .target;
+					
 				switch (mutation .type)
 				{
 					case "attributes":
