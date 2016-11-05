@@ -29,7 +29,7 @@ X3D (function (X3DCanvases)
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
-					return; // Nothing to do, hm, observer needs to be set up for empty broser as well ..
+					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
 	
 				//mybrowser.importDocument(dom); //now also attached x3d property to each node element
 				//update to spec. conforming, latest use
@@ -38,12 +38,14 @@ X3D (function (X3DCanvases)
 	
 				this .browser .replaceWorld (importedScene);
 				
+				var parser  = new XMLParser (this .browser .currentScene);
+				
 				// create an observer instance
 				this .observer = new MutationObserver (function (mutations)
 				{
 					mutations .forEach (function (mutation)
 					{
-						this .processMutation (mutation);
+						this .processMutation (mutation, parser);
 					},
 					this);
 				}
@@ -113,9 +115,15 @@ X3D (function (X3DCanvases)
 				ctx. sensor = sensor;*/
 				//only attach callbacks for output fields
 				if (field. isOutput()) // both inputOutput and outputOnly
+				{
 					field .addFieldCallback (
-						"DomIntegration." + field .getName (),
+						"DomIntegration." + field .getId (),
 						this .fieldCallback .bind (null, field, element));
+					if (element. x3d .getBrowser() .trace)
+						field .addFieldCallback (
+							"DomIntegrationTracer." + field .getId (),
+							this .fieldTraceCallback .bind (null, field, element .x3d));
+				}		
 			},
 			fieldCallback: function  (field, element, value)
 			{
@@ -139,15 +147,16 @@ X3D (function (X3DCanvases)
 				//event.fields = sensor.x3d.getFields(); // copy ?
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
-				//trace to console
-				if (node .getBrowser() .trace)
-				{
-					console .log ( event.timeStamp + 
-						       ": " + node .getTypeName() + 
-						       " " + node .getName() +
-						       " " + eventType +
-						       ": " + value );
-				}
+			},
+			fieldTraceCallback: function  (field, node, value)
+			{
+				var now = performance.timing.navigationStart + performance.now();
+				var timeStamp = node .getBrowser () .getCurrentTime ();
+				var dt = now - timeStamp * 1000;
+				console .log ( "%f: at %f dt of %s ms %s '%s' %s: %s", 
+					      now, timeStamp, dt.toFixed(3), 
+					      node .getTypeName (), node .getName(),
+					      field .getName(), value );
 			},
 			processRemovedNode: function (element)
 			{	
@@ -365,12 +374,10 @@ X3D (function (X3DCanvases)
 					}
 				}
 			},
-			processMutation: function (mutation)
+			processMutation: function (mutation, parser)
 			{
-				var
-					element = mutation .target,
-					parser  = new XMLParser (this .browser .currentScene);
-				
+				var element = mutation .target;
+					
 				switch (mutation .type)
 				{
 					case "attributes":
