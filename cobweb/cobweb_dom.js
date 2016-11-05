@@ -377,7 +377,7 @@ X3D (function (X3DCanvases)
 			processMutation: function (mutation, parser)
 			{
 				var
-					element = mutation .target,
+					element = mutation .target;
 					//parser  = new XMLParser (this .browser .currentScene);
 				
 				switch (mutation .type)
