@@ -29,7 +29,7 @@ X3D (function (X3DCanvases)
 				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
-					return; // Nothing to do, hm, observer needs to be set up for empty broser as well ..
+					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
 	
 				//mybrowser.importDocument(dom); //now also attached x3d property to each node element
 				//update to spec. conforming, latest use
@@ -38,12 +38,14 @@ X3D (function (X3DCanvases)
 	
 				this .browser .replaceWorld (importedScene);
 				
+				var parser  = new XMLParser (this .browser .currentScene);
+				
 				// create an observer instance
 				this .observer = new MutationObserver (function (mutations)
 				{
 					mutations .forEach (function (mutation)
 					{
-						this .processMutation (mutation);
+						this .processMutation (mutation, parser);
 					},
 					this);
 				}
@@ -372,11 +374,11 @@ X3D (function (X3DCanvases)
 					}
 				}
 			},
-			processMutation: function (mutation)
+			processMutation: function (mutation, parser)
 			{
 				var
-					element = mutation .target,
-					parser  = new XMLParser (this .browser .currentScene);
+					element = mutation .target;
+					//parser  = new XMLParser (this .browser .currentScene);
 				
 				switch (mutation .type)
 				{
