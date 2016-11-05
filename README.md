@@ -68,11 +68,12 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 - perhaps add onevent properties to DOM nodes.
 - adapt more x3dom examples: done interactiveTransformations, inline_reflection, addremoveNodes, jquery done
 - clean up and organise tests: updated all to v0.7, added proto tests
+- investigate HTML for xml again
 
 ## Releases
 
+- 0.75: internal improvements: parser reuse, no penalty for trace when off
 - 0.7 : modification and addition of ProtoInstances, basic event trace functionality, requires cobweb > v2.3
 - 0.6 : many more events, eg. all output fields, shortened event names to x3d_fieldname
 - 0.5 : major internal restructuring, route removal support, requires cobweb >= v2.2
 - 0.4 : support for inline access, multiple scenes, adding child nodes, x3dload event, cobweb > v2.1
-
