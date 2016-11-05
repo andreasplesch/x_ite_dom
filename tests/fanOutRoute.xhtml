@@ -165,7 +165,7 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
 		//ts.setAttribute('cycleInterval', e.target.value);
 		//ts.setAttribute('enabled', 'true');
 	});
-	ts.addEventListener('x3dTimeSensor_enabled', function(e) {
+	ts.addEventListener('x3d_enabled', function(e) {
 		if (e.detail.value === false) {
 			ts.setAttribute('cycleInterval', period.value);
 			ts.setAttribute('enabled', 'true');
