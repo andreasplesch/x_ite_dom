@@ -88,8 +88,7 @@ X3DCanvas {
 <Script type='application/x-vrmlscript' DEF='SC'>
       <field name='isOver' type='SFBool' accessType='inputOnly'/>
       <field name='diffuseColor_changed' type='SFColor' accessType='outputOnly'/>
-      <![CDATA[
-
+      
 ecmascript:
 
 function isOver(val) 
@@ -104,7 +103,6 @@ function isOver(val)
     }
 }
 
-	]]>
 </Script>
 <ROUTE fromNode='TS' fromField='isOver' toNode='SC' toField='isOver'/>
 <ROUTE fromNode='SC' fromField='diffuseColor_changed' toNode='MAT' toField='set_diffuseColor'/> 
