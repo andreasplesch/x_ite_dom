@@ -221,7 +221,8 @@ X3DCanvas {
 </X3DCanvas> 
   </body>
   
-<script> <![CDATA[
+<script> 
+	//<![CDATA[ // no CDATA for html
 function init() {
 	var planeSensor = document.querySelector("PlaneSensor");
 	//planeSensor.addEventListener("x3dPlaneSensor_translation_changed", processTranslationGizmoEvent);
@@ -330,7 +331,7 @@ function init() {
 	teapotRotationNode.setAttribute("rotation", transformRotation.toString());
     }
 }
-]]>
+//]]>
   </script>
     
 </html>
