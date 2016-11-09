@@ -27,18 +27,18 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
  <Scene DEF='scene'>
 	<Viewpoint position='16.0328 13.056 34.2417' orientation='-0.624839 0.780206 0.0292506 0.543473' />
     <Background skyColor='1 1 1'/>
-    <Transform translation='-15 0 0'>
+    <Transform translation='-10 0 0'>
     	<Transform DEF='greenPL'>
-	    	<PointLight color='0.2 1 0.2' />
+	    	<PointLight color='0 0.38 0.11' />
 		<Shape>
 			<Appearance>
-				<Material diffuseColor='0.5 0.5 0.5' transparency='0.5' />
+				<Material diffuseColor='0.5 0.5 0.5' transparency='0.7' />
 			</Appearance>
 			<Sphere />
 		</Shape>
 	    </Transform>
 	</Transform>
- 	<Transform translation='15 0 0'>
+ 	<Transform translation='10 0 0'>
 		<Transform USE='greenPL' />
 	 </Transform>   
      <Transform scale='2.5 2.5 2.5'>
