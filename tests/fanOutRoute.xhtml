@@ -29,8 +29,8 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
 	 <NavigationInfo headlight='false' />
     <Background skyColor='1 1 1'/>
     <Transform translation='-10 0 0'>
-    	<Transform DEF='greenPL'>
-	    	<PointLight color='0 0.8 0' />
+    	<Transform DEF='bluePL'>
+	    	<PointLight color='0.878, 0.952, 0.984' />
 		<Shape>
 			<Appearance>
 				<Material shininess='0.8' specularColor='0.5 0.5 0.5' transparency='0.8' />
@@ -40,7 +40,7 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
 	    </Transform>
 	</Transform>
  	<Transform translation='10 0 0'>
-		<Transform USE='greenPL' />
+		<Transform USE='bluePL' />
 	 </Transform>   
      <Transform scale='2.5 2.5 2.5'>
       <Shape DEF='CUBE1'>
