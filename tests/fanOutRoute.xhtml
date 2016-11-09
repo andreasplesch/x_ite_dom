@@ -26,13 +26,14 @@ duration [5s to 60s]: <input id='duration' min='5' max='60' type='range' />
 <X3D xmlns="http://www.web3d.org/specifications/x3d-namespace" id="spheres" showLog='false' showStat="true" x="0px" y="0px" width="400px" height="400px">
  <Scene DEF='scene'>
 	<Viewpoint position='16.0328 13.056 34.2417' orientation='-0.624839 0.780206 0.0292506 0.543473' />
+	 <NavigationInfo headlight='false' />
     <Background skyColor='1 1 1'/>
     <Transform translation='-10 0 0'>
     	<Transform DEF='greenPL'>
-	    	<PointLight color='0 0.38 0.11' />
+	    	<PointLight color='0 0.2 0' />
 		<Shape>
 			<Appearance>
-				<Material diffuseColor='0.5 0.5 0.5' transparency='0.7' />
+				<Material shininess='0.8' specularColor='0.5 0.5 0.5' transparency='0.1' />
 			</Appearance>
 			<Sphere />
 		</Shape>
