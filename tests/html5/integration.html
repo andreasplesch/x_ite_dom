@@ -21,6 +21,7 @@
                 <material id="ballColour" diffuseColor='1 0 0'></material>
             </appearance>
             <sphere id="thesphere" radius="1" onclick="myToggleSizeFunction()"></sphere>
+            <TouchSensor id='thespehereSensor'></TouchSensor> 
         </shape>
         </transform>
 
@@ -35,6 +36,9 @@
 <p>And we can also change the speed of the ball. Use the slider below.</p>
 <input id="speedChange" type="range" value="3" min="0.5" max="5" step="0.5" oninput="mySpeedFunction(this.value)">
 <script>
+
+document.getElementById("thesphereSensor").addEventListener('x3d_isActive', myToggleSizeFunction());
+
 function myBlueFunction() {
     document.getElementById("ballColour").diffuseColor='0 0 1';
     document.getElementById("textColor").style.color='blue';
