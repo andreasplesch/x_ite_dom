@@ -55,7 +55,7 @@ X3DCanvas {
 <input id="speedChange" type="range" value="3" min="0.5" max="5" step="0.5" oninput="mySpeedFunction(this.value)">
 <script>
 
-document.getElementById("thesphereSensor").addEventListener('x3d_isActive', myToggleSizeFunction());
+document.getElementById("thesphereSensor").addEventListener('x3d_touchTime', myToggleSizeFunction);
 
 function myBlueFunction() {
     document.getElementById("ballColour").setAttribute('diffuseColor','0 0 1');
