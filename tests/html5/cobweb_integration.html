@@ -80,8 +80,10 @@ function myToggleSizeFunction() {
 }
 function mySpeedFunction(val) {
     document.getElementById("time").setAttribute('enabled',"false");
-    document.getElementById("time").setAttribute('cycleInterval', val);
-    document.getElementById("time").setAttribute('enabled',"true");
+	window.setTimeout(function(){
+    		document.getElementById("time").setAttribute('cycleInterval', val);
+    		document.getElementById("time").setAttribute('enabled',"true");
+	}, 100);
 }
 </script>
 </body>
