@@ -12,6 +12,7 @@
 			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
     <style >
 X3DCanvas {
+	background: white;
 	width: 500px;
 	height: 400px;
 	float: left;
@@ -35,9 +36,9 @@ X3DCanvas {
             <appearance>
                 <material id="ballColour" diffuseColor='1 0 0'></material>
             </appearance>
-            <sphere id="thesphere" radius="1" onclick="myToggleSizeFunction()"></sphere>
-            <TouchSensor id='thesphereSensor'></TouchSensor> 
+            <sphere id="thesphere" radius="1" onclick="myToggleSizeFunction()"></sphere>    
         </shape>
+	<TouchSensor id='thesphereSensor'></TouchSensor> 
         </transform>
 
         <timeSensor DEF="time" id="time" cycleInterval="5" loop="true"></timeSensor>
