@@ -1,0 +1,86 @@
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>dom integration</title>
+    <script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb/html5/cobweb.js/cobweb.uncompressed.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+    <style >
+X3DCanvas {
+	background: #414141;
+	width: 500px;
+	height: 400px;
+}
+  </style>
+
+</head>
+<body>
+<h1>X3D / SVG / HTML / DOM Integration Example</h1>
+<p> Here are some colour choices - click on a box to select that colour for the ball.</p>
+<svg width="500" height = "200" style="float:left">
+    <rect x="50" y="50" width="100" height="100" rx="10" ry="10" style="fill:blue;stroke:black;stroke-width:2" onclick="myBlueFunction()"/>
+    <rect x="200" y="50" width="100" height="100" rx="10" ry="10" style="fill:green;stroke:black;stroke-width:2" onclick="myGreenFunction()"/>
+    <rect x="350" y="50" width="100" height="100" rx="10" ry="10" style="fill:red;stroke:black;stroke-width:2" onclick="myRedFunction()"/>
+</svg>
+<X3DCanvas>
+<x3d width='500px' height='400px'>
+    <scene>
+        <transform DEF="ball">
+        <shape>
+            <appearance>
+                <material id="ballColour" diffuseColor='1 0 0'></material>
+            </appearance>
+            <sphere id="thesphere" radius="1" onclick="myToggleSizeFunction()"></sphere>
+            <TouchSensor id='thesphereSensor'></TouchSensor> 
+        </shape>
+        </transform>
+
+        <timeSensor DEF="time" id="time" cycleInterval="5" loop="true"></timeSensor>
+        <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
+        <Route fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></Route>
+        <Route fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></Route>
+
+    </scene>
+</x3d>
+</X3DCanvas>
+<p>Click on the ball itself to toggle the size. Currently it is a <span id="textColor" style="color:red">LARGE</span> ball.</p>
+<p>And we can also change the speed of the ball. Use the slider below.</p>
+<input id="speedChange" type="range" value="3" min="0.5" max="5" step="0.5" oninput="mySpeedFunction(this.value)">
+<script>
+
+document.getElementById("thesphereSensor").addEventListener('x3d_isActive', myToggleSizeFunction());
+
+function myBlueFunction() {
+    document.getElementById("ballColour").diffuseColor='0 0 1';
+    document.getElementById("textColor").style.color='blue';
+}
+function myGreenFunction() {
+    document.getElementById("ballColour").diffuseColor='0 0.5 0';
+    document.getElementById("textColor").style.color='green';
+}
+function myRedFunction() {
+    document.getElementById("ballColour").diffuseColor='1 0 0';
+    document.getElementById("textColor").style.color='red';
+}
+function myToggleSizeFunction() {
+    if (document.getElementById("thesphere").radius=="1") {
+        document.getElementById("thesphere").radius='0.5';
+        document.getElementById("textColor").innerHTML = "small";
+    } else {
+        document.getElementById("thesphere").radius='1';
+        document.getElementById("textColor").innerHTML = "LARGE";
+    }
+}
+function mySpeedFunction(val) {
+    document.getElementById("time").enabled="false";
+    document.getElementById("time").cycleInterval=val;
+    document.getElementById("time").enabled="true";
+}
+</script>
+</body>
+</html>
