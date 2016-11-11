@@ -56,30 +56,30 @@ X3DCanvas {
 document.getElementById("thesphereSensor").addEventListener('x3d_isActive', myToggleSizeFunction());
 
 function myBlueFunction() {
-    document.getElementById("ballColour").diffuseColor='0 0 1';
+    document.getElementById("ballColour").setAttribute('diffuseColor','0 0 1');
     document.getElementById("textColor").style.color='blue';
 }
 function myGreenFunction() {
-    document.getElementById("ballColour").diffuseColor='0 0.5 0';
+    document.getElementById("ballColour").setAttribute('diffuseColor','0 0.5 0');
     document.getElementById("textColor").style.color='green';
 }
 function myRedFunction() {
-    document.getElementById("ballColour").diffuseColor='1 0 0';
+    document.getElementById("ballColour").setAttribute('diffuseColor','1 0 0');
     document.getElementById("textColor").style.color='red';
 }
 function myToggleSizeFunction() {
-    if (document.getElementById("thesphere").radius=="1") {
-        document.getElementById("thesphere").radius='0.5';
+    if (document.getElementById("thesphere").getAttribute('radius')=="1") {
+        document.getElementById("thesphere").setAttribute('radius','0.5');
         document.getElementById("textColor").innerHTML = "small";
     } else {
-        document.getElementById("thesphere").radius='1';
+        document.getElementById("thesphere").setAttribute('radius','1');
         document.getElementById("textColor").innerHTML = "LARGE";
     }
 }
 function mySpeedFunction(val) {
-    document.getElementById("time").enabled="false";
-    document.getElementById("time").cycleInterval=val;
-    document.getElementById("time").enabled="true";
+    document.getElementById("time").setAttribute('enabled',"false");
+    document.getElementById("time").setAttribute('cycleInterval', val);
+    document.getElementById("time").setAttribute('enabled',"true");
 }
 </script>
 </body>
