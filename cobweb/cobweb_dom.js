@@ -366,7 +366,8 @@ X3D (function (X3DCanvases)
 					parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
 					
-					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
+					var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
+					    			parentNode .nodeName === 'PROTOINSTANCE';
 					// may need to try..catch in case "name" field does not exist
 					parser. child (element, isProtoInstance);
 					
@@ -393,7 +394,7 @@ X3D (function (X3DCanvases)
 						}
 						catch (error)
 						{
-							// Unknown attriute.
+							// Unknown attribute.
 						}
 		
 						break;
