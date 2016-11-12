@@ -1,0 +1,79 @@
+<!DOCTYPE >
+
+<html >
+	<head>
+		<title>dom inlined inline access</title>
+
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta charset="utf-8"/>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb/html5/cobweb.js/cobweb.uncompressed.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/html5/cobweb/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+	
+<style>
+html, body {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	background: black;
+	color: white;
+}
+X3DCanvas {
+	background: #414141;
+	width: 600px;
+	height: 400px;
+}
+.fallback {
+	display: block;
+	margin: 300px 0 0 0;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	
+	<button onclick='moveHouse()'>Move House</button>
+	Try the Schmetterling viewpoint ...
+	<X3DCanvas>
+<X3D>
+	<Scene>
+		<Viewpoint position='-2 1 -15' orientation='0 1 0 3.14' description='start'></Viewpoint>
+		<Inline DEF="Mushrooms" url='"https://andreasplesch.github.io/Library/Examples/Mushrooms/index.x3d"' ></Inline>
+	</Scene>
+	<p class="fallback">
+		Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
+		because this is currently the choice of the choice. We will continuously keep you informed <br/>
+		on technical developments and as soon as Cobweb is running in other browser too.
+	</p>
+</X3D>
+	</X3DCanvas>
+	
+</body>
+<script>
+//inlines are added as child of inline element
+
+	var range = 5;
+	
+	function moveHouse() {
+		var houseTrafo = document.querySelector("[DEF='pilzhaus']"); //unique DEF inside inlined inlines
+		var pos = houseTrafo.getAttribute("translation").split(' '); //poor man's parse
+		var x = 1.0*pos[0] + range * ( Math.random() - 0.5 );
+		var y = 1.0*pos[1] ;
+		var z = 1.0*pos[2] + range * ( Math.random() - 0.5 );
+		houseTrafo.setAttribute("translation", x + " " + y + " " + z);
+	}
+	
+</script>	
+</html>
