@@ -1,0 +1,128 @@
+<!DOCTYPE html >
+
+<html >
+	<head>
+		<title>inline USE vs. DEF</title>
+
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta charset="utf-8"/>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb/html5/cobweb.js/cobweb.uncompressed.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/html5/cobweb/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+	
+
+<style>
+html, body {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	background: black;
+	color: white;
+}
+X3DCanvas {
+	background: #414141;
+	width: 600px;
+	height: 400px;
+}
+.fallback {
+	display: block;
+	margin: 300px 0 0 0;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<button onclick='rotateDeer()'>Rotate all doubled deer</button>
+	<button onclick='rotateDoubledDeer()'>Rotate linked doubled deer</button>
+	<button onclick='addDeer()'>Add one independant deer</button>
+	<button onclick='addUseDeer()'>Add one linked deer</button>
+	<button onclick='rotateUseDeer()'>rotate linked deer</button>
+	
+	<X3DCanvas>
+		<Scene>
+			<Background 
+				DEF="WO_World"
+				groundColor="0 0.38 0.11"
+				skyColor="0 0 0.61"
+			></Background>
+			<Viewpoint position='-2 1 -15' orientation='0 1 0 3.14' description='start'></Viewpoint>
+			<!--NavigationInfo type='"FLY", "ANY"'></NavigationInfo-->
+    			<Inline DEF="usedDeer" url='"inline_USE.x3d"' ></Inline>
+    			<Transform translation="1 0 -3">
+			    <Inline USE="usedDeer" ></Inline>
+		    	</Transform>
+			<Transform translation="2 0 2">
+				<Inline DEF="singleDeer" url='"Deer.x3d"' ></Inline>
+			</Transform>
+		</Scene>
+		<p class="fallback">
+			Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
+			because this is currently the choice of the choice. We will continuously keep you informed <br/>
+			on technical developments and as soon as Cobweb is running in other browser too.
+		</p>
+	</X3DCanvas>
+</body>
+<script>
+//inlines are added as child of inline element
+	
+	var rot = 0;
+	var urot = 0;
+	var lrot = 0;
+	var range = 10;
+	
+	function rotateDeer() {
+		var deerTrafo = document.querySelector("[DEF='usedDeer'] [DEF='iDeer'] [DEF='Deer_Stag_ifs_TRANSFORM']");
+		rot = rot + Math.PI/18;
+		deerTrafo.setAttribute("rotation","0 1 0 " + rot);
+	}
+	
+	function rotateDoubledDeer() {
+		var deerUTrafo = document.querySelector("[DEF='usedDeer'] Transform[translation='-5 0 0']");
+		urot = urot + Math.PI/18;
+		deerUTrafo.setAttribute("rotation","0 1 0 " + urot);
+	}
+	
+	function addDeer() {
+		var x = -2 + range * (Math.random() - 0.5);
+		var z = range * (Math.random() - 0.5);
+		var transform = document.createElement('Transform');
+		transform.setAttribute('translation', x + " " + 0 + " " + z);
+		var inline = document.createElement('Inline');
+		inline.setAttribute("url",'"Deer.x3d"');
+		var scene = document.querySelector('Scene');
+		transform.appendChild(inline);
+		scene.appendChild(transform);
+	}
+	
+	function addUseDeer() {
+		var x = 2 + range * (Math.random() - 0.5);
+		var z = range * (Math.random() - 0.5);
+		var transform = document.createElement('Transform');
+		transform.setAttribute('translation', x + " " + 0 + " " + z);
+		var inline = document.createElement('Inline');
+		inline.setAttribute("USE","singleDeer");
+		var scene = document.querySelector('Scene');
+		transform.appendChild(inline);
+		scene.appendChild(transform);
+	}
+	
+	function rotateUseDeer() {
+		var deerUTrafo = document.querySelector("[DEF='singleDeer'] Transform[DEF='Deer_Stag_ifs_TRANSFORM']");
+		lrot = lrot + Math.PI/18;
+		deerUTrafo.setAttribute("rotation","0 1 0 " + lrot);
+	}
+	
+</script>	
+</html>
