@@ -63,8 +63,8 @@ X3DCanvas {
 		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
 		<KeySensor DEF='ks1'></KeySensor>
 		<TimeSensor DEF='tms1' loop='true' cycleInterval='10'></TimeSensor>
-		<ScalarInterpolator DEF='SI' key='0 0.5 1' keyValue='0 2 10' />
-		<ROUTE fromNode='tms1' fromField='fraction_changed' toNode='SI' toField='set_fraction' />
+		<ScalarInterpolator DEF='SI' key='0 0.5 1' keyValue='0 2 10' ></ScalarInterpolator>
+		<ROUTE fromNode='tms1' fromField='fraction_changed' toNode='SI' toField='set_fraction' ></ROUTE>
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
 			<ProximitySensor DEF='ps1' size='3'></ProximitySensor> 
