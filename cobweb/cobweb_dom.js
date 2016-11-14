@@ -27,16 +27,17 @@ X3D (function (X3DCanvases)
 			{
 				var scripts = dom .querySelectorAll ('script');
 				for (var i = 0, length = scripts. length; i < length; ++i)
-					this .preprocessScript(scripts[i]);
+					this .appendFieldChildren(scripts[i]);
 				return dom;
 			},
 			
-			preprocessScript: function (script)
+			appendFieldChildren: function (script)
 			{
 				var domParser = new DOMParser();
 				var scriptDoc = domParser .parseFromString (script.textContent, 'application/xml');
 				var fieldDefinitions = scriptDoc .body .children;
 				//comment out field tags
+				
 				for (var i = 0, length = fieldDefinitions .length; i < length; ++i)
 					script.appendChild(fieldDefinitions[0]);
 				// to be continued ...	
@@ -52,7 +53,7 @@ X3D (function (X3DCanvases)
 				
 				//preprocess script nodes if not xhtml
 				
-				if (!documenent.URL.toLowerCase().includes('xhtml'))
+				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
 	
 				//mybrowser.importDocument(dom); //now also attached x3d property to each node element
