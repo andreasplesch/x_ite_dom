@@ -37,7 +37,7 @@ X3D (function (X3DCanvases)
 				var scriptDoc = domParser .parseFromString (script.textContent, 'application/xml');
 				var fieldDefinitions = scriptDoc .body .children;
 				//comment out field tags
-				
+				//regex replace < *[fF][iI][eE][lL][dD] //$(0)
 				for (var i = 0, length = fieldDefinitions .length; i < length; ++i)
 					script.appendChild(fieldDefinitions[0]);
 				// to be continued ...	
