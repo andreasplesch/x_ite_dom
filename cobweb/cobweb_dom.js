@@ -26,6 +26,8 @@ X3D (function (X3DCanvases)
 			preprocessScripts: function (dom)
 			{
 				var scripts = dom .querySelectorAll ('script');
+				for (var i = 0, length = scripts. length; i < length; ++i)
+					
 				return dom;
 			}
 			
