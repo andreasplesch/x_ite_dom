@@ -183,12 +183,12 @@ X3D (function (X3DCanvases)
 				// although Scene does not have .x3d so should never happen?
 				if (element .x3d)
 				{ 
-					if (element .nodeName == 'Inline')
+					if (element .nodeName === 'Inline' || element .nodeName === 'INLINE' )
 						this .processInlineDOM (element); //only add dom
 
 					return; 
 				}
-				else if (element .nodeName === 'Scene')
+				else if (element .nodeName === 'Scene' || element .nodeName === 'SCENE')
 					return;
 				
 				var parentNode = element .parentNode;
@@ -196,7 +196,11 @@ X3D (function (X3DCanvases)
 				// first get correct execution context
 				var nodeScene = this .browser .currentScene ; // assume main Scene
 
-				if (parentNode .parentNode .nodeName === 'Inline')
+				if 
+				(
+					parentNode .parentNode .nodeName === 'Inline' ||
+			   		parentNode .parentNode .nodeName === 'INLINE'
+				)
 				{
 					var nodeScene = parentNode .parentNode .x3d .getInternalScene ();
 				}
@@ -215,7 +219,8 @@ X3D (function (X3DCanvases)
 					var node = parentNode .x3d ;
 					//parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
-					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
+					var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
+					    			parentNode .nodeName === 'PROTOINSTANCE';
 					
 					parser .child (element, isProtoInstance);
 
@@ -260,7 +265,7 @@ X3D (function (X3DCanvases)
 			
 			processInlineDOMs: function (element)
 			{
-				if (element .nodeName == 'Inline')
+				if (element .nodeName === 'Inline' || element .nodeName === 'INLINE')
 					this .processInlineDOM (element);
 
 				var inlines = element .querySelectorAll ('Inline'); // or recursive childnodes ?
@@ -361,7 +366,8 @@ X3D (function (X3DCanvases)
 					parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
 					
-					var isProtoInstance = parentNode .nodeName === 'ProtoInstance' ;
+					var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
+					    			parentNode .nodeName === 'PROTOINSTANCE';
 					// may need to try..catch in case "name" field does not exist
 					parser. child (element, isProtoInstance);
 					
@@ -388,7 +394,7 @@ X3D (function (X3DCanvases)
 						}
 						catch (error)
 						{
-							// Unknown attriute.
+							// Unknown attribute.
 						}
 		
 						break;
