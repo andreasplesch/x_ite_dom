@@ -23,6 +23,12 @@ X3D (function (X3DCanvases)
 	
 		DOMIntegration .prototype =
 		{
+			preprocessScripts: function (dom)
+			{
+				var scripts = dom .querySelectorAll ('script');
+				return dom;
+			}
+			
 			setup: function ()
 			{				
 				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
@@ -30,6 +36,11 @@ X3D (function (X3DCanvases)
 				
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
+				
+				//preprocess script nodes if not xhtml
+				
+				if (!documenent.URL.toLowerCase().includes('xhtml'))
+					dom = this .preprocessScripts(dom);
 	
 				//mybrowser.importDocument(dom); //now also attached x3d property to each node element
 				//update to spec. conforming, latest use
@@ -416,7 +427,7 @@ X3D (function (X3DCanvases)
 				}
 			},
 		};
-
+		
 		var integrations = [ ];
 
 		// Go through all passed x3dcanvas elements.
