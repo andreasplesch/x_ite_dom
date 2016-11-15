@@ -34,10 +34,11 @@ X3D (function (X3DCanvases)
 			appendFieldChildren: function (script)
 			{
 				var domParser = new DOMParser();
-				var scriptDoc = domParser .parseFromString (script.outerHTML, 'application/xml');
+				var scriptDoc = domParser .parseFromString (script. outerHTML, 'application/xml');
 				var fieldDefinitions = scriptDoc .children[0] .children;
 				//comment out field tags
-				//regex replace < *[fF][iI][eE][lL][dD] //$(0)
+				//
+				script .textContent = script .textContent .replace(/<\s*field/ig ,'// $&');  
 				for (var i = 0, length = fieldDefinitions .length; i < length; ++i)
 					script.appendChild(fieldDefinitions[0]);
 				// to be continued ...	
