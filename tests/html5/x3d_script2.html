@@ -1,0 +1,248 @@
+<!DOCTYPE html >
+
+<html >
+	<head>
+		<title>x3d script vs. dom script</title>
+
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta charset="utf-8"/>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb/html5/cobweb.js/cobweb.uncompressed.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/html5/cobweb/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+	
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		
+<style>
+html, body {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+body {
+	background: black;
+	color: white;
+}
+
+X3DCanvas {
+	background: #414141;
+	width: 600px;
+	height: 400px;
+}
+
+.fallback {
+	display: block;
+	margin: 300px 0 0 0;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<button onclick='random_color()'>new color</button>
+	<button onclick='add_box()'>new box</button>
+	<button onclick='remove_last_box()'>remove box</button>
+	<button onclick='remove_last_material()'>remove material</button>
+	
+<X3DCanvas>
+	<Scene>
+		<Viewpoint></Viewpoint>
+		<NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
+		<KeySensor DEF='ks1'></KeySensor>
+		<TimeSensor DEF='tms1' loop='true' cycleInterval='10'></TimeSensor>
+		
+		<Transform translation='2 0 0'>
+			<TouchSensor DEF='ts1'></TouchSensor>
+			<ProximitySensor DEF='ps1' size='8 8 8'></ProximitySensor> 
+				<Shape>
+				<!-- When attribute values are not specified, the default values from the X3D (or VRML) Specification are used. -->
+					<Appearance>
+						<Material></Material>
+					</Appearance>
+					<Box></Box>
+				</Shape>
+		</Transform>
+		
+		<Transform id='shell'>
+		</Transform>
+<!--http://www.web3d.org/x3d/content/examples/Basic/ScriptConformance/TouchSensorIsOverEventECMAScript.html-->
+<Group>
+      <Shape>
+            <Appearance>
+		    <Material DEF='MAT' diffuseColor='0 0 1'></Material>
+            </Appearance>
+	      <Sphere></Sphere>
+      </Shape>
+	<TouchSensor DEF='TS'></TouchSensor>
+</Group>
+<!-- type='application/x-myscript' is requried to escape the web browser's direct execution -->
+<Script type='application/xml' DEF='SC'
+      url='"
+ecmascript:
+
+function isOver(val) 
+{ 
+    if (val == true) 
+    { 
+        diffuseColor_changed = new SFColor(1,0,0); 
+    } 
+    else 
+    { 
+        diffuseColor_changed = new SFColor(0,0,1);
+    }
+}
+"'>
+	<field name='isOver' type='SFBool' accessType='inputOnly'></field>
+	<field name='diffuseColor_changed' type='SFColor' accessType='outputOnly'></field>
+   
+</Script>
+<ROUTE fromNode='TS' fromField='isOver' toNode='SC' toField='isOver'></ROUTE>
+<ROUTE fromNode='SC' fromField='diffuseColor_changed' toNode='MAT' toField='set_diffuseColor'></ROUTE> 
+
+	</Scene>
+			<p class="fallback">
+				Your browser may not support all features required by Cobweb! You can use Firefox, <br/>
+				because this is currently the choice of the choice. We will continuously keep you informed <br/>
+				on technical developments and as soon as Cobweb is running in other browser too.
+			</p>
+</X3DCanvas>
+
+<div class='report'>Touch mouse over coordinates: <span id='coords'></span></div>
+<div class='report'>Touch hit point coordinates: <span id='hitpoint'></span></div>
+<div class='report'>Proximity ? <span id='proxq'></span></div>
+<div class='report'>Time fraction changed: <span id='time'></span></div>
+</body>
+<script>
+console.log('START')
+
+//d3 test
+var firsttrafo = d3.select("Transform");
+
+//start at 45 degress
+firsttrafo.attr("rotation", "0 1 0 0.78");
+
+//transition color
+var mat = d3.select("Material");
+var blue = d3.color("cadetblue"); //css color
+mat.attr("diffuseColor", blue.r/255 + " " + blue.g/255 + " " + blue.b/255);
+var red = d3.color("tomato");
+mat.transition()
+	.duration(5000)
+	.attr("diffuseColor", red.r/255 + " " + red.g/255 + " " + red.b/255);
+
+// 
+var spins = 20;
+var msperspin = 5000;
+firsttrafo.transition()
+	.delay(5000)
+	.duration(spins * msperspin)
+	.ease(d3.easeBounceInOut)
+	.attr("rotation", "1 0 0 " + spins * 2 * Math.PI);
+
+//try out x3d events
+var ts = document.querySelector('TouchSensor');
+var coords = document.querySelector('#coords');
+var hitpt = document.querySelector('#hitpoint');
+var ks = document.querySelector('KeySensor');
+var kp = document.querySelector('#keypressed');
+var ps = document.querySelector('ProximitySensor');
+var pp = document.querySelector('#proxq');
+var tms = document.querySelector('TimeSensor');
+var tmp = document.querySelector('#time');
+
+///*
+ts.addEventListener('x3d_isOver', function(evt) {
+	var e = evt.detail;
+	if (e.value) {
+		coords.textContent = e.name + " " + e.fields.hitPoint_changed;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	}
+	});
+ts.addEventListener('x3d_hitPoint_changed', function(evt) {
+	var e = evt.detail;
+	if (e.value) {
+		hitpt.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	}
+	});
+ps.addEventListener('x3d_isActive', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		pp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+ks.addEventListener('x3d_keyPress', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		kp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+tms.addEventListener('x3d_fraction_changed', function(evt) {
+	var e = evt.detail;
+	//if (evt.value) {
+		tmp.textContent = " " + e.value;
+		//alert('isOver event:'+evt.value+'\nHitPoint: '+evt.fields.hitPoint_changed)
+	//}
+	});
+///*
+
+var box_counter = 0;
+var radius = 4;
+var perBoxAngle = 2*Math.PI/12;
+
+function random_color() {
+	
+	var m = document.querySelector("Material")
+	//will be transferred to scene graph node 
+	m.setAttribute("diffuseColor", Math.random()+" "+Math.random()+" "+Math.random());
+	console.log(m);
+}
+
+function add_box() {
+
+	var transform = document.createElement('Transform');
+	transform.setAttribute('translation', radius * Math.cos(perBoxAngle * box_counter) + " " + radius * Math.sin(perBoxAngle * box_counter++) + " " + 0);
+	var shape = document.createElement('Shape');
+	var app = document.createElement('Appearance');
+	var mat = document.createElement('Material');
+	var box = document.createElement('Box');
+	var shell = document.querySelector('Scene');
+	app.appendChild(mat);
+	shape.appendChild(app);
+	shape.appendChild(box);
+	transform.appendChild(shape);
+	shell.appendChild(transform);
+	radius = radius + box_counter/100;
+}
+
+function remove_last_box() {
+
+	var trafos = document.querySelectorAll("Transform");
+	var last_trafo = trafos[trafos.length - 1];
+	last_trafo.remove();
+	box_counter--;
+	radius = radius - box_counter/100;
+
+}
+
+function remove_last_material() {
+
+	var mats = document.querySelectorAll("Material");
+	var last_mat = mats[mats.length - 1];
+	last_mat.remove();
+}
+
+</script>
+
+</html>
