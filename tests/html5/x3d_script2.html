@@ -85,8 +85,11 @@ X3DCanvas {
 	<TouchSensor DEF='TS'></TouchSensor>
 </Group>
 <!-- type='application/x-myscript' is requried to escape the web browser's direct execution -->
-<Script type='application/xml' DEF='SC'
-      url='"
+<Script type='application/x-vrmlscript' DEF='SC'>
+      <field name='isOver' type='SFBool' accessType='inputOnly'/>
+      <field name='diffuseColor_changed' type='SFColor' accessType='outputOnly'/>
+      <![CDATA[
+
 ecmascript:
 
 function isOver(val) 
@@ -100,10 +103,8 @@ function isOver(val)
         diffuseColor_changed = new SFColor(0,0,1);
     }
 }
-"'>
-	<field name='isOver' type='SFBool' accessType='inputOnly'></field>
-	<field name='diffuseColor_changed' type='SFColor' accessType='outputOnly'></field>
-   
+
+	]]>
 </Script>
 <ROUTE fromNode='TS' fromField='isOver' toNode='SC' toField='isOver'></ROUTE>
 <ROUTE fromNode='SC' fromField='diffuseColor_changed' toNode='MAT' toField='set_diffuseColor'></ROUTE> 
