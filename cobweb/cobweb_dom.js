@@ -36,7 +36,7 @@ X3D (function (X3DCanvases)
 				var domParser = new DOMParser();
 				var scriptDoc = domParser .parseFromString (script. outerHTML, 'application/xml');
 				var scriptNodes = scriptDoc .children[0] .childNodes;
-				script .textContent = '// content moved into childNodes ';  
+				script .textContent = '// content moved into childNodes';  
 				for (var i = 0, length = scriptNodes .length; i < length; ++i)
 					script.appendChild(scriptNodes[0]);	
 			},
