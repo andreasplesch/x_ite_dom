@@ -35,13 +35,10 @@ X3D (function (X3DCanvases)
 			{
 				var domParser = new DOMParser();
 				var scriptDoc = domParser .parseFromString (script. outerHTML, 'application/xml');
-				var fieldDefinitions = scriptDoc .children[0] .childNodes;
-				//comment out field tags
-				//
-				script .textContent = script .textContent .replace(/<\s*field/ig ,'// $&');  
-				for (var i = 0, length = fieldDefinitions .length; i < length; ++i)
-					script.appendChild(fieldDefinitions[0]);
-				// to be continued ...	
+				var scriptNodes = scriptDoc .children[0] .childNodes;
+				script .textContent = '// content moved into childNodes ';  
+				for (var i = 0, length = scriptNodes .length; i < length; ++i)
+					script.appendChild(scriptNodes[0]);	
 			},
 			
 			setup: function ()
