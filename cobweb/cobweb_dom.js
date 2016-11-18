@@ -377,7 +377,7 @@ X3D (function (X3DCanvases)
 					parser .attribute (attribute, element .x3d); //almost there
 
 					//only underscore gets update
-					var field = element .x3d .getField ( parser .attrToRealCase (attributeName) ); //containerField is not a field, check for it?
+					var field = element .x3d .getField ( parser .attributeToCamelCase (attributeName) ); //containerField is not a field, check for it?
 
 					field .addEvent (); // set_field event, updates real property
 				}
