@@ -62,16 +62,16 @@ X3DCanvas {
 document.getElementById("thesphereSensor").addEventListener('x3d_touchTime', myToggleBoxSizeFunction);
 
 function myBlueFunction() {
-    document.getElementById("ballColour").diffuseColor='0 0 1';
+    document.getElementById("ballColour").setAttribute('diffuseColor', '0 0 1');
     document.getElementById("textColor").style.color='blue';
     myToggleBoxSizeFunction();
 }
 function myGreenFunction() {
-    document.getElementById("ballColour").diffuseColor='0 0.5 0';
+    document.getElementById("ballColour").setAttribute('diffuseColor', '0 0.5 0');
     document.getElementById("textColor").style.color='green';
 }
 function myRedFunction() {
-    document.getElementById("ballColour").diffuseColor='1 0 0';
+    document.getElementById("ballColour").setAttribute('diffuseColor', '1 0 0');
     document.getElementById("textColor").style.color='red';
 }
 function myToggleSphereSizeFunction() {
@@ -105,6 +105,8 @@ function myToggleBoxSizeFunction() {
 function mySpeedFunction(val) {
     document.getElementById("time").setAttribute('enabled', "false");
     document.getElementById("time").setAttribute('cycleInterval', val);
+    document.getElementById("ballColour").setAttribute('diffuseColor', '1 0 0');
+
     document.getElementById("time").setAttribute('enabled', "true");
 }
 </script>
