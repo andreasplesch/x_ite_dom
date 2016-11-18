@@ -1,10 +1,27 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>X3DOM X3D/HTML/SVG Example</title>
-    <script type='text/javascript' src='http://www.x3dom.org/download/x3dom.js'> </script>
-    <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/download/x3dom.css'/>
+    <title>dom integration</title>
+    <script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb/html5/cobweb.js/cobweb.uncompressed.js">
+		</script>
+		<script type="text/javascript" 
+			src="https://rawgit.com/andreasplesch/cobweb_dom/master/latest/cobweb_dom.js">
+		</script>
+		<link rel="stylesheet" type="text/css"
+			href="https://rawgit.com/create3000/cobweb/master/cobweb.js/cobweb.css"/>
+
+    <style >
+X3DCanvas {
+	width: 500px;
+	height: 400px;
+	float: left;
+	border: 1px solid;
+}
+  </style>
+
 </head>
+
 <body>
 <h1>X3D / SVG / HTML / DOM Integration Example</h1>
 <p>This is an X3DOM implementation of the example.</p>
@@ -14,27 +31,30 @@
     <rect id="greenRectangle" x="200" y="50" width="100" height="100" rx="10" ry="10" style="fill:green;stroke:black;stroke-width:2" onclick="myGreenFunction()"/>
     <rect id="redRectangle" x="350" y="50" width="100" height="100" rx="10" ry="10" style="fill:red;stroke:black;stroke-width:2" onclick="myRedFunction()"/>
 </svg>
-<x3d width='500px' height='400px'>
-    <scene>
-        <background skycolor='1 1 0.3'></background>
-        <transform DEF="ball">
-            <shape>
-                <appearance>
-                    <material id="ballColour" diffuseColor='1 0 0'></material>
-                </appearance>
-                <sphere id="thesphere" radius="1" onclick="myToggleSphereSizeFunction()"></sphere>
-            </shape>
-            <TouchSensor id='thesphereSensor'></TouchSensor>
-        </transform>
+<X3DCanvas>
+    <x3d>
+        <scene>
+            <background skycolor='1 1 0.3'></background>
+            <transform DEF="ball">
+                <shape>
+                    <appearance>
+                        <material id="ballColour" diffuseColor='1 0 0'></material>
+                    </appearance>
+                    <sphere id="thesphere" radius="1" ></sphere>
+                </shape>
+                <TouchSensor id='thesphereSensor'></TouchSensor>
+            </transform>
 
-        <timeSensor DEF="time" id="time" cycleInterval="0.5" loop="true"></timeSensor>
-        <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
-        <Route fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></Route>
-        <Route fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></Route>
+            <timeSensor DEF="time" id="time" cycleInterval="0.5" loop="true"></timeSensor>
+            <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
+            <Route fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></Route>
+            <Route fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></Route>
 
-    </scene>
-</x3d>
-<p>Click on the ball itself to toggle the size. Currently it is a <span id="textColor" style="color:red">LARGE</span> ball.</p>
+        </scene>
+    </x3d>
+    <p>Sorry, webgl is not sufficiently supported on this browser.</p>
+</X3DCanvas>
+    <p>Click on the ball itself to toggle the size. Currently it is a <span id="textColor" style="color:red">LARGE</span> ball.</p>
 <p>And we can also change the speed of the ball. Use the slider below.</p>
 <input id="speedChange" type="range" value="0.5" min="0.5" max="5" step="0.5" oninput="mySpeedFunction(this.value)"/>
 <script>
