@@ -27,11 +27,11 @@ X3D (function (X3DCanvases)
 			{
 				var scripts = dom .querySelectorAll ('script');
 				for (var i = 0, length = scripts. length; i < length; ++i)
-					this .appendFieldChildren(scripts[i]);
+					this .appendScriptChildren(scripts[i]);
 				return dom;
 			},
 			
-			appendFieldChildren: function (script)
+			appendScriptChildren: function (script)
 			{
 				var domParser = new DOMParser();
 				var scriptDoc = domParser .parseFromString (script. outerHTML, 'application/xml');
@@ -66,6 +66,7 @@ X3D (function (X3DCanvases)
 				// create an observer instance
 				this .observer = new MutationObserver (function (mutations)
 				{
+					this. prepareMutations (mutations);
 					mutations .forEach (function (mutation)
 					{
 						this .processMutation (mutation, parser);
@@ -90,27 +91,33 @@ X3D (function (X3DCanvases)
 					this .processInlineDOM (inlines [i]);
 				
 				//events
-				
-				this .addEventDispatchersAll (dom);
-				
-				//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
-				//use key in X3D.X3DConstants and match Sensor
-				// expand to all [inputoutput] and [outputOnly] fields in all nodes ?
-				// Construct selector
-				/* obsolete
-				this .sensorSelector = "Anchor"; // Other special names? (ViewpointGroup has a proxy inside, consider?)
 
-				for (var key in X3D .X3DConstants)
+				this .addEventDispatchersAll (dom);				
+			},
+			
+			prepareMutations: function (mutations)
+			{
+				// in case of mutations affecting the same element-attribute
+				// add .value by using oldValue of the next mutations
+				var mutations, element, attributeName, value, i, j, length;
+				for ( i = 0, length = mutations .length; i < length; ++i)
 				{
-					if (key .endsWith ('Sensor'))
-						this .sensorSelector += "," + key;
-				}
-				
-				var sensors = dom .querySelectorAll (this .sensorSelector);
-
-				for (var i = 0; i < sensors .length; ++ i)
-					this .addEventDispatchers (sensors [i]);
-				*/
+					mutation = mutations[i];
+					if ( mutation .type !== 'attributes' )  continue ;
+					element = mutation .target;
+					attributeName = mutation .attributeName;
+					value = element .attributes .getNamedItem (attributeName); //assume current
+					for ( j = i + 1; j < length; ++j)
+					{
+						var futureMutation = mutation[j];
+						if ( element === futureMutation .target 
+						    && attributeName === futureMutation .attributeName )
+						{
+							value = futureMutation .oldValue;
+							break;
+						}
+					}
+					mutation .value = value;
 			},
 			
 			addEventDispatchersAll: function (element)
