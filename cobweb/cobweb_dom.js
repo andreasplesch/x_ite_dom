@@ -373,9 +373,9 @@ X3D (function (X3DCanvases)
 			processAttribute: function (mutation, element, parser)
 			{
 				var attributeName = mutation .attributeName;
-				var attribute = element .attributes .getNamedItem (attributeName);
+				var attribute = element .attributes .getNamedItem (attributeName) .cloneNode(); // clone to avoid mutation observation
 				
-				//attribute .value = mutation .value ; // mutation .value is custom; may cause mutation ?
+				attribute .value = mutation .value ; // mutation .value is custom; may cause mutation ?
 				
 				if (element .x3d)
 				{ // is a field
