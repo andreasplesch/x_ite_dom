@@ -103,9 +103,12 @@ function myToggleBoxSizeFunction() {
     }
 }
 function mySpeedFunction(val) {
-    document.getElementById("time").setAttribute('enabled', "false");
-    document.getElementById("time").setAttribute('cycleInterval', val);    
-    (function () {document.getElementById("time").setAttribute('enabled', "true");})();
+	document.getElementById("time").setAttribute('enabled', "false");
+	document.getElementById("time").setAttribute('cycleInterval', val);
+	enableTimer;
+	}
+function enableTimer() {
+	document.getElementById("time").setAttribute('enabled', "true");
 }
 </script>
 </body>
