@@ -109,7 +109,7 @@ X3D (function (X3DCanvases)
 					value = element .attributes .getNamedItem (attributeName) .value; //assume current
 					for ( j = i + 1; j < length; ++j)
 					{
-						var futureMutation = mutation[j];
+						var futureMutation = mutations[j];
 						if ( element === futureMutation .target 
 						    && attributeName === futureMutation .attributeName )
 						{
