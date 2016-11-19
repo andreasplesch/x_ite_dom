@@ -374,7 +374,7 @@ X3D (function (X3DCanvases)
 			{
 				var attribute = element .attributes .getNamedItem (mutation .attributeName);
 				
-				//attribute .value = mutation .value ; // mutation .value is custom
+				attribute .value = mutation .value ; // mutation .value is custom
 				
 				if (element .x3d)
 				{ // is a field
