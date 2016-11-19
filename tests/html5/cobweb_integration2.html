@@ -105,7 +105,7 @@ function myToggleBoxSizeFunction() {
 function mySpeedFunction(val) {
 	document.getElementById("time").setAttribute('enabled', "false");
 	document.getElementById("time").setAttribute('cycleInterval', val);
-	enableTimer;
+	enableTimer();
 	}
 function enableTimer() {
 	document.getElementById("time").setAttribute('enabled', "true");
