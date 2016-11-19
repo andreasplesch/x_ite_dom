@@ -370,16 +370,9 @@ X3D (function (X3DCanvases)
 				this. addEventDispatchersAll (element); 
 			},
 			
-			processAttributes: function (mutation, element, parser)
+			processAttribute: function (mutation, element, parser)
 			{
-				var attributeName = mutation .attributeName; // TODO: check if mutation can have multiple changed attributes
-
-				this .processAttribute (attributeName, element, parser)
-			},
-			
-			processAttribute: function (attributeName, element, parser)
-			{
-				var attribute = element .attributes .getNamedItem (attributeName);
+				var attribute = element .attributes .getNamedItem (mutation .attributeName);
 				
 				//attribute .value = mutation .value ; // mutation .value is custom
 				
@@ -425,7 +418,7 @@ X3D (function (X3DCanvases)
 					{
 						try // performance hit for animations ?
 						{
-							this .processAttributes (mutation, element, parser);
+							this .processAttribute (mutation, element, parser);
 						}
 						catch (error)
 						{
