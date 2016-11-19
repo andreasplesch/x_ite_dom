@@ -76,7 +76,7 @@ X3D (function (X3DCanvases)
 				
 				//start observing, also catches inlined inlines
 				this .observer .observe (dom, 
-				 	{ attributes: true, childList: true, characterData: false, subtree: true });
+				 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
 	
 				// Add internal inline DOMs to document DOM	
 				// create LoadSensor for use with Inline nodes.
