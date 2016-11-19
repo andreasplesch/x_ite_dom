@@ -99,7 +99,7 @@ X3D (function (X3DCanvases)
 			{
 				// in case of mutations affecting the same element-attribute
 				// add .value by using oldValue of the next mutations
-				var mutations, element, attributeName, value, i, j, length;
+				var mutation, element, attributeName, value, i, j, length;
 				for ( i = 0, length = mutations .length; i < length; ++i)
 				{
 					mutation = mutations[i];
