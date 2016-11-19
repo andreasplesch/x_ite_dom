@@ -106,7 +106,7 @@ X3D (function (X3DCanvases)
 					if ( mutation .type !== 'attributes' )  continue ;
 					element = mutation .target;
 					attributeName = mutation .attributeName;
-					value = element .attributes .getNamedItem (attributeName); //assume current
+					value = element .attributes .getNamedItem (attributeName) .value; //assume current
 					for ( j = i + 1; j < length; ++j)
 					{
 						var futureMutation = mutation[j];
@@ -118,6 +118,7 @@ X3D (function (X3DCanvases)
 						}
 					}
 					mutation .value = value;
+				}
 			},
 			
 			addEventDispatchersAll: function (element)
@@ -138,6 +139,7 @@ X3D (function (X3DCanvases)
 				for (var key in fields) 
 					this .bindFieldCallback (fields [key], element);
 			},
+			
 			bindFieldCallback: function  (field, element)
 			{
 				/*var ctx = {};
@@ -155,6 +157,7 @@ X3D (function (X3DCanvases)
 							this .fieldTraceCallback .bind (null, field, element .x3d));
 				}		
 			},
+			
 			fieldCallback: function  (field, element, value)
 			{
 				//var evt = new Event (field.getName()); // better to use official custom event
@@ -178,6 +181,7 @@ X3D (function (X3DCanvases)
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
 			},
+			
 			fieldTraceCallback: function  (field, node, value)
 			{
 				var now = performance.timing.navigationStart + performance.now();
@@ -188,6 +192,7 @@ X3D (function (X3DCanvases)
 					      node .getTypeName (), node .getName(),
 					      field .getName(), value );
 			},
+			
 			processRemovedNode: function (element)
 			{	
 				// Works also for root nodes, as it has to be, since scene.rootNodes is effectively a MFNode in cobweb.
@@ -200,6 +205,7 @@ X3D (function (X3DCanvases)
 					    delete element .x3d;
 				}
 			},
+			
 			processAddedNode: function (element, parser)
 			{
 				// Only process element nodes.
@@ -321,6 +327,7 @@ X3D (function (X3DCanvases)
 				//just add to loadsensor watchlist; triggers isLoaded event after loading
 				watchList .push (element .x3d);
 			},
+			
 			appendInlineDOM: function (element, loaded)
 			{
 				// Now loaded and in .dom
@@ -361,23 +368,20 @@ X3D (function (X3DCanvases)
 				
 				// Attach dom event callbacks.
 				this. addEventDispatchersAll (element); 
-				/*
-				var sensors = element .querySelectorAll (this .sensorSelector);
-
-				for (var i = 0; i < sensors .length; ++ i)
-					this .addEventDispatchers (sensors [i]);
-				*/
-				// Any inlines in appended inline dom are picked up when Scene is a addedNode for Mutations
 			},
+			
 			processAttributes: function (mutation, element, parser)
 			{
 				var attributeName = mutation .attributeName; // TODO: check if mutation can have multiple changed attributes
 
 				this .processAttribute (attributeName, element, parser)
 			},
+			
 			processAttribute: function (attributeName, element, parser)
 			{
 				var attribute = element .attributes .getNamedItem (attributeName);
+				
+				//attribute .value = mutation .value ; // mutation .value is custom
 				
 				if (element .x3d)
 				{ // is a field
@@ -410,6 +414,7 @@ X3D (function (X3DCanvases)
 					}
 				}
 			},
+			
 			processMutation: function (mutation, parser)
 			{
 				var element = mutation .target;
