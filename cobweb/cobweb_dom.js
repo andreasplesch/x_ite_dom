@@ -375,7 +375,7 @@ X3D (function (X3DCanvases)
 				var attributeName = mutation .attributeName;
 				var attribute = element .attributes .getNamedItem (attributeName) .cloneNode(); // clone to avoid mutation observation
 				
-				attribute .value = mutation .value ; // mutation .value is custom; may cause mutation ?
+				attribute .value = mutation .value ; // mutation .value is custom;
 				
 				if (element .x3d)
 				{ // is a field
@@ -385,6 +385,7 @@ X3D (function (X3DCanvases)
 					var field = element .x3d .getField ( parser .attributeToCamelCase (attributeName) ); //containerField is not a field, check for it?
 
 					field .addEvent (); // set_field event, updates real property
+					this .browser .processEvents(); // necessary for multiple mutations
 				}
 				else
 				{ // is an attribute of non-node child such as fieldValue (or ROUTE)
