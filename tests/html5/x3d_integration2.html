@@ -59,6 +59,7 @@ X3DCanvas {
 			{
 				time.enabled = false;
 				time.cycleInterval = 5;
+				Browser.processEvents();
 				time.enabled = true;
 				Browser.print("slow: "+time.enabled);
 			}
@@ -66,6 +67,7 @@ X3DCanvas {
 			{
 				time.enabled = false
 				time.cycleInterval = 1;
+				Browser.processEvents();
 				time.enabled = true;
 			}
 		}
