@@ -76,7 +76,7 @@ function myRedFunction() {
 }
 function myToggleSphereSizeFunction() {
     if (document.getElementById("ball").getAttribute('scale')=='1 1 1') {
-        document.getElementById("ball").getAttribute('scale', '0.5 0.5 0.5');
+        document.getElementById("ball").setAttribute('scale', '0.5 0.5 0.5');
         document.getElementById("textColor").innerHTML = "small";
     } else {
         document.getElementById("ball").getAttribute('scale', '1 1 1');
