@@ -27,7 +27,6 @@
 			{
 				time.enabled = false;
 				time.cycleInterval = 5;
-				//Browser.processEvents();
 				time.enabled = true;
 				Browser.print("slow: "+time.enabled);
 				ballmaterial.diffuseColor = new SFColor(0.5, 0.5, 0.5);
@@ -36,7 +35,6 @@
 			{
 				time.enabled = false
 				time.cycleInterval = 1;
-				//Browser.processEvents();
 				time.enabled = true;
 				ballmaterial.diffuseColor = new SFColor(1, 0, 0);
 			}
@@ -44,8 +42,8 @@
 		]]>
             </Script>
             <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
-            <Route fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></Route>
-            <Route fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></Route>
-            <Route fromNode="thesphereSensor" fromField ="isOver" toNode="speeder" toField="isOver"></Route>
+            <ROUTE fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></ROUTE>
+            <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="speeder" toField="isOver"></ROUTE>
       </Scene>
 </X3D>
