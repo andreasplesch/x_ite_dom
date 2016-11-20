@@ -1,0 +1,61 @@
+<X3D>
+        <Scene>
+            <Transform DEF="ball" scale="1 1 1">
+                <Shape>
+                    <Appearance>
+                        <Material DEF='ballColour' diffuseColor='1 0 0'></Material>
+                    </Appearance>
+                    <Sphere radius="1" ></Sphere>
+                </Shape>
+                <TouchSensor DEF='thesphereSensor'></TouchSensor>
+            </Transform>
+            <TimeSensor DEF="time" cycleInterval="1" loop="true"></TimeSensor>
+            <Script directOutput='true' DEF='speeder'>
+		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
+		<field name='cycleInterval' type='SFTime' accessType='outputOnly'>
+	  </field>
+		<field name='ballmaterial' type='SFNode' accessType='initializeOnly'>
+	    		<Material USE='ballColour'></Material>
+	    	</field>
+		<![CDATA[
+		ecmascript:
+		
+		function isOver (value)
+		{
+			if (value)
+			{
+				cycleInterval_changed = 5;
+				Browser.print("slow: "+time.enabled);
+				ballmaterial.diffuseColor = new SFColor(0.5, 0.5, 0.5);
+			}
+			else
+			{
+				cycleInterval_changed = 2;
+				ballmaterial.diffuseColor = new SFColor(1, 0, 0);
+			}
+		}
+		]]>
+            </Script>
+            <Script DEF='enabler'>
+            <field name='cycleInterval' type='SFTime' accessType='inputOnly'></field>
+            <field name='enabled' type='SFBool' accessType='outputOnly'>
+	          </field>
+            <![CDATA[
+		ecmascript:
+		
+		function cycleInterval_changed (value)
+    {
+      enabled_changed = true;
+    }
+		]]>
+            </Script>
+            <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
+            <ROUTE fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></ROUTE>
+            <ROUTE fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></ROUTE>
+            <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="speeder" toField="isOver"></ROUTE>
+            <ROUTE fromNode="speeder" fromField ="cycleInterval" toNode="time" toField="cycleInterval"></ROUTE>
+            <ROUTE fromNode="time" fromField ="cycleInterval" toNode="enabler" toField="cycleInterval"></ROUTE>
+            <ROUTE fromNode="enabler" fromField ="enabled" toNode="time" toField="enabled"></ROUTE>
+            
+      </Scene>
+</X3D>
