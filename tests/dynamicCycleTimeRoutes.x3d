@@ -45,17 +45,37 @@
 		ecmascript:
 		
 		function set_cycleInterval (value)
-    {
-      enabled_changed = true;
-	Browser.print('\n Enabler ..');
-    }
-		]]>
+    		{
+			enabled_changed = true;
+			Browser.print('\n Enabler ..');
+		}
+	    ]]>
             </Script>
+            <Script DEF='disabler'>
+            <field name='isOver' type='SFBool' accessType='inputOnly'></field>
+            <field name='enabled_changed' type='SFBool' accessType='outputOnly'>
+	    </field>
+	    <field name='isOverTrue' type='SFBool' accessType='outputOnly'>
+	    </field>
+            <![CDATA[
+		ecmascript:
+		
+		function isOver (value)
+    		{
+			
+				enabled_changed = false;
+				isOverTrue = value;
+				Browser.print('\n Disabler ..');
+			
+		}
+	    ]]>
+	    </Script>
             <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
             <ROUTE fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></ROUTE>
             <ROUTE fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></ROUTE>
-            <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="time" toField="set_enabled"></ROUTE>
-            <ROUTE fromNode="time" fromField ="enabled_changed" toNode="speeder" toField="set_enabled"></ROUTE>
+            <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="disabler" toField="isOver"></ROUTE>
+            <ROUTE fromNode="disabler" fromField ="enabled_changed" toNode="time" toField="set_enabled"></ROUTE>
+            <ROUTE fromNode="disabler" fromField ="enabled_changed" toNode="speeder" toField="set_enabled"></ROUTE>
             <ROUTE fromNode="speeder" fromField ="cycleInterval_changed" toNode="time" toField="set_cycleInterval"></ROUTE>
             <ROUTE fromNode="time" fromField ="cycleInterval_changed" toNode="enabler" toField="set_cycleInterval"></ROUTE>
             <ROUTE fromNode="enabler" fromField ="enabled_changed" toNode="time" toField="set_enabled"></ROUTE>
