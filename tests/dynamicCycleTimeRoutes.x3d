@@ -54,9 +54,9 @@
             <ROUTE fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></ROUTE>
             <ROUTE fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></ROUTE>
             <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="speeder" toField="isOver"></ROUTE>
-            <ROUTE fromNode="speeder" fromField ="cycleInterval" toNode="time" toField="cycleInterval"></ROUTE>
-            <ROUTE fromNode="time" fromField ="cycleInterval" toNode="enabler" toField="cycleInterval"></ROUTE>
-            <ROUTE fromNode="enabler" fromField ="enabled" toNode="time" toField="enabled"></ROUTE>
+            <ROUTE fromNode="speeder" fromField ="cycleInterval_changed" toNode="time" toField="set_cycleInterval"></ROUTE>
+            <ROUTE fromNode="time" fromField ="cycleInterval_changed" toNode="enabler" toField="set_cycleInterval"></ROUTE>
+            <ROUTE fromNode="enabler" fromField ="enabled_changed" toNode="time" toField="set_enabled"></ROUTE>
             
       </Scene>
 </X3D>
