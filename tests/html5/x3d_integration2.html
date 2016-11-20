@@ -44,6 +44,7 @@ X3DCanvas {
                 </shape>
                 <TouchSensor id='thesphereSensor' DEF='thesphereSensor'></TouchSensor>
             </transform>
+            <timeSensor DEF="time" id="time" cycleInterval="0.5" loop="true"></timeSensor>
             <Script type='application/x-vrmlscript' directOutput='true' DEF='speeder'>
 		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
 		<field name='time' type='SFNode' accessType='initializeOnly'>
@@ -69,8 +70,6 @@ X3DCanvas {
 		}
 		]]>
             </Script>
-
-            <timeSensor DEF="time" id="time" cycleInterval="0.5" loop="true"></timeSensor>
             <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
             <Route fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></Route>
             <Route fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></Route>
