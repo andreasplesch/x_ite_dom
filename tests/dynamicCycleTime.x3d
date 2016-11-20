@@ -33,7 +33,7 @@
 			}
 			else
 			{
-				time.enabled = false
+				time.enabled = false;
 				time.cycleInterval = 2;
 				time.enabled = true;
 				ballmaterial.diffuseColor = new SFColor(1, 0, 0);
