@@ -12,7 +12,7 @@
             <TimeSensor DEF="time" cycleInterval="1" loop="true"></TimeSensor>
             <Script directOutput='true' DEF='speeder'>
 		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
-		<field name='cycleInterval' type='SFTime' accessType='outputOnly'>
+		<field name='cycleInterval_changed' type='SFTime' accessType='outputOnly'>
 	  </field>
 		<field name='ballmaterial' type='SFNode' accessType='initializeOnly'>
 	    		<Material USE='ballColour'></Material>
@@ -25,7 +25,7 @@
 			if (value)
 			{
 				cycleInterval_changed = 5;
-				Browser.print("slow: "+cycleInterval);
+				Browser.print("slow: "+cycleInterval_changed);
 				ballmaterial.diffuseColor = new SFColor(0.5, 0.5, 0.5);
 			}
 			else
@@ -37,13 +37,13 @@
 		]]>
             </Script>
             <Script DEF='enabler'>
-            <field name='cycleInterval' type='SFTime' accessType='inputOnly'></field>
-            <field name='enabled' type='SFBool' accessType='outputOnly'>
+            <field name='set_cycleInterval' type='SFTime' accessType='inputOnly'></field>
+            <field name='enabled_changed' type='SFBool' accessType='outputOnly'>
 	          </field>
             <![CDATA[
 		ecmascript:
 		
-		function cycleInterval_changed (value)
+		function set_cycleInterval (value)
     {
       enabled_changed = true;
 	Browser.print('/nEnabler ..');
