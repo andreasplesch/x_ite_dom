@@ -35,7 +35,7 @@ X3DCanvas {
     <x3d>
         <scene>
             <background skycolor='1 1 0.3'></background>
-            <transform DEF="ball">
+            <transform DEF="ball" id="ball" scale="1 1 1">
                 <shape>
                     <appearance>
                         <material id="ballColour" diffuseColor='1 0 0'></material>
@@ -75,11 +75,11 @@ function myRedFunction() {
     document.getElementById("textColor").style.color='red';
 }
 function myToggleSphereSizeFunction() {
-    if (document.getElementById("thesphere").radius=="1") {
-        document.getElementById("thesphere").radius='0.5';
+    if (document.getElementById("ball").getAttribute('scale')=='1 1 1') {
+        document.getElementById("ball").getAttribute('scale', '0.5 0.5 0.5');
         document.getElementById("textColor").innerHTML = "small";
     } else {
-        document.getElementById("thesphere").radius='1';
+        document.getElementById("ball").getAttribute('scale', '1 1 1');
         document.getElementById("textColor").innerHTML = "LARGE";
     }
 }
