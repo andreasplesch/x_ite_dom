@@ -46,6 +46,7 @@
 		function cycleInterval_changed (value)
     {
       enabled_changed = true;
+	Browser.print('/nEnabler ..');
     }
 		]]>
             </Script>
