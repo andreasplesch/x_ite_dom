@@ -11,7 +11,7 @@
             </Transform>
             <TimeSensor DEF="time" cycleInterval="1" loop="true"></TimeSensor>
             <Script directOutput='true' DEF='speeder'>
-		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
+		<field name='set_enabled' type='SFBool' accessType='inputOnly'></field>
 		<field name='cycleInterval_changed' type='SFTime' accessType='outputOnly'>
 	  </field>
 		<field name='ballmaterial' type='SFNode' accessType='initializeOnly'>
@@ -20,7 +20,7 @@
 		<![CDATA[
 		ecmascript:
 		
-		function isOver (value)
+		function set_enabled (value)
 		{
 			if (value)
 			{
@@ -55,7 +55,7 @@
             <ROUTE fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></ROUTE>
             <ROUTE fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></ROUTE>
             <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="time" toField="set_enabled"></ROUTE>
-            <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="speeder" toField="isOver"></ROUTE>
+            <ROUTE fromNode="time" fromField ="enabled_changed" toNode="speeder" toField="set_enabled"></ROUTE>
             <ROUTE fromNode="speeder" fromField ="cycleInterval_changed" toNode="time" toField="set_cycleInterval"></ROUTE>
             <ROUTE fromNode="time" fromField ="cycleInterval_changed" toNode="enabler" toField="set_cycleInterval"></ROUTE>
             <ROUTE fromNode="enabler" fromField ="enabled_changed" toNode="time" toField="set_enabled"></ROUTE>
