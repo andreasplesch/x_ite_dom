@@ -58,15 +58,15 @@ X3DCanvas {
 			if (value)
 			{
 				time.enabled = false;
-				time.cycleInterval = new SFTime('5');
+				time.cycleInterval = 5;
 				time.enabled = true;
 				Browser.print("slow: "+time.enabled);
 			}
 			else
 			{
-				time.enabled = new SFBool(false);
-				time.cycleInterval = new SFTime('5');
-				time.enabled = new SFBool(true);
+				time.enabled = false
+				time.cycleInterval = 1;
+				time.enabled = true;
 			}
 		}
 		]]>
