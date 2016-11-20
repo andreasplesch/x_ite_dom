@@ -9,7 +9,7 @@
                 </Shape>
                 <TouchSensor DEF='thesphereSensor'></TouchSensor>
             </Transform>
-            <TimeSensor DEF="time" cycleInterval="0.5" loop="true"></TimeSensor>
+            <TimeSensor DEF="time" cycleInterval="1" loop="true"></TimeSensor>
             <Script directOutput='true' DEF='speeder'>
 		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
 		<field name='time' type='SFNode' accessType='initializeOnly'>
@@ -34,7 +34,7 @@
 			else
 			{
 				time.enabled = false
-				time.cycleInterval = 1;
+				time.cycleInterval = 2;
 				time.enabled = true;
 				ballmaterial.diffuseColor = new SFColor(1, 0, 0);
 			}
