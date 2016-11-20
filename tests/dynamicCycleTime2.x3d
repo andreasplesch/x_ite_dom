@@ -12,7 +12,7 @@
             <TimeSensor DEF="time" cycleInterval="1" loop="true"></TimeSensor>
             <Script directOutput='true' DEF='speeder'>
 		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
-		<field name='time' type='SFNode' accessType='initializeOnly'>
+		<field name='timeNode' type='SFNode' accessType='initializeOnly'>
 	    		<TimeSensor USE='time'></TimeSensor>
 	    	</field>
 		<field name='ballmaterial' type='SFNode' accessType='initializeOnly'>
@@ -25,17 +25,17 @@
 		{
 			if (value)
 			{
-				time.enabled = false;
-				time.cycleInterval = new SFTime(5);
-				time.enabled = true;
+				timeNode.enabled = false;
+				timeNode.cycleInterval = 5;
+				timeNode.enabled = true;
 				Browser.print("slow: "+time.enabled);
 				ballmaterial.diffuseColor = new SFColor(0.5, 0.5, 0.5);
 			}
 			else
 			{
-				time.enabled = false
-				time.cycleInterval = new SFTime(2);
-				time.enabled = true;
+				timeNode.enabled = false;
+				timeNode.cycleInterval = 2;
+				timeNode.enabled = true;
 				ballmaterial.diffuseColor = new SFColor(1, 0, 0);
 			}
 		}
