@@ -25,12 +25,13 @@
 			if (value)
 			{
 				cycleInterval_changed = 5;
-				Browser.print("slow: "+cycleInterval_changed);
+				Browser.print("\n slow: "+cycleInterval_changed);
 				ballmaterial.diffuseColor = new SFColor(0.5, 0.5, 0.5);
 			}
 			else
 			{
 				cycleInterval_changed = 2;
+				Browser.print("\n fast: "+cycleInterval_changed);
 				ballmaterial.diffuseColor = new SFColor(1, 0, 0);
 			}
 		}
@@ -46,13 +47,14 @@
 		function set_cycleInterval (value)
     {
       enabled_changed = true;
-	Browser.print('/nEnabler ..');
+	Browser.print('\n Enabler ..');
     }
 		]]>
             </Script>
             <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
             <ROUTE fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></ROUTE>
             <ROUTE fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></ROUTE>
+            <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="time" toField="set_enabled"></ROUTE>
             <ROUTE fromNode="thesphereSensor" fromField ="isOver" toNode="speeder" toField="isOver"></ROUTE>
             <ROUTE fromNode="speeder" fromField ="cycleInterval_changed" toNode="time" toField="set_cycleInterval"></ROUTE>
             <ROUTE fromNode="time" fromField ="cycleInterval_changed" toNode="enabler" toField="set_cycleInterval"></ROUTE>
