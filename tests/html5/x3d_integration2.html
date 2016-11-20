@@ -46,7 +46,7 @@ X3DCanvas {
             </transform>
             <Script type='application/x-vrmlscript' directOutput='true' DEF='speeder'>
 		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
-		<field name='time' type='SFNode' accessType='outputOnly'>
+		<field name='time' type='SFNode' accessType='initializeOnly'>
 	    		<TimeSensor USE='time'></TimeSensor>
 	    	</field>
 		<![CDATA[
@@ -58,7 +58,7 @@ X3DCanvas {
 				time.enabled = false;
 				time.cycleInterval = '5';
 				time.enabled = true;
-				print("slow: "+time);
+				Browser.print("slow: "+time);
 			}
 			else
 			{
