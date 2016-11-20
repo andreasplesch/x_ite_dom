@@ -42,16 +42,37 @@ X3DCanvas {
                     </appearance>
                     <sphere id="thesphere" radius="1" ></sphere>
                 </shape>
-                <TouchSensor id='thesphereSensor'></TouchSensor>
+                <TouchSensor id='thesphereSensor' DEF='thesphereSensor'></TouchSensor>
             </transform>
-            <script type='text/xml'>
-            </script>
+            <Script type='application/x-vrmlscript' directOutput='true' DEF='speeder'>
+		<field name='isOver' type='SFBool' accessType='inputOnly'></field>
+		<field name='time' type='SFField' accessType='outputOnly'>
+	    		<TimeSensor USE='time'></TimeSensor>
+	    	</field>
+		<![CDATA[
+		ecmascript:
+		function isOver (value)
+		{
+			if (value)
+			{
+				time.enabled = false;
+				time.cycleInterval = '5';
+				time.enabled = true;
+			}
+			else
+			{
+				time.enabled = false;
+				time.cycleInterval = '1';
+				time.enabled = true;
+			}
+		]]>
+            </Script>
 
             <timeSensor DEF="time" id="time" cycleInterval="0.5" loop="true"></timeSensor>
             <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 0 0  0 3 0  0 0 0"></PositionInterpolator>
             <Route fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></Route>
             <Route fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></Route>
-
+            <Route fromNode="thesphereSensor" fromField ="isOver" toNode="speeder" toField="isOver"></Route>
         </scene>
     </x3d>
     <p>Sorry, webgl is not sufficiently supported on this browser.</p>
