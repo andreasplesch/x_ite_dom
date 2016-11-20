@@ -52,20 +52,21 @@ X3DCanvas {
 	    	</field>
 		<![CDATA[
 		ecmascript:
+		
 		function isOver (value)
 		{
 			if (value)
 			{
-				time.enabled = false;
-				time.cycleInterval = '5';
-				time.enabled = true;
+				time.enabled = new SFBool(false);
+				time.cycleInterval = new SFTime('5');
+				time.enabled = new SFBool(true);
 				Browser.print("slow: "+time);
 			}
 			else
 			{
-				time.enabled = false;
-				time.cycleInterval = '1';
-				time.enabled = true;
+				time.enabled = new SFBool(false);
+				time.cycleInterval = new SFTime('5');
+				time.enabled = new SFBool(true);
 			}
 		}
 		]]>
