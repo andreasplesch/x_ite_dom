@@ -28,7 +28,7 @@
 				timeNode.enabled = false;
 				timeNode.cycleInterval = 5;
 				timeNode.enabled = true;
-				Browser.print("slow: "+time.enabled);
+				Browser.print("slow: "+timeNode.enabled);
 				ballmaterial.diffuseColor = new SFColor(0.5, 0.5, 0.5);
 			}
 			else
