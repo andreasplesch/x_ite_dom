@@ -15,11 +15,11 @@ A design goal is to keep the code lines count small enough to keep all code in a
 
 ## Usage
 
-See index.xhtml and the examples in tests/ for usage of the code.
+See index.xhtml and the examples in tests/ and tests/html5 for usage of the code.
 
 ## Limitations
 
-Since X3D uses an XML encoding, xhtml encoded web pages are required.
+Since X3D uses an XML encoding, xhtml encoded web pages are preferred. Regular html case-insensitive encoding can be used as well but is less well tested. I 
 
 - Most attributes of X3D elements should be controllable. 
 - ProtoDeclarations cannot be modified, added or removed.
@@ -28,8 +28,10 @@ Since X3D uses an XML encoding, xhtml encoded web pages are required.
 - Modifying Route attributes does not have the desired or any effect. Remove and add Routes instead.
 - Manipulation of USE and DEF attributes do not have the desired or any effect.
 - Inline: X3D nodes added to the scene graph via a inline node are appended to the inline element and can be manipulated there. internal attribute manipulations work, adding internal root nodes and one level child nodes work, but adding deeper level nodes does not. Adding and removing routes inside Inlines may not work.
-- Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes. 
-- Muliple scenes on a web page can coexist and can be controlled.
+- Script: X3D script nodes require a type='application/x-myscript' attribute. See tests/x3d_script.xhtml. Otherwise they are interpreted by the web browser as dom script nodes.
+- Script node content is interpreted as XML even in HTML documents. This means that a cdata section declaration should be used.
+- Multiple scenes on a web page can coexist and can be controlled.
+- Each attribute mutation leads to a complete x3d event cascade to preserve sequencing. This avoids unexpected behavior but may impact performance slightly.
 - Events: see below
 
 ## Events
@@ -58,6 +60,7 @@ To help with attaching listeners to sensors within inlines, a new 'x3dload' even
 
 To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas element enables detailed logging of output events to the console. This is particularly helpful for ROUTE, Interpolator and event utility debugging. Since all output events are logged, tracing impacts performance. Remove the trace attribute to switch off.
 
+
 ## TODO
 
 - working on access to Inline scenes: done
@@ -67,10 +70,14 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 - multiple scenes per page: done
 - perhaps add onevent properties to DOM nodes.
 - adapt more x3dom examples: done interactiveTransformations, inline_reflection, addremoveNodes, jquery done
-- clean up and organise tests: updated all to v0.7, added proto tests
-- investigate HTML for xml again
+- clean up and organise tests: updated all to v0.8, added proto tests
+
 
 ## Releases
+
+
+
+
 
 - 0.75: internal improvements: parser reuse, no penalty for trace when off
 - 0.7 : modification and addition of ProtoInstances, basic event trace functionality, requires cobweb > v2.3
