@@ -23,6 +23,24 @@ X3D (function (X3DCanvases)
 	
 		DOMIntegration .prototype =
 		{
+			preprocessScripts: function (dom)
+			{
+				var scripts = dom .querySelectorAll ('script');
+				for (var i = 0, length = scripts. length; i < length; ++i)
+					this .appendScriptChildren(scripts[i]);
+				return dom;
+			},
+			
+			appendScriptChildren: function (script)
+			{
+				var domParser = new DOMParser();
+				var scriptDoc = domParser .parseFromString (script. outerHTML, 'application/xml');
+				var scriptNodes = scriptDoc .children[0] .childNodes;
+				script .textContent = '// content moved into childNodes';  
+				for (var i = 0, length = scriptNodes .length; i < length; ++i)
+					script.appendChild(scriptNodes[0]);	
+			},
+			
 			setup: function ()
 			{				
 				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
@@ -30,6 +48,11 @@ X3D (function (X3DCanvases)
 				
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
+				
+				//preprocess script nodes if not xhtml
+				
+				if (!document.URL.toLowerCase().includes('xhtml'))
+					this .preprocessScripts(dom);
 	
 				//mybrowser.importDocument(dom); //now also attached x3d property to each node element
 				//update to spec. conforming, latest use
@@ -43,6 +66,7 @@ X3D (function (X3DCanvases)
 				// create an observer instance
 				this .observer = new MutationObserver (function (mutations)
 				{
+					this. prepareMutations (mutations);
 					mutations .forEach (function (mutation)
 					{
 						this .processMutation (mutation, parser);
@@ -53,7 +77,7 @@ X3D (function (X3DCanvases)
 				
 				//start observing, also catches inlined inlines
 				this .observer .observe (dom, 
-				 	{ attributes: true, childList: true, characterData: false, subtree: true });
+				 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
 	
 				// Add internal inline DOMs to document DOM	
 				// create LoadSensor for use with Inline nodes.
@@ -67,27 +91,34 @@ X3D (function (X3DCanvases)
 					this .processInlineDOM (inlines [i]);
 				
 				//events
-				
-				this .addEventDispatchersAll (dom);
-				
-				//var allSensorNames='TouchSensor','DragSensor'.. // just list all sensors as selector, Anchor!
-				//use key in X3D.X3DConstants and match Sensor
-				// expand to all [inputoutput] and [outputOnly] fields in all nodes ?
-				// Construct selector
-				/* obsolete
-				this .sensorSelector = "Anchor"; // Other special names? (ViewpointGroup has a proxy inside, consider?)
 
-				for (var key in X3D .X3DConstants)
+				this .addEventDispatchersAll (dom);				
+			},
+			
+			prepareMutations: function (mutations)
+			{
+				// in case of mutations affecting the same element-attribute
+				// add .value by using oldValue of the next mutations
+				var mutation, element, attributeName, value, i, j, length;
+				for ( i = 0, length = mutations .length; i < length; ++i)
 				{
-					if (key .endsWith ('Sensor'))
-						this .sensorSelector += "," + key;
+					mutation = mutations[i];
+					if ( mutation .type !== 'attributes' )  continue ;
+					element = mutation .target;
+					attributeName = mutation .attributeName;
+					value = element .attributes .getNamedItem (attributeName) .value; //assume current
+					for ( j = i + 1; j < length; ++j)
+					{
+						var futureMutation = mutations[j];
+						if ( element === futureMutation .target 
+						    && attributeName === futureMutation .attributeName )
+						{
+							value = futureMutation .oldValue;
+							break;
+						}
+					}
+					mutation .value = value;
 				}
-				
-				var sensors = dom .querySelectorAll (this .sensorSelector);
-
-				for (var i = 0; i < sensors .length; ++ i)
-					this .addEventDispatchers (sensors [i]);
-				*/
 			},
 			
 			addEventDispatchersAll: function (element)
@@ -108,6 +139,7 @@ X3D (function (X3DCanvases)
 				for (var key in fields) 
 					this .bindFieldCallback (fields [key], element);
 			},
+			
 			bindFieldCallback: function  (field, element)
 			{
 				/*var ctx = {};
@@ -125,6 +157,7 @@ X3D (function (X3DCanvases)
 							this .fieldTraceCallback .bind (null, field, element .x3d));
 				}		
 			},
+			
 			fieldCallback: function  (field, element, value)
 			{
 				//var evt = new Event (field.getName()); // better to use official custom event
@@ -148,6 +181,7 @@ X3D (function (X3DCanvases)
 				//event.x3d = sensor.x3d; 
 				element .dispatchEvent (event);
 			},
+			
 			fieldTraceCallback: function  (field, node, value)
 			{
 				var now = performance.timing.navigationStart + performance.now();
@@ -158,6 +192,7 @@ X3D (function (X3DCanvases)
 					      node .getTypeName (), node .getName(),
 					      field .getName(), value );
 			},
+			
 			processRemovedNode: function (element)
 			{	
 				// Works also for root nodes, as it has to be, since scene.rootNodes is effectively a MFNode in cobweb.
@@ -170,6 +205,7 @@ X3D (function (X3DCanvases)
 					    delete element .x3d;
 				}
 			},
+			
 			processAddedNode: function (element, parser)
 			{
 				// Only process element nodes.
@@ -291,6 +327,7 @@ X3D (function (X3DCanvases)
 				//just add to loadsensor watchlist; triggers isLoaded event after loading
 				watchList .push (element .x3d);
 			},
+			
 			appendInlineDOM: function (element, loaded)
 			{
 				// Now loaded and in .dom
@@ -331,32 +368,24 @@ X3D (function (X3DCanvases)
 				
 				// Attach dom event callbacks.
 				this. addEventDispatchersAll (element); 
-				/*
-				var sensors = element .querySelectorAll (this .sensorSelector);
-
-				for (var i = 0; i < sensors .length; ++ i)
-					this .addEventDispatchers (sensors [i]);
-				*/
-				// Any inlines in appended inline dom are picked up when Scene is a addedNode for Mutations
 			},
-			processAttributes: function (mutation, element, parser)
+			
+			processAttribute: function (mutation, element, parser)
 			{
-				var attributeName = mutation .attributeName; // TODO: check if mutation can have multiple changed attributes
-
-				this .processAttribute (attributeName, element, parser)
-			},
-			processAttribute: function (attributeName, element, parser)
-			{
-				var attribute = element .attributes .getNamedItem (attributeName);
+				var attributeName = mutation .attributeName;
+				var attribute = element .attributes .getNamedItem (attributeName) .cloneNode(); // clone to avoid mutation observation
+				
+				attribute .value = mutation .value ; // mutation .value is custom;
 				
 				if (element .x3d)
 				{ // is a field
 					parser .attribute (attribute, element .x3d); //almost there
 
 					//only underscore gets update
-					var field = element .x3d .getField (attributeName); //containerField is not a field, check for it?
+					var field = element .x3d .getField ( parser .attributeToCamelCase (attributeName) ); //containerField is not a field, check for it?
 
 					field .addEvent (); // set_field event, updates real property
+					this .browser .processEvents(); // necessary for multiple mutations
 				}
 				else
 				{ // is an attribute of non-node child such as fieldValue (or ROUTE)
@@ -380,6 +409,7 @@ X3D (function (X3DCanvases)
 					}
 				}
 			},
+			
 			processMutation: function (mutation, parser)
 			{
 				var element = mutation .target;
@@ -390,7 +420,7 @@ X3D (function (X3DCanvases)
 					{
 						try // performance hit for animations ?
 						{
-							this .processAttributes (mutation, element, parser);
+							this .processAttribute (mutation, element, parser);
 						}
 						catch (error)
 						{
@@ -416,7 +446,7 @@ X3D (function (X3DCanvases)
 				}
 			},
 		};
-
+		
 		var integrations = [ ];
 
 		// Go through all passed x3dcanvas elements.
