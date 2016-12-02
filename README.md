@@ -75,7 +75,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## Releases
 
-* 0.8 : full html support, preserve sequencing, requires cobweb >= 2.5
+* 0.8 : full html support, preserve mutation sequencing, requires cobweb >= 2.5
 * 0.75: internal improvements: parser reuse, no penalty for trace when off
 * 0.7 : modification and addition of ProtoInstances, basic event trace functionality, requires cobweb > v2.3
 * 0.6 : many more events, eg. all output fields, shortened event names to x3d_fieldname
