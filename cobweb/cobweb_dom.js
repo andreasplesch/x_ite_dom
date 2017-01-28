@@ -258,7 +258,7 @@ X3D (function (X3DCanvases)
 					var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
 					    			parentNode .nodeName === 'PROTOINSTANCE';
 					
-					parser .child (element, isProtoInstance);
+					parser .childElement (element); //, isProtoInstance);
 
 					parser .popParent ();
 					//parser .popExecutionContext ();
@@ -267,7 +267,7 @@ X3D (function (X3DCanvases)
 				else
 				{
 					// Inline or main root node.
-					parser .statement (element);
+					parser .childElement (element);
 					//nodeScene .setup ();
 				}
 				
@@ -367,7 +367,7 @@ X3D (function (X3DCanvases)
 				}
 				
 				// Attach dom event callbacks.
-				this. addEventDispatchersAll (element); 
+				this .addEventDispatchersAll (element); 
 			},
 			
 			processAttribute: function (mutation, element, parser)
@@ -379,7 +379,7 @@ X3D (function (X3DCanvases)
 				
 				if (element .x3d)
 				{ // is a field
-					parser .attribute (attribute, element .x3d); //almost there
+					parser .nodeAttribute (attribute, element .x3d); //almost there
 
 					//only underscore gets update
 					var field = element .x3d .getField ( parser .attributeToCamelCase (attributeName) ); //containerField is not a field, check for it?
@@ -398,14 +398,14 @@ X3D (function (X3DCanvases)
 					var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
 					    			parentNode .nodeName === 'PROTOINSTANCE';
 					// may need to try..catch in case "name" field does not exist
-					parser. child (element, isProtoInstance);
+					parser .childElement (element); //, isProtoInstance);
 					
 					parser .popParent ();
 					parser .popExecutionContext ();
 					if (isProtoInstance)
 					{
-						var field = node. getField (element. getAttribute ("name"));
-					    	field. addEvent ();
+						var field = node .getField (element .getAttribute ("name"));
+					    	field .addEvent ();
 					}
 				}
 			},
