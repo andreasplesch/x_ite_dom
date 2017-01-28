@@ -19,7 +19,7 @@ See index.xhtml and the examples in tests/ and tests/html5 for usage of the code
 
 ## Limitations
 
-Since X3D uses an XML encoding, xhtml encoded web pages are preferred. Regular html case-insensitive encoding can be used as well but is less well tested. I 
+Since X3D uses an XML encoding, xhtml encoded web pages are preferred. Regular html case-insensitive encoding can be used as well but is less well tested. 
 
 - Most attributes of X3D elements should be controllable. 
 - ProtoDeclarations cannot be modified, added or removed.
@@ -75,7 +75,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## Releases
 
-* 0.8 : full html support, preserve mutation sequencing, requires cobweb >= 2.5
+* 0.8 : full html support, preserve mutation sequencing, requires cobweb 2.5 or 2.6, does not work with cobweb dev (master)
 * 0.75: internal improvements: parser reuse, no penalty for trace when off
 * 0.7 : modification and addition of ProtoInstances, basic event trace functionality, requires cobweb > v2.3
 * 0.6 : many more events, eg. all output fields, shortened event names to x3d_fieldname
