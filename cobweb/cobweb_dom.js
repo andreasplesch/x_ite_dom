@@ -3,15 +3,16 @@
 // Cobweb DOM Integration
 // Load after cobweb.js
 
-// Make sure X3D is ready, X3DCanvases has all X3DCanvas elements
-X3D (function (X3DCanvases)
+// Make sure X3D is ready.
+X3D (function ()
 {
 	"use strict"; // Always use strict!
 
 	X3D .require ([ // perhaps switch to importDocument() to avoid require; but creates new scenes
+		"jquery",
 		"cobweb/Parser/XMLParser"
 	],
-	function (XMLParser)
+	function ($, XMLParser)
 	{
 		console .info ("Cobweb XHTML DOM integration enabled");
 
@@ -446,8 +447,10 @@ X3D (function (X3DCanvases)
 				}
 			},
 		};
-		
-		var integrations = [ ];
+
+		var
+			X3DCanvases  = $("X3DCanvas"),
+			integrations = [ ];
 
 		// Go through all passed x3dcanvas elements.
 		for (var i = 0, length = X3DCanvases .length; i < length; ++ i)
