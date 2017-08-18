@@ -54,9 +54,6 @@ X3D (function ()
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
 	
-				//mybrowser.importDocument(dom); //now also attached x3d property to each node element
-				//update to spec. conforming, latest use
-	
 				var importedScene = this .browser .importDocument (dom); //now also attached x3d property to each node element
 	
 				this .browser .replaceWorld (importedScene);
