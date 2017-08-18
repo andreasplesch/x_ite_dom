@@ -56,7 +56,7 @@ a {
 	<div> xhtml examples:
 		<ol>
 		{% for example in site.static_files %}
-		{% assign p = example.path | split: "/" %}
+		{% assign p = example.path | split:"/" %}
 		  {% if p[0] == 'tests' and example.extname == 'xhtml' %}
 		     <li><a href="{{example.path}}">{{example.path}}</a></li>
 		  {% endif %}
