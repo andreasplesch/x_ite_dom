@@ -9,7 +9,6 @@ X3D (function ()
 	"use strict"; // Always use strict!
 
 	X3D .require ([ // perhaps switch to importDocument() to avoid require; but creates new scenes
-		"jquery",
 		"cobweb/Parser/XMLParser"
 	],
 	function ($, XMLParser)
@@ -449,7 +448,7 @@ X3D (function ()
 		};
 
 		var
-			X3DCanvases  = $("X3DCanvas"),
+			X3DCanvases  = document.querySelectorAll("X3DCanvas"),
 			integrations = [ ];
 
 		// Go through all passed x3dcanvas elements.
