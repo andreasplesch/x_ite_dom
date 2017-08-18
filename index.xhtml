@@ -52,7 +52,7 @@ X3DCanvas {
 	<h1> cobweb via the DOM </h1>
 	<div> examples: 
 		{% for example in site.static_files %}
-		<p>{{example.path  | split: "/" | first}}</p>
+		<p>{{example.path | split: "/" | first}}</p>
 		{% endfor %}
 		
 		<a href="tests/">folder</a> </div>
