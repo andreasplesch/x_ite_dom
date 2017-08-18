@@ -51,8 +51,10 @@ X3DCanvas {
 <body>
 	<h1> cobweb via the DOM </h1>
 	<div> examples: 
-		{% for example in site.pages | where_exp: "item", "item.path contains 'tests'" %}
-		<p><a href="{{example.path}}">{{example.path}}</a></p>
+		{% for example in site.static_files %}
+		  {% if example contains 'tests' %}
+		     <p><a href="{{example.path}}">{{example.path}}</a></p>
+		  {% endif %}
 		{% endfor %}
 		
 		<a href="tests/">folder</a> </div>
