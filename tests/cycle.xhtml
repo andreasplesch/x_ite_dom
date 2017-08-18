@@ -10,6 +10,8 @@
 		<!--script type="text/javascript" src="https://cdn.rawgit.com/andreasplesch/cobweb_dom/master/release/cobweb_dom.0.8.js"></script-->
 		<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script-->
 		<script type="text/javascript" src="https://rawgit.com/andreasplesch/cobweb_dom/master/cobweb/cobweb_dom.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+		
       <style>
 
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400);
@@ -142,7 +144,16 @@ html, body {
 			</div>
 		</div>
 
-		<script src="https://rawgit.com/malsup/cycle2/master/build/jquery.cycle2.min.js"></script>
-
+		<!--script src="https://rawgit.com/malsup/cycle2/master/build/jquery.cycle2.min.js"></script-->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.cycle-slideshow').slick({
+			autoplay: true
+			
+		});
+	});
+</script>
+		
 	</body>
 </html>
