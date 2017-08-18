@@ -57,7 +57,9 @@ a {
 		<ol>
 		{% for example in site.static_files %}
 		  {% if example.extname == 'xhtml' %}
-		     <li><a href="{{example.path}}">{{example.path}}</a></li>
+		    {% if example.path contains 'tests' %}
+		      <li><a href="{{example.path}}">{{example.path}}</a></li>
+		     {% endif %}
 		  {% endif %}
 		{% endfor %}
 		</ol>
