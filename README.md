@@ -72,9 +72,9 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 - adapt more x3dom examples: done interactiveTransformations, inline_reflection, addremoveNodes, jquery done
 - clean up and organise tests: updated all to v0.8, added proto tests
 
-
 ## Releases
 
+* 0.9 : no functional changes, works with cobweb 3.3; jekyll generation of example list
 * 0.8 : full html support, preserve mutation sequencing, requires cobweb 2.5 or 2.6, does not work with cobweb dev (master)
 * 0.75: internal improvements: parser reuse, no penalty for trace when off
 * 0.7 : modification and addition of ProtoInstances, basic event trace functionality, requires cobweb > v2.3
