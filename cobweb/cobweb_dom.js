@@ -11,7 +11,7 @@ X3D (function ()
 	X3D .require ([ // perhaps switch to importDocument() to avoid require; but creates new scenes
 		"cobweb/Parser/XMLParser"
 	],
-	function ($, XMLParser)
+	function (XMLParser)
 	{
 		console .info ("Cobweb XHTML DOM integration enabled");
 
