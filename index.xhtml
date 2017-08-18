@@ -53,11 +53,14 @@ a {
 </head>
 <body>
 	<h1> cobweb via the DOM </h1>
-	<div> xhtml examples:
+	<div> xhtml examples  :
 		<ol>
 		{% for example in site.static_files %}
 		  {% if example.extname == '.xhtml' %}
+		    {% if example.path contains 'tests/' %}
+			
 		      <li><a href="{{example.path}}">{{example.path}}</a></li>
+		    {% endif %}
 		  {% endif %}
 		{% endfor %}
 		</ol>
