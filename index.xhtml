@@ -53,7 +53,7 @@ X3DCanvas {
 	<div> examples: 
 		{% for example in site.static_files %}
 		  {% if example contains 'tests' %}
-		     <p><a href="{{example.path}}">{{example.path}}</a></p>
+		     <div><a href="{{example.path}}">{{example.path}}</a></div>
 		  {% endif %}
 		{% endfor %}
 		
