@@ -245,9 +245,10 @@ function init() {
 	
 	//var currentGizmoRotation       = new x3dom.fields.SFMatrix4f();
     	//var currentGizmoRotationOffset = new x3dom.fields.SFMatrix4f();
-	    var currentGizmoRotation = new X3D.SFRotation() ; // without onload, chrome complains because it executes this before cobweb is available, for some reason
-	    var currentGizmoRotationOffset = new X3D.SFRotation() ;
-	
+	X3D(function(){
+	    currentGizmoRotation = new X3D.SFRotation() ; // without onload, chrome complains because it executes this before cobweb is available, for some reason
+	    currentGizmoRotationOffset = new X3D.SFRotation() ;
+	};
 	/*
      	* Callback function, invoked on translation gizmo output.
      	*/
