@@ -51,7 +51,7 @@ X3DCanvas {
 <body>
 	<h1> cobweb via the DOM </h1>
 	<div> examples: 
-		{% for example in site.pages %}
+		{% for example in site.static_files %}
 		<p>{{example.path | split: "/" | first}}</p>
 		{% endfor %}
 		
