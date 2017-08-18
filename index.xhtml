@@ -54,8 +54,8 @@ a {
 <body>
 	<h1> cobweb via the DOM </h1>
 	<div> examples: 
-		{% for example in site.pages %}
-		  {% if example contains 'tests' %}
+		{% for example in site.static_files %}
+		  {% if example.path contains 'tests' %}
 		     <div><a href="{{example.path}}">{{example.path}}</a></div>
 		  {% endif %}
 		{% endfor %}
