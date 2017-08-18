@@ -53,9 +53,10 @@ a {
 </head>
 <body>
 	<h1> cobweb via the DOM </h1>
-	<div> examples: 
+	<div> xhtml examples: 
 		{% for example in site.static_files %}
-		  {% if example.path contains 'tests' %}
+		{% assign p = example.path | split: "/" %}
+		  {% if p | first contains 'tests' %}
 		     <div><a href="{{example.path}}">{{example.path}}</a></div>
 		  {% endif %}
 		{% endfor %}
