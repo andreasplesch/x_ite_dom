@@ -53,18 +53,6 @@ a {
 </head>
 <body>
 	<h1> cobweb via the DOM </h1>
-	<div> xhtml examples  :
-		<ol>
-		{% for example in site.static_files %}
-		  {% if example.extname == '.xhtml' %}
-		    {% if example.path contains 'tests/' %}
-			
-		      <li><a href="{{example.path}}">{{example.path}}</a></li>
-		    {% endif %}
-		  {% endif %}
-		{% endfor %}
-		</ol>
-		<a href="tests/">folder</a> </div>
 	
 	<X3DCanvas>
 <X3D>
@@ -97,6 +85,28 @@ a {
 	<button onclick='remove_last_box()'>remove box</button>
 	<button onclick='remove_last_material()'>remove material</button>
 </div>
+	<div> xhtml examples  :
+		<ol>
+		{% for example in site.static_files %}
+		  {% if example.extname == '.xhtml' %}
+		    {% if example.path contains 'tests/' %}	
+		      <li><a href="{{example.path}}"> {{example.path}} </a></li>
+		    {% endif %}
+		  {% endif %}
+		{% endfor %}
+		</ol>
+	</div>
+	<div> html5 examples  :
+		<ol>
+		{% for example in site.static_files %}
+		  {% if example.extname == '.html' %}
+		    {% if example.path contains 'tests/' %}	
+		      <li><a href="{{example.path}}"> {{example.path}} </a></li>
+		    {% endif %}
+		  {% endif %}
+		{% endfor %}
+		</ol>
+	</div>
 </body>
 <script>
 console.log('START')
