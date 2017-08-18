@@ -27,7 +27,7 @@ html, body {
 }
 
 .cycle-slideshow {
-	_position: absolute;
+	position: absolute;
 	top: 0px;
 	right: 0px;
 	bottom: 0px;
@@ -38,9 +38,9 @@ html, body {
 
 .cycle-slideshow > div,
 .browser {
-	_position: absolute;
+	position: absolute;
 	width: 100%;
-	height: 300px;
+	height: 100%;
 }
 
 .text {
@@ -149,8 +149,10 @@ html, body {
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.cycle-slideshow').slick({
-			autoplay: true
-			
+			autoplay: true,
+			arrows: false,
+			dots: true,
+			fade: true
 		});
 	});
 </script>
