@@ -1,8 +1,0 @@
-for f in `grep -r -l cobweb.js`;
-do echo sed -i 's/cobweb.js/cobweb.js/' $f;
-done;
-
-
-
-
-   
