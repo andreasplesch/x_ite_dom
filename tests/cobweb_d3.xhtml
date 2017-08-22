@@ -49,7 +49,7 @@ X3DCanvas {
 }
 </style>
 </head>
-<body>
+<body onload='init()'>
 	<button onclick='random_color()'>new color</button>
 	<button onclick='add_box()'>new box</button>
 	<button onclick='remove_last_box()'>remove box</button>
@@ -97,6 +97,7 @@ X3DCanvas {
 <div class='report'>Viewpoint position: <span id='position'></span></div>
 </body>
 <script>
+	function init() { //only after onload, other d3 is not yet loaded
 console.log('START')
 
 //d3 test
@@ -190,7 +191,7 @@ vp2.addEventListener('x3d_position', function(evt) {
 	//}
 	});
 ///*
-
+	}
 var box_counter = 0;
 var radius = 4;
 var perBoxAngle = 2*Math.PI/12;
