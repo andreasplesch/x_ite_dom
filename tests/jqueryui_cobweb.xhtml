@@ -84,7 +84,7 @@
 	 
   
 </body>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!--script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script-->
 <link type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/humanity/jquery-ui.css" rel="stylesheet" />
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 <script>
@@ -95,15 +95,6 @@ $(".slider").slider({min: 0, max: 1, step: 0.01, slide: function(e, ui) {
 	     + $("#blueSlider").slider('option', 'value');              
 	$("Material").attr("diffuseColor", newCol);
 }});
-		     
-function random_color() {
-	
-	var m = document.querySelector("Material")
-	//will be transferred to scene graph node 
-	m.setAttribute("diffuseColor", Math.random()+" "+Math.random()+" "+Math.random());
-	console.log(m);
-}
-
-
+	     
 </script>
 </html>
