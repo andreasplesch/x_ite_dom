@@ -82,18 +82,17 @@
             </ul>
         </div>
     </div>
-
-	 
-  
 </body>
 <script>
 	$$ = jQuery.noConflict();
 // Create the sliders
-$$(".slider").slider({min: 0, max: 1, step: 0.01, slide: function(e, ui) {
+$$(function(){
+	$$(".slider").slider({min: 0, max: 1, step: 0.01, slide: function(e, ui) {
 	var newCol = $$("#redSlider").slider('option', 'value') + " " 
 	     + $$("#greenSlider").slider('option', 'value') + " "  
 	     + $$("#blueSlider").slider('option', 'value');              
 	$$("Material").attr("diffuseColor", newCol);
 }});
+});
 </script>
 </html>
