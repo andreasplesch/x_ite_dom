@@ -16,7 +16,9 @@
 	</script>
 	<link rel="stylesheet" type="text/css"
 		href="https://rawgit.com/create3000/cobweb/master/dist/cobweb.css"/>
-	
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/humanity/jquery-ui.css" rel="stylesheet" />
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <style>
   html, body {
   	margin: 0px;
@@ -87,19 +89,14 @@
 	 
   
 </body>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/humanity/jquery-ui.css" rel="stylesheet" />
-<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
 <script>
 	$$ = jQuery.noConflict();
-	          // Create the sliders
+// Create the sliders
 $$(".slider").slider({min: 0, max: 1, step: 0.01, slide: function(e, ui) {
-	var newCol =   $$("#redSlider").slider('option', 'value') + " " 
+	var newCol = $$("#redSlider").slider('option', 'value') + " " 
 	     + $$("#greenSlider").slider('option', 'value') + " "  
 	     + $$("#blueSlider").slider('option', 'value');              
 	$$("Material").attr("diffuseColor", newCol);
 }});
-	     
 </script>
 </html>
