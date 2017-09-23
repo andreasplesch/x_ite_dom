@@ -1,13 +1,13 @@
-# cobweb_dom
+# X_ite_dom
 
 ## Summary
 
-cobweb_dom.js is intended to be used with the X3D browser cobweb.js (https://github.com/create3000/cobweb). cobweb_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
+x_ite_dom.js is intended to be used with the X3D browser x_ite.js (https://github.com/create3000/x_ite). x_ite_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
 Please be aware that X3D requires a well defined organisation of the scene. If modifying the DOM results in an invalid scene graph, errors result.
 
 ## Design
 
-The design is based around the idea that cobweb_dom.js is an optional, thin bridge layer which only requires minimal or no modification to cobweb as a X3D browser. To a large extent it tries to use the external SAI as it is defined for standard conforming X3D browsers.
+The design is based around the idea that x_ite_dom.js is an optional, thin bridge layer which only requires minimal or no modification to cobweb as a X3D browser. To a large extent it tries to use the external SAI as it is defined for standard conforming X3D browsers.
 
 The overall idea is to use the DOM mutation observer facility to relay changes in the DOM to the X3D scene graph which is internal to cobweb. After creating an initial X3D scene from X3D XML under the X3DCanvas tag, the bridge code installs a mutation observer to catch all changes within a Scene element. Depending on what was changed, then X3D SAI as well as some internal cobweb.js methods are invoked to realize these changes within the parallel scene graph.
 
@@ -40,7 +40,7 @@ Event handling currently covers all inputOutput and outputOnly fields, which inc
 
 Mouse events originate from x3d sensor nodes. This means that the x3d scene has to have such a sensor node (TouchSensor) for any mouse events to be dispatched.
 
-See tests/cobweb_d3.js and tests/interactiveTransformations.xhtml for examples.
+See tests/interactiveTransformations.xhtml and other for examples.
 
 Event type names parallel x3d field names. The name construction is "x3d" + "_" + x3d event name.
 
@@ -74,6 +74,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## Releases
 
+* 0.9x : renamed to x_ite_dom
 * 0.9 : no functional changes, works with cobweb 3.3; jekyll generation of example list
 * 0.8 : full html support, preserve mutation sequencing, requires cobweb 2.5 or 2.6, does not work with cobweb dev (master)
 * 0.75: internal improvements: parser reuse, no penalty for trace when off
