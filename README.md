@@ -1,4 +1,4 @@
-# X_ite_dom
+# x_ite_dom
 
 ## Summary
 
