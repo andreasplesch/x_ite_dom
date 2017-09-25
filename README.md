@@ -74,7 +74,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## Releases
 
-* 0.9x : renamed to x_ite_dom
+* 0.9x = 1.0 : renamed to x_ite_dom
 * 0.9 : no functional changes, works with cobweb 3.3; jekyll generation of example list
 * 0.8 : full html support, preserve mutation sequencing, requires cobweb 2.5 or 2.6, does not work with cobweb dev (master)
 * 0.75: internal improvements: parser reuse, no penalty for trace when off
