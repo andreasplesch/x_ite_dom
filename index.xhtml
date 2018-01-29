@@ -57,7 +57,8 @@ a {
 	<X3DCanvas>
 <X3D>
 	<Scene>
-		<Viewpoint></Viewpoint>
+		<Viewpoint description='default'></Viewpoint>
+		<Viewpoint description='fromBack' position='0 0 -10' orientation='0 1 0.1415'></Viewpoint>
 		<Transform translation='2 0 0'>
 			<TouchSensor DEF='ts1'></TouchSensor>
 				<Shape>
@@ -84,6 +85,7 @@ a {
 	<button onclick='add_box()'>new box</button>
 	<button onclick='remove_last_box()'>remove box</button>
 	<button onclick='remove_last_material()'>remove material</button>
+	<button onclick='toggle_Viewpoint()'>toggle view</button>
 </div>
 	<div> xhtml examples  :
 		<ol>
@@ -114,6 +116,13 @@ console.log('START')
 var box_counter = 0;
 var radius = 4;
 var perBoxAngle = 2*Math.PI/12;
+
+var viewpointNodes=document.querySelectorAll("Viewpoint");
+var v_i = 0;
+
+function toggle_Viewpoint () {
+	viewpointNodes[++v_i%2].setAttribute("set_bind","true");
+}
 
 function random_color() {
 	
