@@ -122,7 +122,7 @@ var viewpointNodes=document.querySelectorAll("Viewpoint");
 var v_i = 0;
 
 function reset_Viewpoint () {
-	X3D.getBrowser("X3DCanvas").bindViewpoint(viewpointNodes[v_i%2].x3d);
+	X3D.getBrowser("X3DCanvas").bindViewpoint(viewpointNodes[v_i%2].x3d);//direct browser interface
 }
 
 function toggle_Viewpoint () {
