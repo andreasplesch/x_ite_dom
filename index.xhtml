@@ -86,6 +86,7 @@ a {
 	<button onclick='remove_last_box()'>remove box</button>
 	<button onclick='remove_last_material()'>remove material</button>
 	<button onclick='toggle_Viewpoint()'>toggle view</button>
+	<button onclick='reset_Viewpoint()'>reset view</button>
 </div>
 	<div> xhtml examples  :
 		<ol>
@@ -119,6 +120,10 @@ var perBoxAngle = 2*Math.PI/12;
 
 var viewpointNodes=document.querySelectorAll("Viewpoint");
 var v_i = 0;
+
+function reset_Viewpoint () {
+	X3D.getBrowser("X3DCanvas").bindViewpoint(viewpointNodes[v_i%2].x3d);
+}
 
 function toggle_Viewpoint () {
 	viewpointNodes[++v_i%2].setAttribute("set_bind","true");
