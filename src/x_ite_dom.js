@@ -1,7 +1,7 @@
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*- */
 
-// Cobweb DOM Integration
-// Load after cobweb.js
+// X_ITE DOM Integration
+// Load after x_ite.js
 
 // Make sure X3D is ready.
 X3D (function ()
@@ -13,7 +13,7 @@ X3D (function ()
 	],
 	function (XMLParser)
 	{
-		console .info ("Cobweb XHTML DOM integration enabled");
+		console .info ("X_ITE XHTML DOM integration enabled");
 
 		function DOMIntegration (X3DCanvas)
 		{
@@ -131,7 +131,10 @@ X3D (function ()
 				if (element .x3d === undefined)
 					return;
 	
-				var fields = element .x3d .getFields (); // check for ROUTE ?
+				if (element .nodeName === 'ROUTE')
+					return;
+
+				var fields = element .x3d .getFields ();
 	
 				for (var key in fields) 
 					this .bindFieldCallback (fields [key], element);
