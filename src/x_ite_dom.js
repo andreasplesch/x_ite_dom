@@ -195,8 +195,7 @@ X3D (function ()
 			
 			processRemovedNode: function (element)
 			{	
-				// Works also for root nodes, as it has to be, since scene.rootNodes is effectively a MFNode in cobweb.
-				// All done! Cobweb has to do for routes and such.
+				// Works also for root nodes, as it has to be, since scene.rootNodes is effectively a MFNode in x-ite.
 				// Also removes ROUTE elements.
 				if (element .x3d)	
 				{
@@ -286,17 +285,7 @@ X3D (function ()
 				//if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches() not well supported
 				
 				this. addEventDispatchers (element);
-				this. addEventDispatchersAll (element); // also for childnodes
-				
-				/* obsolete	
-				if (this .sensorSelector .split (",") .includes (element .nodeName))
-					this .addEventDispatchers (element);
-
-				var sensors = element .querySelectorAll (this .sensorSelector);
-
-				for (var i = 0; i < sensors.length; ++ i)
-					this .addEventDispatchers (sensors[i]);
-				*/
+				this. addEventDispatchersAll (element); // also for childnodes	
 			},
 			
 			processInlineDOMs: function (element)
@@ -362,8 +351,6 @@ X3D (function ()
 					event .element = this .browser .getElement ();
 
 					document .dispatchEvent (event);
-
-					//console .log (event);
 				}
 				
 				// Attach dom event callbacks.
