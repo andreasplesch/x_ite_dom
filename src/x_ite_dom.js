@@ -1,7 +1,7 @@
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*- */
 
-// Cobweb DOM Integration
-// Load after cobweb.js
+// X_ITE DOM Integration
+// Load after x_ite.js
 
 // Make sure X3D is ready.
 X3D (function ()
