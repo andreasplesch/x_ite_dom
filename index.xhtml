@@ -46,9 +46,18 @@ X3DCanvas {
 	margin: 300px 0 0 0;
 	text-align: center;
 }
+	
 a {
-	background: yellow;
-]
+	background: white;
+}
+	
+a:hover {
+	background: #dcdc63;
+}
+	
+button, li, a {
+	margin: 5px;
+}
 </style>
 </head>
 <body>
@@ -88,7 +97,7 @@ a {
 	<button onclick='toggle_Viewpoint()'>toggle view</button>
 	<button onclick='reset_Viewpoint()'>reset view</button>
 </div>
-	<div> xhtml examples  :
+	<div> <h2> xhtml examples </h2>
 		<ol>
 		{% for example in site.static_files %}
 		  {% if example.extname == '.xhtml' %}
@@ -99,7 +108,7 @@ a {
 		{% endfor %}
 		</ol>
 	</div>
-	<div> html5 examples  :
+	<div> <h2> html5 examples </h2>
 		<ol>
 		{% for example in site.static_files %}
 		  {% if example.extname == '.html' %}
