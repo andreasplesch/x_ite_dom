@@ -17,7 +17,7 @@ A design goal is to keep the code lines count small enough to keep all code in a
 
 See index.xhtml and the examples in tests/ and tests/html5 for usage of the code.
 
-## Limitations
+## Capabilities and Limitations
 
 Since X3D uses an XML encoding, xhtml encoded web pages are preferred. Regular html case-insensitive encoding can be used as well but is less well tested. 
 
@@ -63,18 +63,16 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## TODO
 
-- working on access to Inline scenes: done
 - Prototype handling: ProtoInstances work, ProtoDeclarations undecided
 - allow hook into render loop ?
 - allow mutated attributes to be parsed objects, eg. skip parsing; useful if X3D math function are used on native types
-- multiple scenes per page: done
 - perhaps add onevent properties to DOM nodes.
-- adapt more x3dom examples: done interactiveTransformations, inline_reflection, addremoveNodes, jquery done
-- clean up and organise tests: updated all to v0.8, added proto tests
+- clean up and organise tests: updated all to latest, added proto tests
 
 ## Releases
 
-* 0.9x = 1.0 : renamed to x_ite_dom
+* 1.0 : small updates for x_ite >= 4.4.3
+* 0.9x: renamed to x_ite_dom
 * 0.9 : no functional changes, works with cobweb 3.3; jekyll generation of example list
 * 0.8 : full html support, preserve mutation sequencing, requires cobweb 2.5 or 2.6, does not work with cobweb dev (master)
 * 0.75: internal improvements: parser reuse, no penalty for trace when off
