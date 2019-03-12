@@ -4,6 +4,7 @@
 // Load after x_ite.js
 
 // Make sure X3D is ready.
+
 X3D (function ()
 {
 	"use strict"; // Always use strict!
@@ -54,12 +55,20 @@ X3D (function ()
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
 	
-				var importedScene = this .browser .importDocument (dom); //now also attached x3d property to each node element
-	
-				this .browser .replaceWorld (importedScene);
-				
-				var parser  = new XMLParser (this .browser .currentScene);
-				
+				this .importedScene = this .browser .importDocument (dom); //now also attached x3d property to each node element
+
+				var parser = new XMLParser (this .importedScene);
+
+				//require additional component libraries and reimport
+
+				X3D. require(parser .getProviderUrls (),
+					function() {
+						this .importedScene = this .browser .importDocument (dom);//reimport with providers
+						this .browser .replaceWorld (this .importedScene);
+					} .bind(this),
+					function(){ console.log("Error requiring component libraries")} .bind(this)
+				);
+
 				// create an observer instance
 				this .observer = new MutationObserver (function (mutations)
 				{
@@ -79,7 +88,7 @@ X3D (function ()
 				// Add internal inline DOMs to document DOM	
 				// create LoadSensor for use with Inline nodes.
 
-				this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+				this .loadSensor = this .importedScene .createNode ("LoadSensor") .getValue ();
 				
 				// Add inline doms from initial scene.
 				var inlines = dom .querySelectorAll ('Inline');
