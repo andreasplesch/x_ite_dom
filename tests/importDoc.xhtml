@@ -66,8 +66,8 @@ X3DCanvas {
 </body>
 <script>
 	<![CDATA[
-X3D(function(el) {
-	var browser = X3D.getBrowser(el);
+X3D(function() {
+	var browser = X3D.getBrowser('X3DCanvas');
 	var numRootNodes = browser .currentScene .rootNodes .length;
 	var myx3d = document.querySelector('Scene');
 	browser.importDocument(myx3d);
