@@ -55,26 +55,20 @@ X3D (function ()
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
 	
-				var importedScene = this .browser .importDocument (dom); //now also attached x3d property to each node element
+				var scope = this;
 
-				var parser = new XMLParser (importedScene);
+				var afterParsing = function () {
 
-				//require additional component libraries and reimport
+					scope .loadSensor = this .scene .createNode ("LoadSensor") .getValue ();
+					scope .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
+					scope .browser. replaceWorld (this. scene);
 
-				X3D. require(importedScene .getProviderUrls (),
-					function() {
-						
-						importedScene = this .browser .importDocument (dom);//reimport with providers
-						this .browser .replaceWorld (importedScene);
-						
-						this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+				};
 
-						//events
-						this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
-					} .bind(this)
-					,
-					function(error){ console.log("Error requiring component libraries", error); }
-				);
+				// use parseIntoScene rather than importDocument because it lazy loads components
+				var parser = new XMLParser (this .browser .currentScene);
+
+				parser .parseIntoScene( dom, afterParsing, this .browser .print ); 
 
 				// create an observer instance
 				this .observer = new MutationObserver (function (mutations)
@@ -92,17 +86,12 @@ X3D (function ()
 				this .observer .observe (dom, 
 				 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
 	
-				// Add internal inline DOMs to document DOM	
-				// create LoadSensor for use with Inline nodes.
-
-				//this .loadSensor = this .importedScene .createNode ("LoadSensor") .getValue ();
 				
 				// Add inline doms from initial scene.
 				var inlines = dom .querySelectorAll ('Inline');
 
 				for (var i = 0, length = inlines. length; i < length; ++i)
 					this .processInlineDOM (inlines [i]);
-				
 				
 			},
 			
