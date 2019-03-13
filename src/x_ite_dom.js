@@ -45,7 +45,7 @@ X3D (function ()
 			setup: function ()
 			{				
 				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
-				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+				var dom = this .browser .getElement () [0] .querySelector ('X3D'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
@@ -61,7 +61,7 @@ X3D (function ()
 
 				//require additional component libraries and reimport
 
-				X3D. require(parser .getProviderUrls (),
+				X3D. require(importedScene .getProviderUrls (),
 					function() {
 						
 						importedScene = this .browser .importDocument (dom);//reimport with providers
