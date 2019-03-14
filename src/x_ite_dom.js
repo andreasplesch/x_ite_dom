@@ -65,41 +65,39 @@ X3D (function ()
 
 					//events
 					this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
+	
+					// create an observer instance
+					this .observer = new MutationObserver (function (mutations)
+					{
+						this. prepareMutations (mutations);
+						mutations .forEach (function (mutation)
+						{
+							this .processMutation (mutation, new XMLParser (importedScene));
+						},
+						this);
+					}
+					.bind (this));
+					
+					//start observing, also catches inlined inlines
+					this .observer .observe (dom, 
+					 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
+	
+					// Add internal inline DOMs to document DOM	
+					// create LoadSensor for use with Inline nodes.
+
+					//this .loadSensor = this .importedScene .createNode ("LoadSensor") .getValue ();
+					
+					// Add inline doms from initial scene.
+					var inlines = dom .querySelectorAll ('Inline');
+
+					for (var i = 0, length = inlines. length; i < length; ++i)
+						this .processInlineDOM (inlines [i]);
 				}
 				.bind (this),
 				function (error)
 				{
 					console .log ("Error requiring component libraries", error);
 				});
-
-				// create an observer instance
-				this .observer = new MutationObserver (function (mutations)
-				{
-					this. prepareMutations (mutations);
-					mutations .forEach (function (mutation)
-					{
-						this .processMutation (mutation, parser);
-					},
-					this);
-				}
-				.bind (this));
-				
-				//start observing, also catches inlined inlines
-				this .observer .observe (dom, 
-				 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
-	
-				// Add internal inline DOMs to document DOM	
-				// create LoadSensor for use with Inline nodes.
-
-				//this .loadSensor = this .importedScene .createNode ("LoadSensor") .getValue ();
-				
-				// Add inline doms from initial scene.
-				var inlines = dom .querySelectorAll ('Inline');
-
-				for (var i = 0, length = inlines. length; i < length; ++i)
-					this .processInlineDOM (inlines [i]);
-				
-				
 			},
 			
 			prepareMutations: function (mutations)
