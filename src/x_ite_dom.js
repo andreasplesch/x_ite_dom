@@ -54,45 +54,50 @@ X3D (function ()
 				
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
-	
-				var scope = this;
 
-				var afterParsing = function () {
-
-					scope .loadSensor = this .scene .createNode ("LoadSensor") .getValue ();
-					scope .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
-					scope .browser. replaceWorld (this. scene);
-
-				};
-
-				// use parseIntoScene rather than importDocument because it lazy loads components
-				var parser = new XMLParser (this .browser .currentScene);
-
-				parser .parseIntoScene( dom, afterParsing, this .browser .print ); 
-
-				// create an observer instance
-				this .observer = new MutationObserver (function (mutations)
+				//now also attached x3d property to each node element
+				this .browser .importDocument (dom,
+				function (importedScene)
 				{
-					this. prepareMutations (mutations);
-					mutations .forEach (function (mutation)
-					{
-						this .processMutation (mutation, parser);
-					},
-					this);
-				}
-				.bind (this));
-				
-				//start observing, also catches inlined inlines
-				this .observer .observe (dom, 
-				 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
-	
-				
-				// Add inline doms from initial scene.
-				var inlines = dom .querySelectorAll ('Inline');
+					this .browser .replaceWorld (importedScene);
 
-				for (var i = 0, length = inlines. length; i < length; ++i)
-					this .processInlineDOM (inlines [i]);
-				
+					this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+
+					//events
+					this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
+	
+					// create an observer instance
+					this .observer = new MutationObserver (function (mutations)
+					{
+						this. prepareMutations (mutations);
+						mutations .forEach (function (mutation)
+						{
+							this .processMutation (mutation, new XMLParser (importedScene));
+						},
+						this);
+					}
+					.bind (this));
+					
+					//start observing, also catches inlined inlines
+					this .observer .observe (dom, 
+					 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
+	
+					// Add internal inline DOMs to document DOM	
+					// create LoadSensor for use with Inline nodes.
+
+					//this .loadSensor = this .importedScene .createNode ("LoadSensor") .getValue ();
+					
+					// Add inline doms from initial scene.
+					var inlines = dom .querySelectorAll ('Inline');
+
+					for (var i = 0, length = inlines. length; i < length; ++i)
+						this .processInlineDOM (inlines [i]);
+				}
+				.bind (this),
+				function (error)
+				{
+					console .log ("Error requiring component libraries", error);
+				});
 			},
 			
 			prepareMutations: function (mutations)
