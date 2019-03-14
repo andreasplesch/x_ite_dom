@@ -45,7 +45,7 @@ X3D (function ()
 			setup: function ()
 			{				
 				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
-				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+				var dom = this .browser .getElement () [0] .querySelector ('X3D'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
