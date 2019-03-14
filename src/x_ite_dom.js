@@ -54,27 +54,23 @@ X3D (function ()
 				
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
-	
-				var importedScene = this .browser .importDocument (dom); //now also attached x3d property to each node element
 
-				var parser = new XMLParser (importedScene);
+				//now also attached x3d property to each node element
+				this .browser .importDocument (dom,
+				function (importedScene)
+				{
+					this .browser .replaceWorld (importedScene);
 
-				//require additional component libraries and reimport
+					this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
 
-				X3D. require(parser .getProviderUrls (),
-					function() {
-						
-						importedScene = this .browser .importDocument (dom);//reimport with providers
-						this .browser .replaceWorld (importedScene);
-						
-						this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
-
-						//events
-						this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
-					} .bind(this)
-					,
-					function(error){ console.log("Error requiring component libraries", error); }
-				);
+					//events
+					this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
+				}
+				.bind (this),
+				function (error)
+				{
+					console .log ("Error requiring component libraries", error);
+				});
 
 				// create an observer instance
 				this .observer = new MutationObserver (function (mutations)
