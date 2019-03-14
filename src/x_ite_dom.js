@@ -55,17 +55,12 @@ X3D (function ()
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
 
-				//now also attached x3d property to each node element
-				this .browser .importDocument (dom,
-				function (importedScene)
+				var afterImport = function (importedScene)
 				{
 					this .browser .replaceWorld (importedScene);
 
 					this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
 
-					//events
-					this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
-	
 					// create an observer instance
 					this .observer = new MutationObserver (function (mutations)
 					{
@@ -92,12 +87,22 @@ X3D (function ()
 
 					for (var i = 0, length = inlines. length; i < length; ++i)
 						this .processInlineDOM (inlines [i]);
-				}
-				.bind (this),
+
+					//events
+					this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
+	
+				};
+
+				//now also attached x3d property to each node element
+				this .browser .importDocument (dom,
+				afterImport .bind (this),
 				function (error)
 				{
 					console .log ("Error requiring component libraries", error);
 				});
+
+				
+				
 			},
 			
 			prepareMutations: function (mutations)
