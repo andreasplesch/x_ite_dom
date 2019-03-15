@@ -56,8 +56,7 @@ X3D (function ()
 					this .preprocessScripts(dom);
 
 				//now also attached x3d property to each node element
-				this .browser .importDocument (dom)
-				.then (function (importedScene)
+				this .browser .importDocument (dom, function (importedScene)
 				{
 					this .browser .replaceWorld (importedScene);
 
