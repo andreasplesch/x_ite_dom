@@ -56,7 +56,7 @@ X3D (function ()
 					this .preprocessScripts(dom);
 
 				//now also attached x3d property to each node element
-				this .browser .importDocument (dom, function (importedScene)
+				var onAfterImport = function (importedScene)
 				{
 					this .browser .replaceWorld (importedScene);
 
@@ -91,12 +91,14 @@ X3D (function ()
 
 					for (var i = 0, length = inlines. length; i < length; ++i)
 						this .processInlineDOM (inlines [i]);
-				}
-				.bind (this),
-				function (error)
+				};
+
+				var onError = function (error)
 				{
 					console .log ("Error importing document:", error);
-				});
+				};
+				
+				this .browser .importDocument (dom, onAfterImport .bind(this), onError);
 			},
 			
 			prepareMutations: function (mutations)
