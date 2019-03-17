@@ -33,6 +33,7 @@ Since X3D uses an XML encoding, xhtml encoded web pages are preferred. Regular h
 - Multiple scenes on a web page can coexist and can be controlled.
 - Each attribute mutation leads to a complete x3d event cascade to preserve sequencing. This avoids unexpected behavior but may impact performance slightly.
 - Events: see below
+- on demand loading of required components if profile is given in X3D element; otherwise 'Full' profile is loaded: for faster loading specify correct profile (or components) such as 'Interactive', 'Full' is rarely needed.
 
 ## Events
 
@@ -71,6 +72,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## Releases
 
+* 1.1 : updates for x_ite >= 4.4.4: async loading of required components, X3D tag now required
 * 1.0 : small updates for x_ite >= 4.4.3
 * 0.9x: renamed to x_ite_dom
 * 0.9 : no functional changes, works with cobweb 3.3; jekyll generation of example list
