@@ -4,6 +4,7 @@
 // Load after x_ite.js
 
 // Make sure X3D is ready.
+
 X3D (function ()
 {
 	"use strict"; // Always use strict!
@@ -44,7 +45,7 @@ X3D (function ()
 			setup: function ()
 			{				
 				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
-				var dom = this .browser .getElement () [0] .querySelector ('Scene'); // avoid jquery to future proof; TODO multiple Scenes
+				var dom = this .browser .getElement () [0] .querySelector ('X3D'); // avoid jquery to future proof; TODO multiple Scenes
 				
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
@@ -53,43 +54,51 @@ X3D (function ()
 				
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
-	
-				var importedScene = this .browser .importDocument (dom); //now also attached x3d property to each node element
-	
-				this .browser .replaceWorld (importedScene);
-				
-				var parser  = new XMLParser (this .browser .currentScene);
-				
-				// create an observer instance
-				this .observer = new MutationObserver (function (mutations)
+
+				//now also attached x3d property to each node element
+				var onAfterImport = function (importedScene)
 				{
-					this. prepareMutations (mutations);
-					mutations .forEach (function (mutation)
-					{
-						this .processMutation (mutation, parser);
-					},
-					this);
-				}
-				.bind (this));
-				
-				//start observing, also catches inlined inlines
-				this .observer .observe (dom, 
-				 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
+					this .browser .replaceWorld (importedScene);
+
+					this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+
+					//events
+					this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
 	
-				// Add internal inline DOMs to document DOM	
-				// create LoadSensor for use with Inline nodes.
+					// create an observer instance
+					this .observer = new MutationObserver (function (mutations)
+					{
+						this. prepareMutations (mutations);
+						mutations .forEach (function (mutation)
+						{
+							this .processMutation (mutation, new XMLParser (importedScene));
+						},
+						this);
+					}
+					.bind (this));
+					
+					//start observing, also catches inlined inlines
+					this .observer .observe (dom, 
+					 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
+	
+					// Add internal inline DOMs to document DOM	
+					// create LoadSensor for use with Inline nodes.
 
-				this .loadSensor = importedScene .createNode ("LoadSensor") .getValue ();
+					//this .loadSensor = this .importedScene .createNode ("LoadSensor") .getValue ();
+					
+					// Add inline doms from initial scene.
+					var inlines = dom .querySelectorAll ('Inline');
+
+					for (var i = 0, length = inlines. length; i < length; ++i)
+						this .processInlineDOM (inlines [i]);
+				};
+
+				var onError = function (error)
+				{
+					console .log ("Error importing document:", error);
+				};
 				
-				// Add inline doms from initial scene.
-				var inlines = dom .querySelectorAll ('Inline');
-
-				for (var i = 0, length = inlines. length; i < length; ++i)
-					this .processInlineDOM (inlines [i]);
-				
-				//events
-
-				this .addEventDispatchersAll (dom);				
+				this .browser .importDocument (dom, onAfterImport .bind(this), onError);
 			},
 			
 			prepareMutations: function (mutations)
@@ -136,8 +145,8 @@ X3D (function ()
 
 				var fields = element .x3d .getFields ();
 	
-				for (var key in fields) 
-					this .bindFieldCallback (fields [key], element);
+				for (var key of fields .keys()) //fields now Map 
+					this .bindFieldCallback (fields .get (key), element);
 			},
 			
 			bindFieldCallback: function  (field, element)
