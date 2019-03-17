@@ -143,8 +143,8 @@ X3D (function ()
 
 				var fields = element .x3d .getFields ();
 	
-				for (var key in fields) 
-					this .bindFieldCallback (fields [key], element);
+				for (var key of fields .keys()) //fields now Map 
+					this .bindFieldCallback (fields .get (key), element);
 			},
 			
 			bindFieldCallback: function  (field, element)
