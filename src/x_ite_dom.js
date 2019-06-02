@@ -330,7 +330,8 @@ X3D (function ()
 					watchList = this .loadSensor .getField ("watchList"),
 					isLoaded  = this .loadSensor .getField ("isLoaded");
 
-				element .appendChild (node .dom .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
+				if (node .dom) //guard since .dom does not exist for invalid urls
+					element .appendChild (node .dom .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
 
 				//not needed any more, remove callback
 				isLoaded .removeFieldCallback ("loaded" + node .getId ());
