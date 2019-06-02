@@ -80,11 +80,6 @@ X3D (function ()
 					//start observing, also catches inlined inlines
 					this .observer .observe (dom, 
 					 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
-	
-					// Add internal inline DOMs to document DOM	
-					// create LoadSensor for use with Inline nodes.
-
-					//this .loadSensor = this .importedScene .createNode ("LoadSensor") .getValue ();
 					
 					// Add inline doms from initial scene.
 					var inlines = dom .querySelectorAll ('Inline');
@@ -335,7 +330,8 @@ X3D (function ()
 					watchList = this .loadSensor .getField ("watchList"),
 					isLoaded  = this .loadSensor .getField ("isLoaded");
 
-				element .appendChild (node .dom .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
+				if (node .dom) //guard since .dom does not exist for invalid urls
+					element .appendChild (node .dom .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
 
 				//not needed any more, remove callback
 				isLoaded .removeFieldCallback ("loaded" + node .getId ());
