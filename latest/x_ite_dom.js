@@ -371,10 +371,11 @@ X3D (function ()
 				
 				if (element .x3d)
 				{ // is a field
-					parser .nodeAttribute (attribute, element .x3d); //almost there
+					parser .nodeAttribute (attribute, element .x3d); //now only deals with initialize only
 
 					//only underscore gets update
 					var field = element .x3d .getField ( parser .attributeToCamelCase (attributeName) ); //containerField is not a field, check for it?
+					parser .fieldValue(field, attribute .value); //now necessary for other access types
 
 					field .addEvent (); // set_field event, updates real property
 					this .browser .processEvents(); // necessary for multiple mutations
