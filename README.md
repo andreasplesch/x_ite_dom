@@ -72,6 +72,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 
 ## Releases
 
+* 1.3 : updates: inline dom and x_ite parser changes
 * 1.1 : updates for x_ite >= 4.4.4: async loading of required components, X3D tag now required
 * 1.0 : small updates for x_ite >= 4.4.3
 * 0.9x: renamed to x_ite_dom
