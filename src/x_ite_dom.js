@@ -241,12 +241,12 @@ X3D (function ()
 			   		parentNode .parentNode .nodeName === 'INLINE'
 				)
 				{
-					var nodeScene = parentNode .parentNode .x3d .getInternalScene ();
+					nodeScene = parentNode .parentNode .x3d .getInternalScene ();
 				}
 				else if (parentNode .x3d)
 				{
 					// Use parent's scene if non-root, works for inline.
-					var nodeScene = parentNode .x3d .getExecutionContext ();
+					nodeScene = parentNode .x3d .getExecutionContext ();
 				}
 				
 				parser .pushExecutionContext (nodeScene);
@@ -258,8 +258,8 @@ X3D (function ()
 					var node = parentNode .x3d ;
 					//parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
-					var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
-					    			parentNode .nodeName === 'PROTOINSTANCE';
+					//var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
+					//    			parentNode .nodeName === 'PROTOINSTANCE';
 					
 					parser .childElement (element); //, isProtoInstance);
 
@@ -384,7 +384,7 @@ X3D (function ()
 				{ // is an attribute of non-node child such as fieldValue (or ROUTE)
 					var parentNode = element .parentNode; //should always be a node (?)
 					var node = parentNode .x3d; // need to attach .x3d to ProtoInstance
-					var nodeScene = node .getExecutionContext ();
+					//var nodeScene = node .getExecutionContext ();
 					parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
 					
