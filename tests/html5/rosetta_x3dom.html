@@ -26,12 +26,12 @@
                     <appearance>
                         <material id="ballColour" diffuseColor='1 0 0'></material>
                     </appearance>
-                    <sphere id="thesphere" radius="1" onclick="myToggleSphereSizeFunction()"></sphere>
+                    <sphere id="thesphere" radius="1" onclick="myToggleSizeFunction()"></sphere>
                 </shape>
                 <TouchSensor id='thesphereSensor'></TouchSensor>
             </transform>
 
-            <timeSensor DEF="time" id="time" cycleInterval="0.5" loop="true"></timeSensor>
+            <timeSensor DEF="time" id="time" cycleInterval="3" loop="true"></timeSensor>
             <PositionInterpolator DEF="move" key="0 0.5 1" keyValue="0 -2 0  0 3 0  0 -2 0"></PositionInterpolator>
             <Route fromNode="time" fromField ="fraction_changed" toNode="move" toField="set_fraction"></Route>
             <Route fromNode="move" fromField ="value_changed" toNode="ball" toField="translation"></Route>
@@ -40,10 +40,10 @@
     </x3d>
     <p>Click on the ball itself to toggle the size. Currently it is a <span id="textColor" style="color:red">LARGE</span> ball.</p>
     <p>And we can also change the speed of the ball. Use the slider below.</p>
-    <input id="speedChange" type="range" value="0.5" min="0.5" max="5" step="0.5" oninput="mySpeedFunction(this.value)"/>
+    <input id="speedChange" type="range" value="2.5" min="0.5" max="5" step="0.1" oninput="mySpeedFunction(this.value)"/>
     <script>
 
-    document.getElementById("thesphereSensor").addEventListener('x3d_touchTime', myToggleBoxSizeFunction);
+    document.getElementById("thesphereSensor").addEventListener('x3d_touchTime', myToggleSizeFunction);
 
     function myBlueFunction() {
         document.getElementById("ballColour").diffuseColor='0 0 1';
@@ -75,7 +75,7 @@
             document.getElementById("greenRectangle").setAttribute('height', '50');
             document.getElementById("redRectangle").setAttribute('width', '50');
             document.getElementById("redRectangle").setAttribute('height', '50');
-            document.getElementById("textColor").innerHTML = "small";
+            document.getElementById("textColor").innerHTML = "small";functio
         } else {
             document.getElementById("blueRectangle").setAttribute('width', '100');
             document.getElementById("blueRectangle").setAttribute('height', '100');
@@ -86,9 +86,14 @@
             document.getElementById("textColor").innerHTML = "LARGE";
         }
     }
+    function myToggleSizeFunction() {
+        myToggleSphereSizeFunction();
+        myToggleBoxSizeFunction();
+    }
+
     function mySpeedFunction(val) {
         document.getElementById("time").enabled="false";
-        document.getElementById("time").cycleInterval=val;
+        document.getElementById("time").cycleInterval=5.5 - val;
         document.getElementById("time").enabled="true";
     }
     </script>
