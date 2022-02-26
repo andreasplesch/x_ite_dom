@@ -9,6 +9,8 @@ X3D (function ()
 {
 	"use strict"; // Always use strict!
 
+   const _dom = Symbol .for ("X_ITE.dom");
+
 	X3D .require ([ // perhaps switch to importDocument() to avoid require; but creates new scenes
 		"x_ite/Parser/XMLParser"
 	],
@@ -330,8 +332,8 @@ X3D (function ()
 					watchList = this .loadSensor .getField ("watchList"),
 					isLoaded  = this .loadSensor .getField ("isLoaded");
 
-				if (node .dom) //guard since .dom does not exist for invalid urls
-					element .appendChild (node .dom .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
+				if (node [_dom]) //guard since .dom does not exist for invalid urls
+					element .appendChild (node [_dom] .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
 
 				//not needed any more, remove callback
 				isLoaded .removeFieldCallback ("loaded" + node .getId ());
