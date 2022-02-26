@@ -9,14 +9,14 @@ X3D (function ()
 {
 	"use strict"; // Always use strict!
 
-   const _dom = Symbol .for ("X_ITE.dom");
-
 	X3D .require ([ // perhaps switch to importDocument() to avoid require; but creates new scenes
 		"x_ite/Parser/XMLParser"
 	],
 	function (XMLParser)
 	{
 		console .info ("X_ITE XHTML DOM integration enabled");
+
+		const _dom = Symbol .for ("X_ITE.dom");
 
 		function DOMIntegration (X3DCanvas)
 		{
