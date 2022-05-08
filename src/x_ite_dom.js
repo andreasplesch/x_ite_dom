@@ -16,12 +16,14 @@ X3D (function ()
 	{
 		console .info ("X_ITE XHTML DOM integration enabled");
 
+		const _dom = Symbol .for ("X_ITE.dom");
+
 		function DOMIntegration (X3DCanvas)
 		{
 			this .browser = X3D .getBrowser (X3DCanvas);
 			this .browser .trace = X3DCanvas .attributes .getNamedItem('trace');
 		}
-	
+
 		DOMIntegration .prototype =
 		{
 			preprocessScripts: function (dom)
@@ -31,27 +33,27 @@ X3D (function ()
 					this .appendScriptChildren(scripts[i]);
 				return dom;
 			},
-			
+
 			appendScriptChildren: function (script)
 			{
 				var domParser = new DOMParser();
 				var scriptDoc = domParser .parseFromString (script. outerHTML, 'application/xml');
 				var scriptNodes = scriptDoc .children[0] .childNodes;
-				script .textContent = '// content moved into childNodes';  
+				script .textContent = '// content moved into childNodes';
 				for (var i = 0, length = scriptNodes .length; i < length; ++i)
-					script.appendChild(scriptNodes[0]);	
+					script.appendChild(scriptNodes[0]);
 			},
-			
+
 			setup: function ()
-			{				
+			{
 				//this .trace = this .browser .getElement () [0] .attributes .getNamedItem('trace');
 				var dom = this .browser .getElement () [0] .querySelector ('X3D'); // avoid jquery to future proof; TODO multiple Scenes
-				
+
 				if (dom === null)
 					return; // Nothing to do, hm, observer needs to be set up for empty browser as well ..
-				
+
 				//preprocess script nodes if not xhtml
-				
+
 				if (!document.URL.toLowerCase().includes('xhtml'))
 					this .preprocessScripts(dom);
 
@@ -64,7 +66,7 @@ X3D (function ()
 
 					//events
 					this .addEventDispatchersAll (dom); //has to happen after reimporting since dom.x3d
-	
+
 					// create an observer instance
 					this .observer = new MutationObserver (function (mutations)
 					{
@@ -76,11 +78,11 @@ X3D (function ()
 						this);
 					}
 					.bind (this));
-					
+
 					//start observing, also catches inlined inlines
-					this .observer .observe (dom, 
+					this .observer .observe (dom,
 					 	{ attributes: true, childList: true, characterData: false, subtree: true, attributeOldValue: true });
-					
+
 					// Add inline doms from initial scene.
 					var inlines = dom .querySelectorAll ('Inline');
 
@@ -92,10 +94,10 @@ X3D (function ()
 				{
 					console .log ("Error importing document:", error);
 				};
-				
+
 				this .browser .importDocument (dom, onAfterImport .bind(this), onError);
 			},
-			
+
 			prepareMutations: function (mutations)
 			{
 				// in case of mutations affecting the same element-attribute
@@ -111,7 +113,7 @@ X3D (function ()
 					for ( j = i + 1; j < length; ++j)
 					{
 						var futureMutation = mutations[j];
-						if ( element === futureMutation .target 
+						if ( element === futureMutation .target
 						    && attributeName === futureMutation .attributeName )
 						{
 							value = futureMutation .oldValue;
@@ -121,29 +123,29 @@ X3D (function ()
 					mutation .value = value;
 				}
 			},
-			
+
 			addEventDispatchersAll: function (element)
 			{
 				var elements = element.querySelectorAll('*');
 				for (var i = 0, length = elements .length; i < length; ++i)
 					this. addEventDispatchers (elements [i]);
 			},
-			
+
 			addEventDispatchers: function (element)
 			{
 				// check for USE nodes; they do not emit events
 				if (element .x3d === undefined)
 					return;
-	
+
 				if (element .nodeName === 'ROUTE')
 					return;
 
 				var fields = element .x3d .getFields ();
-	
-				for (var key of fields .keys()) //fields now Map 
-					this .bindFieldCallback (fields .get (key), element);
+
+				for (var field of fields) //fields now Map
+					this .bindFieldCallback (field, element);
 			},
-			
+
 			bindFieldCallback: function  (field, element)
 			{
 				/*var ctx = {};
@@ -159,83 +161,83 @@ X3D (function ()
 						field .addFieldCallback (
 							"DomIntegrationTracer." + field .getId (),
 							this .fieldTraceCallback .bind (null, field, element .x3d));
-				}		
+				}
 			},
-			
+
 			fieldCallback: function  (field, element, value)
 			{
 				//var evt = new Event (field.getName()); // better to use official custom event
-	
+
 				var node      = element .x3d;
 				var prefix    = "x3d";
 				//var eventType = prefix + element.nodeName + "_" + field .getName ();
 				var eventType = prefix + "_" + field .getName ();
 
-				var event = new CustomEvent (eventType, { 
+				var event = new CustomEvent (eventType, {
 					detail: {
 						value: value,
 						fields: node .getFields (),
 						name: node .getName (),
 						x3d: node
-					} 
+					}
 				});
 
 				//event.value = value;
 				//event.fields = sensor.x3d.getFields(); // copy ?
-				//event.x3d = sensor.x3d; 
+				//event.x3d = sensor.x3d;
 				element .dispatchEvent (event);
 			},
-			
+
 			fieldTraceCallback: function  (field, node, value)
 			{
 				var now = performance.timing.navigationStart + performance.now();
 				var timeStamp = node .getBrowser () .getCurrentTime ();
 				var dt = now - timeStamp * 1000;
-				console .log ( "%f: at %f dt of %s ms %s '%s' %s: %s", 
-					      now, timeStamp, dt.toFixed(3), 
+				console .log ( "%f: at %f dt of %s ms %s '%s' %s: %s",
+					      now, timeStamp, dt.toFixed(3),
 					      node .getTypeName (), node .getName(),
 					      field .getName(), value );
 			},
-			
+
 			processRemovedNode: function (element)
-			{	
+			{
 				// Works also for root nodes, as it has to be, since scene.rootNodes is effectively a MFNode in x-ite.
 				// Also removes ROUTE elements.
-				if (element .x3d)	
+				if (element .x3d)
 				{
 					element .x3d .dispose ();
-					if (element .nodeName === 'ROUTE') // dispatcher still needs .x3d when dispose processes events  
+					if (element .nodeName === 'ROUTE') // dispatcher still needs .x3d when dispose processes events
 					    delete element .x3d;
 				}
 			},
-			
+
 			processAddedNode: function (element, parser)
 			{
 				// Only process element nodes.
 				if (element .nodeType !== Node .ELEMENT_NODE)
 					return;
-				
+
 				// First need to look for Inline doms to add to dom.
 				this .processInlineDOMs (element);
-				
+
 				// Do not add to scene if already parsed as child of inline,
 				// although Scene does not have .x3d so should never happen?
 				if (element .x3d)
-				{ 
+				{
 					if (element .nodeName === 'Inline' || element .nodeName === 'INLINE' )
 						this .processInlineDOM (element); //only add dom
 
-					return; 
+					return;
 				}
 				else if (element .nodeName === 'Scene' || element .nodeName === 'SCENE')
 					return;
-				
+
 				var parentNode = element .parentNode;
 
 				// first get correct execution context
 				var nodeScene = this .browser .currentScene ; // assume main Scene
 
-				if 
+				if
 				(
 					parentNode .parentNode .nodeName === 'Inline' ||
 			   		parentNode .parentNode .nodeName === 'INLINE'
@@ -248,9 +250,9 @@ X3D (function ()
 					// Use parent's scene if non-root, works for inline.
 					nodeScene = parentNode .x3d .getExecutionContext ();
 				}
-				
+
 				parser .pushExecutionContext (nodeScene);
-				
+
 				// then check if root node
 				if (parentNode .x3d)
 				{
@@ -260,7 +262,7 @@ X3D (function ()
 					parser .pushParent (node);
 					//var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
 					//    			parentNode .nodeName === 'PROTOINSTANCE';
-					
+
 					parser .childElement (element); //, isProtoInstance);
 
 					parser .popParent ();
@@ -273,25 +275,25 @@ X3D (function ()
 					parser .childElement (element);
 					//nodeScene .setup ();
 				}
-				
+
 				parser .popExecutionContext ();
 				nodeScene .setup ();
 				//parser only adds uninitialized x3d nodes to scene
 				//the setup function initializes only uninitialized nodes, but only root nodes ?
 				//needed also after inline.setup(), should not hurt to redo if nodeScene = main Scene
-				
+
 				this .browser .currentScene .setup (); // Consider a single setup() after all nodes are added.
-				
+
 				// now after creating nodes need to look again for Inline doms.
 				this .processInlineDOMs (element);
 
 				//then attach event dispatchers
 				//if (element .matches (this .sensorSelector)) { this .addEventDispatchers (element); } // matches() not well supported
-				
+
 				this. addEventDispatchers (element);
-				this. addEventDispatchersAll (element); // also for childnodes	
+				this. addEventDispatchersAll (element); // also for childnodes
 			},
-			
+
 			processInlineDOMs: function (element)
 			{
 				if (element .nodeName === 'Inline' || element .nodeName === 'INLINE')
@@ -302,7 +304,7 @@ X3D (function ()
 				for (var i = 0, length = inlines .length; i < length; ++ i)
 					this .processInlineDOM (inlines [i]);
 			},
-			
+
 			processInlineDOM: function (element)
 			{
 				// Check for USE inline as it does not have dom
@@ -320,7 +322,7 @@ X3D (function ()
 				//just add to loadsensor watchlist; triggers isLoaded event after loading
 				watchList .push (element .x3d);
 			},
-			
+
 			appendInlineDOM: function (element, loaded)
 			{
 				// Now loaded and in .dom
@@ -330,21 +332,21 @@ X3D (function ()
 					watchList = this .loadSensor .getField ("watchList"),
 					isLoaded  = this .loadSensor .getField ("isLoaded");
 
-				if (node .dom) //guard since .dom does not exist for invalid urls
-					element .appendChild (node .dom .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
+				if (node [_dom]) //guard since .dom does not exist for invalid urls
+					element .appendChild (node [_dom] .querySelector ('Scene')) ; // XXX: or root nodes? HO: Think, Scene is better.
 
 				//not needed any more, remove callback
 				isLoaded .removeFieldCallback ("loaded" + node .getId ());
 
 				// Remove from watchlist
-				
-				var wListUpdate = watchList .getValue () .filter ( 
+
+				var wListUpdate = watchList .getValue () .filter (
 					function (value) { return value .getValue () !== node; }
 				);
 
 				watchList .setValue (wListUpdate);
 
-				//check if all inlines are appended and dispatch event; 
+				//check if all inlines are appended and dispatch event;
 				//would be also dispatched later whenever a new inline was completely appended
 				if (element .querySelector ('Inline') === null) // no more internal inlines
 				{
@@ -357,18 +359,18 @@ X3D (function ()
 
 					document .dispatchEvent (event);
 				}
-				
+
 				// Attach dom event callbacks.
-				this .addEventDispatchersAll (element); 
+				this .addEventDispatchersAll (element);
 			},
-			
+
 			processAttribute: function (mutation, element, parser)
 			{
 				var attributeName = mutation .attributeName;
 				var attribute = element .attributes .getNamedItem (attributeName) .cloneNode(); // clone to avoid mutation observation
-				
+
 				attribute .value = mutation .value ; // mutation .value is custom;
-				
+
 				if (element .x3d)
 				{ // is a field
 					parser .nodeAttribute (attribute, element .x3d); //now only deals with initialize only
@@ -387,12 +389,12 @@ X3D (function ()
 					//var nodeScene = node .getExecutionContext ();
 					parser .pushExecutionContext (node .getExecutionContext ());
 					parser .pushParent (node);
-					
+
 					var isProtoInstance = 	parentNode .nodeName === 'ProtoInstance' ||
 					    			parentNode .nodeName === 'PROTOINSTANCE';
 					// may need to try..catch in case "name" field does not exist
 					parser .childElement (element); //, isProtoInstance);
-					
+
 					parser .popParent ();
 					parser .popExecutionContext ();
 					if (isProtoInstance)
@@ -402,11 +404,11 @@ X3D (function ()
 					}
 				}
 			},
-			
+
 			processMutation: function (mutation, parser)
 			{
 				var element = mutation .target;
-					
+
 				switch (mutation .type)
 				{
 					case "attributes":
@@ -419,21 +421,21 @@ X3D (function ()
 						{
 							// Unknown attribute.
 						}
-		
+
 						break;
 					}
 					case "childList":
-					{					
+					{
 						var addedNodes = mutation.addedNodes;
-	
+
 						for (var i = 0; i < addedNodes .length; ++ i)
 							this .processAddedNode (addedNodes[i], parser);
-		
+
 						var removedNodes = mutation .removedNodes;
-	
+
 						for (var i = 0; i < removedNodes .length; ++ i)
 							this .processRemovedNode (removedNodes[i]);
-	
+
 						break;
 					}
 				}
@@ -450,7 +452,7 @@ X3D (function ()
 			var integration = new DOMIntegration (X3DCanvases [i]);
 
 			integration .setup ();
-			
+
 			integrations .push (integration);
 		}
 	});
