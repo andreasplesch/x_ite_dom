@@ -1,5 +1,13 @@
 # x_ite_dom
 
+## Development moved to https://github.com/create3000/x_ite/
+
+x_ite_dom has been adopted by the main x_ite.js library (https://github.com/andreasplesch/x_ite_dom/issues/40). Therefore all development shifted to
+
+https://github.com/create3000/x_ite/blob/main/src/x_ite/Browser/DOMIntegration.js
+
+This repo will remain, for documentation purposes.
+
 ## Summary
 
 x_ite_dom.js is intended to be used with the X3D browser x_ite.js (https://github.com/create3000/x_ite). x_ite_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
