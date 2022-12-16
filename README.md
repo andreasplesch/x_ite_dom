@@ -10,7 +10,7 @@ This repo will remain, for documentation purposes.
 
 ## Summary
 
-x_ite_dom.js is intended to be used with the X3D browser x_ite.js (https://github.com/create3000/x_ite). x_ite_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
+x_ite_dom.js is intended to be used with the X3D browser x_ite.js (https://github.com/create3000/x_ite), up to __version 7.0.0__. x_ite_dom links the X3D DOM nodes to the X3D scene graph and thereby allows for control of the X3D scene using regular DOM manipulation methods.
 Please be aware that X3D requires a well defined organisation of the scene. If modifying the DOM results in an invalid scene graph, errors result.
 
 ## Design
@@ -79,6 +79,7 @@ To help with debugging x3d event flow, a 'trace' attribute for the X3DCanvas ele
 - clean up and organise tests: updated all to latest, added proto tests
 
 ## Releases
+
 
 * 1.3 : updates: inline dom and x_ite parser changes
 * 1.1 : updates for x_ite >= 4.4.4: async loading of required components, X3D tag now required
